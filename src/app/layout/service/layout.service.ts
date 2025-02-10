@@ -27,11 +27,11 @@ interface MenuChangeEvent {
 })
 export class LayoutService {
     _config: layoutConfig = {
-        preset: 'Aura',
-        primary: 'emerald',
-        surface: null,
-        darkTheme: false,
-        menuMode: 'static'
+        preset: 'Lara', //PRESET
+        primary: 'emerald', //BG PRIMARY
+        surface: 'zinc', //BG SECONDARY
+        darkTheme: true,
+        menuMode: 'static'  //??
     };
 
     _state: LayoutState = {

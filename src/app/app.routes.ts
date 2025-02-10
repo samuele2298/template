@@ -6,6 +6,7 @@ import { Landing } from './pages/landing/landing';
 import { Login } from './pages/auth/login';
 import { Notfound } from './pages/notfound/notfound';
 import { authGuard } from './auth.guard';
+import { Waitlist } from './pages/waitlist/waitlist';
 
 export const appRoutes: Routes = [
     {
@@ -20,6 +21,7 @@ export const appRoutes: Routes = [
     },
     { path: 'login', component: Login },
     { path: 'landing', component: Landing },
+    { path: 'waitlist', component: Waitlist },
     { path: 'notfound', component: Notfound },
     { path: 'auth', loadChildren: () => import('./pages/auth/auth.routes') },
     { path: '**', redirectTo: '/notfound' }
