@@ -1,0 +1,128 @@
+
+<div cds-layout="horizontal gap:md" class="clr-align-items-center">
+  <a role="tooltip" aria-haspopup="true" class="tooltip tooltip-md tooltip-bottom-right">
+    <cds-icon shape="info-circle" size="24"></cds-icon>
+    <span class="tooltip-content">     
+      This is gem finder a usefull filter tool to maximize your value from this application
+    </span>
+  </a>
+  <h3 style="margin: 0;">Gems Finder</h3>
+</div>
+
+<!-- Search Box and Reset Button -->
+<div class="custom-search" [class.hidden]="filtersHidden">
+  <form class="search" >
+    <label for="search1_input">
+        <input 
+        id="search1_input" 
+        [(ngModel)]="filter_search" 
+        type="text" 
+        placeholder="Search for keywords..."  
+        (keydown.enter)="filterResult()"
+        name="searchInput" 
+      />    
+    </label>
+  </form> 
+  <button (click)="reset()" aria-label="Search">
+    <cds-icon shape="refresh" solid="true" size="30" class="search-button"></cds-icon>
+  </button>
+</div>
+<div class="custom-filtermenu" [class.hidden]="filtersHidden">
+  <!-- Category Comboboxes -->
+  <div class="custom-combobox-container">
+    <label>Category</label>
+    <div class="custom-combobox">
+      <select [(ngModel)]="selected_category.name" name="select0" (ngModelChange)="filterResult()" required>
+        <option *ngFor="let cat of categories" [value]="cat.name">
+          {{ cat.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <br>
+  <!-- Market Cap Comboboxes -->
+  <div class="custom-combobox-container">
+    <label>Market Cap  (Min/Max)</label>
+    <div class="custom-combobox">
+      <select [(ngModel)]="minMcap" name="select1" (ngModelChange)="filterResult()" required>
+        <option *ngFor="let mcap of minMcaps" [value]="mcap">
+          {{ getNumberFormatMcap(mcap) }}
+        </option>
+      </select>
+    </div>
+    <div class="custom-combobox">
+      <select [(ngModel)]="maxMcap" name="select2" (ngModelChange)="filterResult()" required>
+        <option *ngFor="let mcap of maxMcaps" [value]="mcap">
+          {{ getNumberFormatMcap(mcap) }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <br>
+  <!-- Investment Score Comboboxes -->
+  <div class="custom-combobox-container">
+    <label>Inv Scores  (Min/Max)</label>
+    <div class="custom-combobox">
+      <select [(ngModel)]="minInvScore" name="select3" (ngModelChange)="filterResult()" required>
+        <option *ngFor="let score of minInvScores" [value]="score">
+          {{ getNumberFormat(score) }}
+        </option>
+      </select>
+    </div>
+    <div class="custom-combobox">
+      <select [(ngModel)]="maxInvScore" name="select4" (ngModelChange)="filterResult()" required>
+        <option *ngFor="let score of maxInvScores" [value]="score">
+          {{ getNumberFormat(score) }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <br>
+  <!-- Trading Score Comboboxes -->
+  <div class="custom-combobox-container">
+    <label>Trd Score (Min/Max)</label>
+    <div class="custom-combobox">
+      <select [(ngModel)]="minTrdScore" name="select5" (ngModelChange)="filterResult()" required>
+        <option *ngFor="let score of minTrdScores" [value]="score">
+          {{ getNumberFormat(score) }}
+        </option>
+      </select>
+    </div>
+    <div class="custom-combobox">
+      <select [(ngModel)]="maxTrdScore" name="select6" (ngModelChange)="filterResult()" required>
+        <option *ngFor="let score of maxTrdScores" [value]="score">
+          {{ getNumberFormat(score) }}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+<button (click)="showFilters()" class="showfilters-button">
+  <cds-icon shape="arrow" solid="true" size="30" class="filter-icon"></cds-icon>
+  {{ filtersHidden ? 'Show Filters' : 'Hide Filters' }}
+</button>
+<div>
+  <clr-datagrid>
+      <clr-dg-column class="sticky-column" [clrDgField]="'name'" [clrDgSortOrder]="0">Name</clr-dg-column>
+      <clr-dg-column [clrDgField]="'mcap'" [clrDgSortOrder]="0">Mcap</clr-dg-column>
+      <clr-dg-column [clrDgField]="'category'" [clrDgSortOrder]="0">Category</clr-dg-column>
+      <clr-dg-column [clrDgField]="'inv_score'" [clrDgSortOrder]="0">Inv Score</clr-dg-column>
+      <clr-dg-column [clrDgField]="'trd_score'" [clrDgSortOrder]="0">Trd Score</clr-dg-column> 
+
+      <clr-dg-row *clrDgItems="let coin of filtered_coins"  >
+          <clr-dg-cell class="sticky-column" (click)="navigateToCoin(coin.name)">{{ coin.name }}</clr-dg-cell>
+          <clr-dg-cell>{{ formatNumber(coin.mcap)}}</clr-dg-cell>
+          <clr-dg-cell (click)="navigateToCategory(coin.category)">{{ coin.category }}</clr-dg-cell>
+          <clr-dg-cell [ngClass]="coin.inv_score >= 0 ? 'green' : 'red'">{{ coin.inv_score.toFixed(2)}}</clr-dg-cell>
+          <clr-dg-cell [ngClass]="coin.trd_score >= 0 ? 'green' : 'red'">{{ coin.trd_score.toFixed(2)}}</clr-dg-cell>
+
+      </clr-dg-row>
+      <clr-dg-footer>
+        <clr-dg-pagination #pagination [clrDgPageSize]="10">
+          <clr-dg-page-size [clrPageSizeOptions]="[10, 20, 50, 100, 500]">Coins per page</clr-dg-page-size>
+          {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} of
+          {{ pagination.totalItems }} coins
+        </clr-dg-pagination>
+      </clr-dg-footer>
+  </clr-datagrid>
+</div>

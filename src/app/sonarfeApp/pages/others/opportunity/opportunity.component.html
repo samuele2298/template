@@ -1,0 +1,94 @@
+<button *ngIf="loadingState" [clrLoading]="loadingState" type="button" class="btn btn-sm"></button>
+<clr-alert *ngIf="!loadingState && (ops.length <= 0)" [clrAlertClosable]="false" [clrAlertType]="'warning'">
+    <clr-alert-item>
+        <span class="alert-text">No opportunities running.</span>
+    </clr-alert-item>
+</clr-alert>
+<div class="card" *ngFor="let op of ops">
+    <table class="table table-noborder" style="margin-top: 0px;">
+        <thead>
+            <tr>
+                <th>Pair</th>
+                <th>Margin USDT</th>
+                <th>Margin %</th>
+                <th>Fee USDT</th>
+                <th>Opp USDT</th>
+                <th>Side</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Exchange</th>
+                <th>Side</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Exchange</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>{{getPairName(op.oppair)}}</strong></td>
+                <td>{{(+op.opthreshold).toFixed(2)}}</td>
+                <td>{{(+op.opthreshold * 100/(+op.A.q * +op.A.p)).toFixed(3)}}</td>
+                <td>{{((+op.A.q * +op.A.f) + (+op.B.q * +op.B.f)).toFixed(2)}}</td>
+                <td>{{(+op.A.q * +op.A.p).toFixed(2)}}</td>
+                <td>{{op.oppri === 'A' ? 'BUY' : 'SELL'}}</td>
+                <td>{{op[op.oppri === 'A' ? 'A' : 'B'].q}}</td>
+                <td>{{op[op.oppri === 'A' ? 'A' : 'B'].p}}</td>
+                <td>{{getExchangeName((op[op.oppri === 'A' ? 'A' : 'B'].exchid))}}</td>
+                <td>{{op.oppri === 'A' ? 'SELL' : 'BUY'}}</td>
+                <td>{{op[op.oppri === 'A' ? 'B' : 'A'].q}}</td>
+                <td>{{op[op.oppri === 'A' ? 'B' : 'A'].p}}</td>
+                <td>{{getExchangeName(op[op.oppri === 'A' ? 'B' : 'A'].exchid)}}</td>
+                <td>{{op.opdate | date:'yyyy-MM-dd HH:mm:ss':'UTC'}}</td>
+                <td>
+                    <clr-dropdown>
+                        <button clrDropdownTrigger>
+                            <cds-icon shape="bars"></cds-icon>
+                        </button>
+                        <clr-dropdown-menu clrPosition="bottom-right" *clrIfOpen>
+                            <label class="dropdown-header" aria-hidden="true">Opportunity Action</label>
+                            <div class="dropdown-item disabled" role="menuitem">Abort</div>
+                        </clr-dropdown-menu>
+                    </clr-dropdown>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table" style="margin-top: 0px;">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Side</th>
+                <th>Filled</th>
+                <th>Quantiy</th>
+                <th>Price</th>
+                <th>Exchange</th>
+                <th>Init Date</th>
+                <th>Update Date</th>
+                <th>Status</th>
+                <th class="right">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let ord of op.oporders">
+                <td><span class="color-square" [style.backgroundColor]="orderStatusClass.get(ord.orstatus)"></span></td>
+                <td>{{ord.orside}}</td>
+                <td>{{ord.orqfilled}}</td>
+                <td>{{ord.orq}}</td>
+                <td>{{ord.orprice}}</td>
+                <td>{{getExchangeName(ord.orexch)}}</td>
+                <td>{{ord.orinitdate | date:'yyyy-MM-dd HH:mm:ss':'UTC'}}</td>
+                <td>{{ord.orupddate | date:'yyyy-MM-dd HH:mm:ss':'UTC'}}</td>
+                <td>{{orderStatus.get(ord.orstatus)}}</td>
+                <td class="right" style="padding-top: 0; padding-bottom: 0; vertical-align: middle;">
+                    <button [clrLoading]="ord.loadingState" type="button" class="btn btn-sm btn-danger btn-icon"
+                        [class.disabled]="ord.orstatus !== '1' && ord.orstatus !== '2'" style="margin: 0;"
+                        title="Cancel order" (click)="abortOrder(ord)">
+                        <cds-icon shape="times"></cds-icon>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

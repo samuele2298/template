@@ -1,0 +1,202 @@
+<div *ngIf="isLoading()" class="loading-overlay">
+    <div class="loading-spinner">
+      <div class="loading-text">Please wait...</div>
+      <span class="spinner spinner-sm">Loading...</span>
+    </div>
+</div>
+
+<!-- Header -->
+<div class="header-container">
+    <div class="inner-header-container">
+        <button type="button" class="btn btn-icon" aria-label="home" (click)="goBack()">
+            <cds-icon shape="arrow" direction="left"></cds-icon>
+        </button>
+        <a role="tooltip" aria-haspopup="true" class="tooltip tooltip-md tooltip-bottom-right" style="margin-top: 5px;">
+        <cds-icon shape="info-circle" size="24"></cds-icon>
+            <span class="tooltip-content">     
+                You&apos;re in the coin screen. Choose a category above to update the data. Here, you&apos;ll find 3 tabs:<br>
+                1. Chart (price, volume, volatility, and volume profile if pro) <br>
+                2. Seasonality (monthly performance, with inactive months marked as 0)<br>
+                3. Info (coin basics, score and performances vs selected category)
+            </span>
+        </a>
+        <h3 class="coin-name"> 
+            {{coin!.name}}</h3>
+        <h3 [ngClass]="getPositiveNegative()">{{coin!.d_chart[this.coin.d_chart.length-1]!.close }} $</h3>
+    </div>
+    <clr-dropdown [clrCloseMenuOnItemClick]="true" >
+        <button [ngClass]="{'btn btn-outline-primary disabled': categories.length === 0, 'btn btn-outline-primary': categories.length != 0}" clrDropdownTrigger>
+            {{ selectedCategory.name}}
+          <cds-icon shape="angle" direction="down"></cds-icon>
+        </button>
+        <clr-dropdown-menu clrPosition="bottom-right" *clrIfOpen>
+          <div aria-label="Dropdown header Action 1" 
+            clrDropdownItem 
+            *ngFor="let category of categories" 
+            (click)="selectCategory(category)">{{category.name}} 
+            </div>
+        </clr-dropdown-menu>
+    </clr-dropdown>
+</div>
+
+<clr-tabs>
+    <clr-tab>
+        <button clrTabLink>Chart</button>
+        <clr-tab-content *ngIf="true">
+            <div class="button-selection">
+                <button 
+                  *ngFor="let timeframe of timeframes" 
+                  class="timeframe-button" 
+                  [class.selected]="timeframe === selectedTimeframe"  
+                  (click)="selectTimeframe(timeframe)">
+                  {{ timeframe }}
+                </button> 
+            </div>
+ 
+            <div class="chart-container">
+                <canvas id="chart"></canvas>
+            </div>
+
+        </clr-tab-content>
+    </clr-tab>
+
+    <clr-tab>
+        <button clrTabLink>Seasonality</button>
+        <clr-tab-content>
+            <div class="seasonality-container">
+                <!-- Conditional Overlay -->
+                <div class="overlay" *ngIf="!isPro()">
+                    <div class="overlay-message">
+                        You need to upgrade to Pro to access this feature.
+                    </div>
+                </div>
+                <!-- Conditional Overlay -->
+                <div class="overlay" *ngIf="coin.seasonality.length == 0">
+                    <div class="overlay-message">
+                        Seasonality not available.
+                    </div>
+                </div>
+                <canvas id="seasonality_chart"></canvas>
+            </div>
+        </clr-tab-content>
+    </clr-tab>
+
+    <clr-tab>
+        <button clrTabLink>Info</button>
+        <clr-tab-content *ngIf="true">
+
+            <h4>General Info</h4>
+
+            <div class="metrics">
+                <div class="metric-container ">
+                    <div class="data">Investment Score:</div>
+                    <div class="value">{{ selectedCategory.inv_score | number: '1.2-2'}} </div>
+                </div>
+
+                <div class="metric-container ">
+                    <div class="data">Trading Score:</div>
+                    <div class="value">{{  selectedCategory.trd_score | number: '1.2-2' }} </div>
+                </div>
+
+                <div class="metric-container ">
+                    <div class="data">Market Cap</div>
+                    <div class="value">{{ formatNumber(coin!.mcap) }} </div>
+                </div>
+
+                <div class="metric-container ">
+                    <div class="data">Ticker</div>
+                    <div class="value">{{ coin!.name}}/USDT </div>
+                </div>
+            </div>
+
+            <h4 cds-text="section">Performance Metrics</h4>
+             <!--<div class="metrics">
+                <div class="metric-container">
+                    <div class="data">15 min TF</div>
+                    <div class="value">{{coin!.name }}: {{ coin!.f | number: '1.2-2' }}%</div>
+                    <div class="value">{{selectedCategory!.name}}: {{ selectedCategory!.f | number: '1.2-2' }}%</div>
+                </div>
+    
+                <div class="metric-container">
+                    <div class="data">1 Hour TF</div>
+                    <div class="value">{{coin!.name }}: {{ coin!.s | number: '1.2-2' }}%</div>
+                    <div class="value">{{selectedCategory!.name}}: {{ selectedCategory!.s | number: '1.2-2' }}%</div>
+                </div>
+    
+                <div class="metric-container">
+                    <div class="data">4 Hour TF</div>
+                    <div class="value">{{coin!.name }}: {{ coin!.t | number: '1.2-2' }}%</div>
+                    <div class="value">{{selectedCategory!.name}}: {{ selectedCategory!.t | number: '1.2-2' }}%</div>
+                </div>
+    
+                <div class="metric-container">
+                    <div class="data">1 Day TF</div>
+                    <div class="value">{{coin!.name }}: {{ coin!.d | number: '1.2-2' }}%</div>
+                    <div class="value">{{selectedCategory!.name}}: {{ selectedCategory!.d | number: '1.2-2' }}%</div>
+                </div>
+    
+                <div class="metric-container">
+                    <div class="data">1 Week TF</div>
+                    <div class="value">{{coin!.name }}: {{ coin!.w | number: '1.2-2' }}%</div>
+                    <div class="value">{{selectedCategory!.name}}: {{ selectedCategory!.w | number: '1.2-2' }}%</div>
+                </div>
+    
+                <div class="metric-container">
+                    <div class="data">1 Month TF</div>
+                    <div class="value">{{coin!.name }}: {{ coin!.m | number: '1.2-2' }}%</div>
+                    <div class="value">{{selectedCategory!.name}}: {{ selectedCategory!.m | number: '1.2-2' }}%</div>
+                </div>
+            </div> -->
+
+            <div class="btn-group btn-secondary btn-sm" style="align-self: center;margin-bottom: 10px;">
+                <button class="btn" (click)="selectedMetric = 0" >Price</button>
+                <button class="btn" (click)="selectedMetric = 1" >Volumes</button>
+                <button class="btn" (click)="selectedMetric = 2" >Volatility</button>
+              </div>
+
+            <clr-datagrid>
+                <clr-dg-column class="sticky-column">Name</clr-dg-column>
+                <clr-dg-column *ngIf="selectedMetric == 0" [clrDgField]="'f'" [clrDgSortOrder]="0">15min</clr-dg-column>
+                <clr-dg-column *ngIf="selectedMetric == 1" [clrDgField]="'f_volu'" [clrDgSortOrder]="0">15min Volu</clr-dg-column>
+                <clr-dg-column *ngIf="selectedMetric == 2" [clrDgField]="'f_vol'" [clrDgSortOrder]="0">15min Vol</clr-dg-column> 
+                <clr-dg-column *ngIf="selectedMetric == 0" [clrDgField]="'s'" [clrDgSortOrder]="0">1h</clr-dg-column>
+                <clr-dg-column *ngIf="selectedMetric == 1" [clrDgField]="'s_volu'" [clrDgSortOrder]="0">1h Volu</clr-dg-column>
+                <clr-dg-column *ngIf="selectedMetric == 2" [clrDgField]="'s_vol'" [clrDgSortOrder]="0">1h Vol</clr-dg-column>       
+                <clr-dg-column *ngIf="selectedMetric == 0" [clrDgField]="'t'" [clrDgSortOrder]="0">4h</clr-dg-column>
+                <clr-dg-column *ngIf="selectedMetric == 1" [clrDgField]="'t_volu'" [clrDgSortOrder]="0">4h Volu</clr-dg-column>
+                <clr-dg-column *ngIf="selectedMetric == 2" [clrDgField]="'t_vol'" [clrDgSortOrder]="0">4h Vol</clr-dg-column>      
+                <clr-dg-column *ngIf="selectedMetric == 0" [clrDgField]="'d'" [clrDgSortOrder]="0">1d</clr-dg-column>
+                <clr-dg-column *ngIf="selectedMetric == 1" [clrDgField]="'d_volu'" [clrDgSortOrder]="0">1d Volu</clr-dg-column>
+                <clr-dg-column *ngIf="selectedMetric == 2" [clrDgField]="'d_vol'" [clrDgSortOrder]="0">1d Vol</clr-dg-column> 
+                <clr-dg-column *ngIf="selectedMetric == 0" [clrDgField]="'w'" [clrDgSortOrder]="0">1w </clr-dg-column>
+                <clr-dg-column *ngIf="selectedMetric == 1" [clrDgField]="'w_volu'" [clrDgSortOrder]="0">1w Volu</clr-dg-column>
+                <clr-dg-column *ngIf="selectedMetric == 2" [clrDgField]="'w_vol'" [clrDgSortOrder]="0">1w Vol</clr-dg-column>       
+                <clr-dg-column *ngIf="selectedMetric == 0" [clrDgField]="'m'" [clrDgSortOrder]="0">1m</clr-dg-column>
+                <clr-dg-column *ngIf="selectedMetric == 1" [clrDgField]="'m_volu'" [clrDgSortOrder]="0">1m Volu</clr-dg-column>
+                <clr-dg-column *ngIf="selectedMetric == 2" [clrDgField]="'m_vol'" [clrDgSortOrder]="0">1m Vol</clr-dg-column>  
+          
+                <clr-dg-row>
+                    <clr-dg-cell class="sticky-column">{{ coin.name }}</clr-dg-cell>
+                    <clr-dg-cell [ngClass]="number(giveMetric(coin, 1)) >= 0 ? 'green' : 'red'">{{ giveMetric(coin, 1) }} %</clr-dg-cell>
+                    <clr-dg-cell [ngClass]="number(giveMetric(coin, 2)) >= 0 ? 'green' : 'red'">{{ giveMetric(coin, 2) }} %</clr-dg-cell>
+                    <clr-dg-cell [ngClass]="number(giveMetric(coin, 3)) >= 0 ? 'green' : 'red'">{{ giveMetric(coin, 3) }} %</clr-dg-cell>
+                    <clr-dg-cell [ngClass]="number(giveMetric(coin, 4)) >= 0 ? 'green' : 'red'">{{ giveMetric(coin, 4) }} %</clr-dg-cell>
+                    <clr-dg-cell [ngClass]="number(giveMetric(coin, 5)) >= 0 ? 'green' : 'red'">{{ giveMetric(coin, 5) }} %</clr-dg-cell>
+                    <clr-dg-cell [ngClass]="number(giveMetric(coin, 6)) >= 0 ? 'green' : 'red'"> {{ giveMetric(coin, 6) }} %</clr-dg-cell>
+                </clr-dg-row>
+
+                <clr-dg-row>
+                    <clr-dg-cell class="sticky-column" (click)="goToCategory()">{{ selectedCategory.name }}</clr-dg-cell>
+
+                    <clr-dg-cell [ngClass]="number(giveCatMetric(1)) >= 0 ? 'green' : 'red'">{{ giveCatMetric(1) }} %</clr-dg-cell>
+                    <clr-dg-cell [ngClass]="number(giveCatMetric(2)) >= 0 ? 'green' : 'red'">{{ giveCatMetric(2) }} %</clr-dg-cell>
+                    <clr-dg-cell [ngClass]="number(giveCatMetric(3)) >= 0 ? 'green' : 'red'">{{ giveCatMetric(3) }} %</clr-dg-cell>
+                    <clr-dg-cell [ngClass]="number(giveCatMetric(4)) >= 0 ? 'green' : 'red'">{{ giveCatMetric(4) }} %</clr-dg-cell>
+                    <clr-dg-cell [ngClass]="number(giveCatMetric(5)) >= 0 ? 'green' : 'red'">{{ giveCatMetric(5) }} %</clr-dg-cell>
+                    <clr-dg-cell [ngClass]="number(giveCatMetric(6)) >= 0 ? 'green' : 'red'">{{ giveCatMetric(6) }} %</clr-dg-cell>
+
+                </clr-dg-row>
+            </clr-datagrid>
+        </clr-tab-content>
+    </clr-tab>
+</clr-tabs>

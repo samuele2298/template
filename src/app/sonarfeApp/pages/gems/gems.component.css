@@ -1,0 +1,299 @@
+.wrap-text {
+    white-space: normal;
+    word-break: break-all;
+    /* oppure word-break: break-word; */
+}
+
+.ellipsis-text {
+    white-space: normal;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.datagrid-cell, .datagrid-action-overflow, 
+.datagrid-empty, .datagrid-container, .action-item,
+.datagrid-footer, .datagrid-column	{
+    background-color: #1b1b1c;
+    padding: 2vh; /* Adds more padding for a spacious row layout */
+    font-size: 1em; /* Optional: Adjust font size if needed */
+    background: #1b1b1c;
+}
+
+.btn-primary{
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: hsl(263, 76%, 36%);
+}
+
+clr-modal{
+    --clr-modal-bg-color: #141414;
+}
+
+form.search {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin-block: 2vh;
+  }
+  
+form.search input {
+    background-color: #2A2A3A; /* Slightly lighter dark */
+    color: #EAEAEA;
+    border: none; /* Remove border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    outline: none; /* Remove focus outline */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 300px; /* Optional: control width */
+}
+
+form.search input:focus {
+    background-color: #3A3A4A;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+clr-combobox{
+    --clr-combobox-min-width: 100%;
+    --clr-combobox-font-size: 30px;
+}
+
+button {
+    all: unset; /* Resets all button styles */
+    display: inline-block; /* Keeps the button in the layout */
+    cursor: pointer; /* Ensures it's still clickable */
+}
+  
+/* Add padding for touch targets (especially for mobile) */
+button {
+    padding: 0.5rem; /* Optional: adjust for touch-friendly area */
+}
+
+/* Icon alignment */
+button .search-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+    
+/* Optional: hover effect */
+button:hover .search-button {
+    color: #ffffff; /* Highlight the icon on hover */
+}
+
+.search-button {
+    width: 40%;
+    height: 40%;
+    margin-left: 3vw;
+    margin-bottom: 10px;
+    color: #a43cff;
+}
+
+.custom-search{
+    display: flex;
+    flex-direction: row; 
+    margin-top: 10px;
+    justify-content: space-around;
+}
+
+.custom-search.hidden{
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden; /* Ensures no content spills out */
+
+}
+
+.custom-filtermenu {
+    display: flex;
+    flex-direction: row;
+    gap: 2vw;
+    width: 100%;
+}
+
+.custom-filtermenu.hidden {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden; /* Ensures no content spills out */
+}
+  
+.custom-combobox {
+    position: relative;
+    width: 100%;
+}
+
+.custom-combobox-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    width: 100%;
+
+}
+  
+  label {
+    font-size: 14px;
+    color: #bbb;
+    margin-bottom: 8px;
+  }
+  
+  .custom-combobox select {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 14px;
+    appearance: none; /* Hide default dropdown arrow */
+    outline: none;
+  }
+  
+  .custom-combobox select:focus {
+    border-color: #a43cff;
+    box-shadow: 0 0 5px #a43cff;
+  }
+  
+  .custom-combobox select option {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .custom-combobox::after {
+    content: '▼';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #bbb;
+  }
+  
+  .custom-combobox select:focus + .custom-combobox::after {
+    color: #a43cff;
+  }
+  
+.custom-combobox-container + .custom-combobox-container {
+    margin-top: 20px;
+}
+  
+.filter-icon{
+    color: #a43cff;
+} 
+
+.showfilters-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+    background-color: #2e2e2e; /* Dark gray for the button */
+    color: #ffffff; /* White text for contrast */
+    border: 1px solid #555555; /* Softer gray border for dark mode */
+    border-radius: 8px; /* Rounded corners for a modern look */
+    padding: 6px 10; /* Comfortable padding */
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+}
+
+.showfilters-button:active {
+    background-color: #555555; /* Slightly lighter for active state */
+    transform: scale(0.98); /* Slight press effect */
+}
+
+.showfilters-button cds-icon {
+  margin-right: 8px; /* Space between the icon and text */
+  transition: color 0.3s ease;
+}
+
+.sticky-column {
+    text-decoration: underline; /* Optional: underline the text */
+    cursor: pointer; /* Show pointer cursor on hover */
+}
+
+.sticky-column:hover {
+    text-decoration: none; /* Remove underline on hover for a subtle effect */
+}
+
+.green {
+    font-weight: bold;
+    color: green;
+}
+  
+.red {
+    font-weight: bold;
+    color: red;
+}
+
+@media (max-width: 768px) {
+    /* Form container */
+    form.search {
+        display: flex;
+        width: 100%;
+        align-items: center;
+     }
+        
+    /* Input field styling */
+    form.search input {
+        background-color: #2A2A3A; /* Slightly lighter dark */
+        color: #EAEAEA;
+        border: none; /* Remove border */
+        border-radius: 8px; /* Rounded corners */
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+        outline: none; /* Remove focus outline */
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        width: 100%;
+        max-width: 400px; /* Optional: control width */
+    }
+    
+    /* Input field focus effect */
+    form.search input:focus {
+        background-color: #3A3A4A;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+
+    .datagrid-cell, .datagrid-action-overflow, 
+    .datagrid-empty, .datagrid-container, .action-item,
+    .datagrid-footer, .datagrid-column , .datagrid-placeholders {
+        padding: 2.2vh; /* Adds more padding for a spacious row layout */
+        font-size: 1.2em; /* Optional: Adjust font size if needed */
+    }
+
+    .sticky-column{
+        position: sticky;
+        left: 0;
+        z-index: 2;
+    }
+
+    .custom-combobox {
+        position: relative;
+        width: 100% !important;
+    }
+
+    /* Custom combobox adjustments for mobile */
+    .custom-combobox-container {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+        width: 100%;
+    }
+
+    /* Label styling for mobile */
+    label {
+        font-size: 1rem;
+        color: #bbb;
+        margin-bottom: 8px;
+    }
+
+    /* Custom filter menu styling */
+    .custom-filtermenu {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+}
+

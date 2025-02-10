@@ -1,0 +1,155 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.header-container{
+    padding: 8px;
+    display: flex; 
+    flex-direction:row; 
+    justify-content:space-between;
+    align-items: center;
+}
+
+.title-section{
+    font-size: 2em;
+    margin-block: 0;
+    margin-inline: 20px;
+    padding: 0;
+}
+
+.bias {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-block: 2vh;
+    gap: 1vh;
+}
+  
+.bias-container {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    padding: 3vh;
+    width: 22%; /* Default width for larger screens (4 metrics in a row) */
+    text-align: center;
+    box-shadow: 3px 3px 0px #a43cff; /* Solid shadow without blur */
+    background: linear-gradient(135deg, #1e1e1f, #1b1b1c, #29282b);
+    transition: all 0.3s ease; /* Smooth transition for hover */
+}
+  
+/* .bias-container:hover {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); 
+    transform: translateY(-5px); 
+}*/
+
+
+.bias-container .data {
+    font-weight: bold;
+    margin-bottom: 2vh;
+    font-size: 1em;
+    color: #a43cff;
+
+}
+  
+.bias-container .value {
+    font-weight: bold;
+    font-size: 1em;
+}
+
+/* Lists Section */
+.list-section {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0;
+    margin-bottom: 2vh;
+}
+
+.list-container {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+    height: 100%;
+    border-radius: 10px;
+    background: #1b1b1c;
+    box-shadow: 3px 3px 0px #a43cff; /* solid shadow without blur */
+    background: linear-gradient(135deg, #1e1e1f, #1b1b1c, #29282b);
+    padding: 3vh;
+}
+
+.list-label {
+    font-size: 1em;
+    margin-bottom: 10px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.list-container h3 {
+    text-align: center;
+    margin-bottom: 1vh;
+}
+
+.list-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.list-container th, .list-container td {
+    padding: 0.5vh;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.clickable {
+    text-decoration: underline; /* Optional: underline the text */
+    cursor: pointer; /* Show pointer cursor on hover */
+}
+
+.clickable:hover {
+    text-decoration: none; /* Remove underline on hover for a subtle effect */
+}
+
+.green {
+    font-weight: bold;
+    color: green;
+}
+  
+.red {
+    font-weight: bold;
+    color: red;
+}
+
+@media (max-width: 768px) {
+
+   /* Stack metrics vertically */
+   .bias {
+        flex-direction: column;
+        gap: 3vh;
+    }
+
+    .bias-container, .list-container {
+        width: 100%;
+    }
+
+    .bias-container .data {
+        font-size: 1.8em;
+        padding-bottom: 10px;
+    }
+
+    .bias-container .value {
+        font-size: 1.6em;
+    }
+
+    /* Stack lists vertically */
+    .list-section {
+        flex-direction: column;
+        gap: 3vh;
+    }
+
+    .list-label {
+        font-size: 1.4em;
+    }
+    
+}

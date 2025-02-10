@@ -1,0 +1,70 @@
+<!-- Confirm Withdraw Delete PopUp -->
+<clr-modal [(clrModalOpen)]="isModalOpen">
+  <h3 class="modal-title">Are you sure?</h3>
+  <div class="modal-body">Proceed to delete the withdraw: {{ selectionDeleteWithdraw }} ?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-outline" type="button" (click)="deleteWithdraw()">Ok</button>
+    <button class="btn btn-primary" type="button" (click)="isModalOpen = false">Cancel</button>
+  </div>
+</clr-modal>
+<div cds-layout="horizontal gap:md" class="clr-align-items-center">
+    <button [clrLoading]="loadingState" type="button" class="btn btn-sm" (click)="getWithdrawals()">Reload</button>
+    <input clrInput placeholder="search..." [(ngModel)]="searchFilter" (keyup)="applySearchFilter()">
+    <clr-combobox-container>
+      <label>Status Filter</label>
+      <clr-combobox [(ngModel)]="selection" name="select" (ngModelChange)="getWithdrawals()" required>
+        <clr-options>
+          <clr-option *clrOptionItems="let status of statuses; field: 'name'" [clrValue]="status">
+            {{ status.name }}
+          </clr-option>
+        </clr-options>
+      </clr-combobox>
+    </clr-combobox-container>
+</div>
+<div>
+    <clr-datagrid>
+        <clr-dg-column>From</clr-dg-column>
+        <clr-dg-column>To</clr-dg-column>
+        <clr-dg-column>Coin</clr-dg-column>
+        <clr-dg-column>Status</clr-dg-column>
+        <clr-dg-column>Address</clr-dg-column>
+        <clr-dg-column>Memotag</clr-dg-column>
+        <clr-dg-column>Desc</clr-dg-column>
+        <clr-dg-column>Info</clr-dg-column>
+        <clr-dg-column>Txid</clr-dg-column>
+        <clr-dg-column>Fee</clr-dg-column>
+        <clr-dg-column>Fee USDT</clr-dg-column>
+        <clr-dg-column>Amount</clr-dg-column>
+        <clr-dg-column>Amount USDT</clr-dg-column>
+        <clr-dg-column>Create Date</clr-dg-column>
+        <clr-dg-column>Complete Date</clr-dg-column>
+
+        <clr-dg-row *clrDgItems="let wd of withdrawals">
+            <clr-dg-action-overflow>
+              <button class="action-item" (click)="openWithdrawDeletePopUp(wd.id)">Delete</button>
+            </clr-dg-action-overflow>
+            <clr-dg-cell>{{wd.fromexch}}</clr-dg-cell>
+            <clr-dg-cell>{{wd.toexch}}</clr-dg-cell>
+            <clr-dg-cell>{{wd.symn}}</clr-dg-cell>
+            <clr-dg-cell><span class="label" [class.label-success]="wd.status===5" 
+                    [class.label-orange]="wd.status===2" 
+                    [class.label-danger]="wd.status===9"
+                    [class.label-warning]="wd.status===1"
+                    [class.label-info]="wd.status===0">{{wdStatus.get(wd.status)}}</span></clr-dg-cell>
+            <clr-dg-cell class="ellipsis-text" (click)="copyText(wd.address)">{{ getTruncatedText(wd.address, 40)}}</clr-dg-cell>
+            <clr-dg-cell>{{wd.memotag}}</clr-dg-cell>
+            <clr-dg-cell class="wrap-text">{{wd.desc}}</clr-dg-cell>
+            <clr-dg-cell class="ellipsis-text" (click)="copyText(wd.info)">{{ getTruncatedText(wd.info, 40)}}</clr-dg-cell>
+            <clr-dg-cell class="ellipsis-text" (click)="copyText(wd.txid)">{{ getTruncatedText(wd.txid, 40)}}</clr-dg-cell>
+            <clr-dg-cell>{{wd.fee}}</clr-dg-cell>
+            <clr-dg-cell>{{formatNumber(wd.feeusdt)}}</clr-dg-cell>
+            <clr-dg-cell>{{wd.amount}}</clr-dg-cell>
+            <clr-dg-cell>{{formatNumber(wd.amountusdt)}}</clr-dg-cell>
+            <clr-dg-cell>{{wd.createtime| date:'yyyy/MM/dd HH:mm:ss':'UTC'}}</clr-dg-cell>
+            <clr-dg-cell>{{wd.completetime| date:'yyyy/MM/dd HH:mm:ss':'UTC'}}</clr-dg-cell>
+        </clr-dg-row>
+
+        <clr-dg-footer>{{ withdrawals.length }} pairs</clr-dg-footer>
+    </clr-datagrid>
+</div>

@@ -1,0 +1,260 @@
+<div *ngIf="isLoading()" class="loading-overlay">
+  <div class="loading-spinner">
+    <div class="loading-text">Please wait...</div>
+    <span class="spinner spinner-sm">Loading...</span>
+  </div>
+</div>
+
+<!-- Add PopUp -->
+<clr-modal [(clrModalOpen)]="isUpdateOpen">
+  <h3 class="modal-title">Select Coins to Add</h3>
+  <div class="modal-body clr-dark-theme">
+    <div class="search-container">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="Search coins..."
+        class="clr-input search-input"
+        (input)="updateFilteredCoins()"
+      />
+    </div>
+    <table class="table table-compact table-dark custom-table">
+      <thead>
+        <tr>
+          <th>Select</th>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tr *ngFor="let coin of filteredCoins">
+        <td>
+          <clr-checkbox-wrapper>
+            <input
+              clrCheckbox
+              type="checkbox"
+              [checked]="isSelected(coin.id)"
+              (change)="toggleSelection(coin.id)"
+            />
+          </clr-checkbox-wrapper>
+        </td>
+        <td>{{ coin.name }}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-outline-primary" type="button" (click)="confirmSelection()">Ok</button>
+    <button class="btn btn-primary" type="button" (click)="isUpdateOpen = false">Cancel</button>
+  </div>
+</clr-modal>
+
+<!-- Rename PopUp -->
+<clr-modal [(clrModalOpen)]="isRenameOpen">
+  <h3 class="modal-title">Rename New Category</h3>
+  <div class="modal-body">
+    <label for="categoryNameInput">Enter the new name:</label>
+    <input id="categoryNameInput" type="text" [(ngModel)]="categoryRename" placeholder="Category Name" class="clr-input" />
+  </div>
+  <div class="modal-footer">
+    <!-- Pass categoryName as an argument to the createCategory function -->
+    <button class="btn btn-primary" type="button" (click)="rename()">Rename</button>
+    <button class="btn btn-outline" type="button" (click)="isRenameOpen = false">Cancel</button>
+  </div>
+</clr-modal>
+
+<!-- Clear PopUp -->
+<clr-modal [(clrModalOpen)]="isClearOpen">
+  <h3 class="modal-title">Are you sure?</h3>
+  <div class="modal-body">Proceed to clear the cateogory: {{ category!.name }} ?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-outline" type="button" (click)="clearCategory()" >Ok</button>
+    <button class="btn btn-primary" type="button" (click)="isClearOpen = false">Cancel</button>
+  </div>
+</clr-modal>
+
+<!-- Duplicate PopUp -->
+<clr-modal [(clrModalOpen)]="isDuplicateOpen">
+  <h3 class="modal-title">Duplicate New Category</h3>
+  <div class="modal-body">
+    <label for="categoryNameInput">Enter the new name:</label>
+    <input id="categoryNameInput" type="text" [(ngModel)]="categoryRename" placeholder="Category Name" class="clr-input" />
+  </div>
+  <p *ngIf="categoryRename === category.name" class="text-danger">
+    The new name cannot be the same as the current category name.
+  </p>
+  <div class="modal-footer">
+    <!-- Pass categoryName as an argument to the createCategory function -->
+    <button class="btn btn-primary" type="button" (click)="duplicate()" [disabled]="!categoryRename || categoryRename === category.name">
+      Rename
+    </button>
+    <button class="btn btn-outline" type="button" (click)="isDuplicateOpen = false">Cancel</button>
+  </div>
+</clr-modal>
+
+<!-- Delete PopUp -->
+<clr-modal [(clrModalOpen)]="isDeleteOpen">
+    <h3 class="modal-title">Are you sure?</h3>
+    <div class="modal-body">Proceed to delete the cateogory: {{ category!.name }} ?
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" type="button" (click)="delCategory()" >Ok</button>
+      <button class="btn btn-primary" type="button" (click)="isDeleteOpen = false">Cancel</button>
+    </div>
+</clr-modal>
+
+<!-- Header -->
+<div class="header-container">
+    <button type="button" class="btn btn-icon" aria-label="home" (click)="goBack()">
+      <cds-icon shape="arrow" direction="left"></cds-icon>
+    </button>
+    <div style="display: flex; flex-direction: row; align-items: center;gap: 6px;">
+      <a role="tooltip" aria-haspopup="true" class="tooltip tooltip-md tooltip-bottom-right">
+        <cds-icon shape="info-circle" size="24"></cds-icon>
+        <span class="tooltip-content">     
+          You&apos;re in the category screen. Here, you can modify and rename categories. 
+          The screen shows category performance, plus coins with their investing and intraday trading scores.
+        </span>
+      </a>
+      <h3 style="margin: 0;">{{category!.name}}</h3>    
+      <a *ngIf="category.public" role="tooltip" aria-haspopup="true" class="tooltip tooltip-md tooltip-bottom-left">
+        <cds-icon  shape="lock" solid="true" size="18"></cds-icon>
+        <span class="tooltip-content">     
+          This is a public category. You can&apos;t modify it, but you can duplicate it and customize as needed.
+        </span>
+      </a>
+    </div>
+    <clr-button-group [clrMenuPosition]="'bottom-right'">
+      <clr-button *ngIf="isAdmin() || (!category.public && isPro())" [clrInMenu]="true" (click)="isUpdateOpen= !isUpdateOpen">Add Coins</clr-button>
+      <clr-button *ngIf="isAdmin() || (!category.public && isPro())"[clrInMenu]="true" (click)="isRenameOpen= !isRenameOpen">Rename</clr-button>
+      <clr-button *ngIf="isAdmin() || (!category.public && isPro())" [clrInMenu]="true" (click)="isClearOpen= !isClearOpen">Clear</clr-button>
+      <clr-button [clrInMenu]="true" (click)="isDuplicateOpen= !isDuplicateOpen">Duplicate</clr-button>
+      <clr-button *ngIf="isAdmin() || (!category.public && isPro())"[clrInMenu]="true" (click)="isDeleteOpen= !isDeleteOpen">Delete</clr-button>
+    </clr-button-group>
+    <!-- <div> 
+        <button 
+          class="btn btn-primary" 
+          [disabled]="!isPro()"
+          (click)="isUpdateOpen= !isUpdateOpen"
+          style="margin-left: auto;"
+        >
+          Add
+        </button>
+        <button 
+          class="btn btn-primary" 
+          [disabled]="!isPro()"          
+          (click)="isDeleteOpen= !isDeleteOpen"
+          style="margin-left: auto;"
+        >
+          Delete
+        </button>
+    </div> -->
+
+</div>
+
+<div class="btn-group btn-secondary btn-sm" style="align-self: center;margin-block: 20px;">
+  <button class="btn" (click)="selectedMetric = 0" >Price</button>
+  <button class="btn" (click)="selectedMetric = 1" >Volumes</button>
+  <button class="btn" (click)="selectedMetric = 2" >Volatility</button>
+</div>
+
+<div class="main-content">
+  <!-- Div per visualizzare le metriche orizzontalmente -->
+  <div class="metrics" >
+    <div class="metrics-container" >
+        <div class="data">Mcap:</div>
+        <div class="value">{{ formatNumber(category.mcap!)}}</div>
+    </div>
+    <div class="metrics-container" >
+    <div class="data">Dominance:</div>
+    <div class="value">{{ category!.dominance?.toFixed(4)}} %</div>
+    </div>  
+    <div class="metrics-container" >
+      <div *ngIf="selectedMetric == 0"  class="data">15min:</div>
+      <div *ngIf="selectedMetric == 1"  class="data">15min Volu:</div>
+      <div *ngIf="selectedMetric == 2"  class="data">15min Vol:</div>
+      <div class="value">{{ giveCatMetric(category, 1) }} %</div>
+    </div>  
+    <div class="metrics-container" >
+      <div *ngIf="selectedMetric == 0"  class="data">4h:</div>
+      <div *ngIf="selectedMetric == 1"  class="data">4h Volu:</div>
+      <div *ngIf="selectedMetric == 2"  class="data">4h Vol:</div>    
+      <div class="value">{{ giveCatMetric(category, 2) }} %</div>
+    </div> 
+    <div class="metrics-container" >
+      <div *ngIf="selectedMetric == 0"  class="data">1h:</div>
+      <div *ngIf="selectedMetric == 1"  class="data">1h Volu:</div>
+      <div *ngIf="selectedMetric == 2"  class="data">1h Vol:</div>    
+      <div class="value">{{ giveCatMetric(category, 3) }} %</div>
+    </div>  
+    <div class="metrics-container" >
+      <div *ngIf="selectedMetric == 0"  class="data">1d:</div>
+      <div *ngIf="selectedMetric == 1"  class="data">1d Volu:</div>
+      <div *ngIf="selectedMetric == 2"  class="data">1d Vol:</div>
+          <div class="value">{{ giveCatMetric(category, 4) }} %</div>
+    </div>
+    <div class="metrics-container" >
+      <div *ngIf="selectedMetric == 0"  class="data">1w:</div>
+      <div *ngIf="selectedMetric == 1"  class="data">1w Volu:</div>
+      <div *ngIf="selectedMetric == 2"  class="data">1w Vol:</div>
+          <div class="value">{{ giveCatMetric(category, 5) }} %</div>
+    </div>  
+    <div class="metrics-container" >
+      <div *ngIf="selectedMetric == 0"  class="data">1m:</div>
+      <div *ngIf="selectedMetric == 1"  class="data">1m Volu:</div>
+      <div *ngIf="selectedMetric == 2"  class="data">1m Vol:</div>
+          <div class="value">{{ giveCatMetric(category, 6) }} %</div>
+    </div>
+  </div>
+
+
+  <div class="table-coins">
+    <clr-datagrid *ngIf="coins!.length > 0">
+      <clr-dg-column class="sticky-column" [clrDgField]="'name'" [clrDgSortOrder]="0">Name</clr-dg-column>
+      <clr-dg-column [clrDgField]="'mcap'" [clrDgSortOrder]="0">Mcap</clr-dg-column>
+      <clr-dg-column [clrDgField]="'inv_score'" [clrDgSortOrder]="0"> InvScore</clr-dg-column>
+      <clr-dg-column [clrDgField]="'trd_score'" [clrDgSortOrder]="0"> TrdScore</clr-dg-column>
+      <clr-dg-column *ngIf="selectedMetric == 0" [clrDgField]="'f'" [clrDgSortOrder]="0">15min</clr-dg-column>
+      <clr-dg-column *ngIf="selectedMetric == 1" [clrDgField]="'f_volu'" [clrDgSortOrder]="0">15min Volu</clr-dg-column>
+      <clr-dg-column *ngIf="selectedMetric == 2" [clrDgField]="'f_vol'" [clrDgSortOrder]="0">15min Vol</clr-dg-column> 
+      <clr-dg-column *ngIf="selectedMetric == 0" [clrDgField]="'s'" [clrDgSortOrder]="0">1h</clr-dg-column>
+      <clr-dg-column *ngIf="selectedMetric == 1" [clrDgField]="'s_volu'" [clrDgSortOrder]="0">1h Volu</clr-dg-column>
+      <clr-dg-column *ngIf="selectedMetric == 2" [clrDgField]="'s_vol'" [clrDgSortOrder]="0">1h Vol</clr-dg-column>       
+      <clr-dg-column *ngIf="selectedMetric == 0" [clrDgField]="'t'" [clrDgSortOrder]="0">4h</clr-dg-column>
+      <clr-dg-column *ngIf="selectedMetric == 1" [clrDgField]="'t_volu'" [clrDgSortOrder]="0">4h Volu</clr-dg-column>
+      <clr-dg-column *ngIf="selectedMetric == 2" [clrDgField]="'t_vol'" [clrDgSortOrder]="0">4h Vol</clr-dg-column>      
+      <clr-dg-column *ngIf="selectedMetric == 0" [clrDgField]="'d'" [clrDgSortOrder]="0">1d</clr-dg-column>
+      <clr-dg-column *ngIf="selectedMetric == 1" [clrDgField]="'d_volu'" [clrDgSortOrder]="0">1d Volu</clr-dg-column>
+      <clr-dg-column *ngIf="selectedMetric == 2" [clrDgField]="'d_vol'" [clrDgSortOrder]="0">1d Vol</clr-dg-column> 
+      <clr-dg-column *ngIf="selectedMetric == 0" [clrDgField]="'w'" [clrDgSortOrder]="0">1w </clr-dg-column>
+      <clr-dg-column *ngIf="selectedMetric == 1" [clrDgField]="'w_volu'" [clrDgSortOrder]="0">1w Volu</clr-dg-column>
+      <clr-dg-column *ngIf="selectedMetric == 2" [clrDgField]="'w_vol'" [clrDgSortOrder]="0">1w Vol</clr-dg-column>       
+      <clr-dg-column *ngIf="selectedMetric == 0" [clrDgField]="'m'" [clrDgSortOrder]="0">1m</clr-dg-column>
+      <clr-dg-column *ngIf="selectedMetric == 1" [clrDgField]="'m_volu'" [clrDgSortOrder]="0">1m Volu</clr-dg-column>
+      <clr-dg-column *ngIf="selectedMetric == 2" [clrDgField]="'m_vol'" [clrDgSortOrder]="0">1m Vol</clr-dg-column>  
+
+      <clr-dg-row *clrDgItems="let coin of coins" > 
+          <clr-dg-action-overflow  *ngIf="!category.public && isPro()"> 
+            <button class="action-item" (click)="removeCoin(coin.id)" >Remove</button>
+          </clr-dg-action-overflow>
+          <clr-dg-cell class="sticky-column" (click)="navigateToCoin(coin.name)">{{ coin.name }}</clr-dg-cell>
+          <clr-dg-cell>{{ formatNumber(coin.mcap )}}</clr-dg-cell>
+          <clr-dg-cell [ngClass]="coin.inv_score >= 0 ? 'green' : 'red'">{{ coin.inv_score.toFixed(2) }}</clr-dg-cell>
+          <clr-dg-cell [ngClass]="coin.trd_score >= 0 ? 'green' : 'red'">{{ coin.trd_score.toFixed(2) }}</clr-dg-cell>
+          <clr-dg-cell [ngClass]="number(giveMetric(coin, 1)) >= 0 ? 'green' : 'red'">{{ giveMetric(coin, 1) }} %</clr-dg-cell>
+          <clr-dg-cell [ngClass]="number(giveMetric(coin, 2)) >= 0 ? 'green' : 'red'">{{ giveMetric(coin, 2) }} %</clr-dg-cell>
+          <clr-dg-cell [ngClass]="number(giveMetric(coin, 3)) >= 0 ? 'green' : 'red'">{{ giveMetric(coin, 3) }} %</clr-dg-cell>
+          <clr-dg-cell [ngClass]="number(giveMetric(coin, 4)) >= 0 ? 'green' : 'red'">{{ giveMetric(coin, 4) }} %</clr-dg-cell>
+          <clr-dg-cell [ngClass]="number(giveMetric(coin, 5)) >= 0 ? 'green' : 'red'">{{ giveMetric(coin, 5) }} %</clr-dg-cell>
+          <clr-dg-cell [ngClass]="number(giveMetric(coin, 6)) >= 0 ? 'green' : 'red'">{{ giveMetric(coin, 6) }} %</clr-dg-cell>
+      </clr-dg-row>
+
+
+      <clr-dg-footer>
+        <clr-dg-pagination #pagination [clrDgPageSize]="20">
+          <clr-dg-page-size [clrPageSizeOptions]="[20, 40, 60, 80, 100, 200, 300, 500]">Coins per page</clr-dg-page-size>
+          {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} of
+          {{ pagination.totalItems }} coins
+        </clr-dg-pagination>
+      </clr-dg-footer>
+    </clr-datagrid>
+  </div>
+</div>

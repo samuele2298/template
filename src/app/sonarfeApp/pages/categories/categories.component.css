@@ -1,0 +1,78 @@
+
+.datagrid-cell, .datagrid-action-overflow, 
+.datagrid-empty, .datagrid-container, .action-item,
+.datagrid-footer, .datagrid-column , .datagrid-placeholders {
+    background-color: #1b1b1c;
+    padding: 2vh; /* Adds more padding for a spacious row layout */
+    font-size: 1em; /* Optional: Adjust font size if needed */
+    background: #1b1b1c;
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark transparent background */
+    z-index: 9999; /* Make sure it's above all content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.loading-spinner {
+    display: flex;
+    flex-direction: row;
+}
+
+.loading-text {
+    margin-left: 10px;
+    color: white;
+    font-size: 16px;
+}
+
+.btn-primary{
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: #a43cff;
+}
+
+clr-modal{
+    --clr-modal-bg-color: #141414;
+}
+
+.sticky-column{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.green {
+    font-weight: bold;
+    color: green;
+}
+  
+.red {
+    font-weight: bold;
+    color: red;
+}
+
+@media (max-width: 768px) {
+
+    .datagrid-cell, .datagrid-action-overflow, 
+    .datagrid-empty, .datagrid-container, .action-item,
+    .datagrid-footer, .datagrid-column , .datagrid-placeholders {
+        padding: 2.2vh; /* Adds more padding for a spacious row layout */
+        font-size: 1.2em; /* Optional: Adjust font size if needed */
+    }
+    
+    .sticky-column{
+        position: sticky;
+        left: 0;
+        z-index: 2;
+    }
+    
+}
+
+

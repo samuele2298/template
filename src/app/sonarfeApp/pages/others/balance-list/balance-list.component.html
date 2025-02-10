@@ -1,0 +1,43 @@
+<div cds-layout="horizontal gap:md" class="clr-align-items-center">
+    <button [clrLoading]="loadingBalState" type="button" class="btn btn-sm" (click)="getBalList()">Reload</button>
+    <clr-checkbox-wrapper>
+        <label>Hide zero balances</label>
+        <input clrCheckbox type="checkbox" [(ngModel)]="checkedZeroBalance" (change)="applyBalanceZeroFilter()">
+    </clr-checkbox-wrapper>
+    <input clrInput placeholder="search..." [(ngModel)]="searchFilter" (keyup)="applySearchFilter()">
+</div>
+<div>
+    <clr-datagrid>
+        <clr-dg-column>
+            <ng-container *clrDgHideableColumn="{ hidden: true }">ID</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kexch_name'">
+            <ng-container *clrDgHideableColumn="{ hidden: false }">Exchange</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Ksym_description'">Sym Desc</clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kbal_rangestatus'">
+            <ng-container *clrDgHideableColumn="{ hidden: false }">Range Status</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kbal_value'" [clrDgColType]="'number'">
+            <ng-container *clrDgHideableColumn="{ hidden: false }">Value</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kbal_usdtvalue'" [clrDgColType]="'number'">
+            <ng-container *clrDgHideableColumn="{ hidden: false }">USDT Value</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kbal_updatetime'">
+            <ng-container *clrDgHideableColumn="{ hidden: false }">Update Time</ng-container>
+        </clr-dg-column>
+
+        <clr-dg-row *clrDgItems="let bal of bals">
+            <clr-dg-cell>{{bal.id}}</clr-dg-cell>
+            <clr-dg-cell>{{bal.Kexch_name}}</clr-dg-cell>
+            <clr-dg-cell>{{bal.Ksym_description}}</clr-dg-cell>
+            <clr-dg-cell>{{bal.Kbal_rangestatus}}</clr-dg-cell>
+            <clr-dg-cell class="right">{{bal.Kbal_value.toFixed(8)}}</clr-dg-cell>
+            <clr-dg-cell class="right">{{bal.Kbal_usdtvalue.toFixed(8)}}</clr-dg-cell>
+            <clr-dg-cell>{{bal.Kbal_updatetime | date:'yyyy/MM/dd HH:mm:ss':'UTC'}}</clr-dg-cell>
+        </clr-dg-row>
+
+        <clr-dg-footer>{{ bals.length }} pairs</clr-dg-footer>
+    </clr-datagrid>
+</div>

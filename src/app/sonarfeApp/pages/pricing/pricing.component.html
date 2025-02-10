@@ -1,0 +1,93 @@
+<!-- Modal Structure -->
+<clr-modal [(clrModalOpen)]="isOpen">
+    <h3 class="modal-title">How to Pay with Crypto</h3>
+    <div class="modal-body">
+      <label>To complete your payment with USDT (TRC-20), please send the required amount to the address below.<br></label>
+      <!-- Display the crypto address -->
+      <div class="crypto-address">
+        <label>{{ usdtAddress }}</label>
+    </div>
+      <label for="categoryNameInput">After making the payment, please write an email to cryptosonarinfo&#64;gmail.com
+        with the sreen. <br><br>
+       Note: If your exchange doesn&apos;t support recurring payments, you&apos;ll need to pay monthly to maintain your account. Alternatively, you can pay for multiple months or a quarter upfront by specifying it in your email. </label>
+    </div>
+    <div class="modal-footer">
+      <!-- Pass categoryName as an argument to the createCategory function -->
+      <button class="btn btn-outline" type="button" (click)="copyAddress()">Copy Address</button>
+      <button class="btn btn-outline" type="button" (click)="closeModal()">Cancel</button>
+    </div>
+</clr-modal>
+  
+<div class="pricing-section">
+    <div class="pricing-header">
+        <h1>Choose Your Plan</h1>
+    </div>
+
+    <div class="pricing-cards">
+        <div class="pricing-card">
+            <div class="pricing-card-header">
+                <h4>Basic Plan</h4>
+                <span>Get Started with Essential Features</span>
+            </div>
+            <div class="pricing-card-body">
+                <h1>
+                    <span class="discounted-price">Free</span>
+                </h1>
+                <ul>
+                    <li>Crypto Basic Data<span class="check">&#10003;</span></li>
+                    <li>Bias of Today<span class="check">&#10003;</span></li>
+                    <li>Personalized Weights<span class="check">&#10003;</span></li>
+                    <li>Public Categories<span class="check">&#10003;</span></li>
+                    <li>Public Scores<span class="check">&#10003;</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="pricing-card">
+            <div class="pricing-card-header">
+                <h4>Monthly Plan</h4>
+                <span>Everything in Free + Advanced Features</span>
+            </div>
+            <div class="pricing-card-body">
+                <h1>
+                    <span class="original-price">$19.99</span> <br>
+                    <span class="discounted-price">$9.99</span>
+                    <br><small>/ 1 Month</small>                
+                </h1>
+                <ul>
+                    <li>Includes all Free Plan<span class="check">&#10003;</span></li>
+                    <li>Volume Profile Feature<span class="check">&#10003;</span></li>
+                    <li>Seasonality Chart<span class="check">&#10003;</span></li>
+                    <li>Personalized Categories<span class="check">&#10003;</span></li>
+                    <li>Personalized Scores<span class="check">&#10003;</span></li>
+                    <li>Gems Finder<span class="check">&#10003;</span></li>
+                </ul>
+                <a (click)="onCheckout('monthly')" class="get-started-btn pro-btn">Get Started</a>
+            </div>
+        </div>
+
+        <div class="pricing-card">
+            <div class="pricing-card-header">
+                <h4>Quarter Plan</h4>
+                <span>Same as Monthly but x3</span>
+            </div>
+            <div class="pricing-card-body">
+                <h1>
+                    <span class="original-price">$34.99</span> <br>
+                    <span class="discounted-price">$24.99</span>
+                    <br><small>/ 3 Month</small>                
+                </h1>
+                <ul>
+                    <li>Includes all Free Plan<span class="check">&#10003;</span></li>
+                    <li>Volume Profile Feature<span class="check">&#10003;</span></li>
+                    <li>Seasonality Chart<span class="check">&#10003;</span></li>
+                    <li>Personalized Categories<span class="check">&#10003;</span></li>
+                    <li>Personalized Scores<span class="check">&#10003;</span></li>
+                    <li>Gems Finder<span class="check">&#10003;</span></li>
+                </ul>
+                <a (click)="onCheckout('quarter')" class="get-started-btn">Get Started</a>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,84 @@
+<form class="search" (submit)="onSearch(searchInput.value)" >
+  <label for="search_input">
+    <input #searchInput id="search_input" type="text" placeholder="Search for keywords..."/>
+  </label>
+  <button type="submit" aria-label="Search">
+    <cds-icon shape="search" solid="true" size="28" class="search-button"></cds-icon>
+  </button>
+</form>
+
+
+<div class="metrics">
+  <div class="metric-container" *ngFor="let global of globals">
+    <div class="data">{{ global.description}}</div>
+    <div class="value">{{ getFormatteGlobal(global)}}</div>
+  </div>
+</div>
+
+<!-- <div class="charts-section">
+  <div class="chart-container">
+    <div class="chart-label">BTC Price</div>
+    <canvas id="chart_price">{{chart_price}}</canvas>
+  </div>  
+  <div class="chart-container">
+    <div class="chart-label">BTC Volume</div>
+    <canvas id="chart_vol">{{chart_vol}}</canvas>
+  </div>
+</div> -->
+
+<div class="list-section">
+  <div class="list-container">
+    <div class="list-label">Best Categories      
+      <a role="tooltip" aria-haspopup="true" class="tooltip tooltip-md tooltip-bottom-left">
+      <cds-icon shape="info-circle" size="24"></cds-icon>
+          <span class="tooltip-content">     
+              This are the best performing Categories on the Daily timeframe
+          </span>
+      </a>
+    </div>
+    <table>
+      <tr><th>Name</th><th>%</th></tr>
+      <tr *ngFor="let category of best_categories" (click)="navigateToCategory(category.name)">
+        <td class="clickable">{{ category.name }}</td>
+        <td [ngClass]="category.d >= 0 ? 'green' : 'red'">{{ category.d.toFixed(2) }}%</td>
+      </tr>
+    </table>
+  </div>
+  <div class="list-container">
+    <div class="list-label">Best Investing Coins
+      <a role="tooltip" aria-haspopup="true" class="tooltip tooltip-md tooltip-bottom-left">
+        <cds-icon shape="info-circle" size="24"></cds-icon>
+            <span class="tooltip-content">     
+              This are the best performing Coins based on the higher investing score (multiday timeframe) across all the categories (no ALL and ALLALTS)
+            </span>
+        </a>
+    </div>
+    <table>
+      <tr><th>Name</th><th>Category</th><th>Score</th></tr>
+      <tr *ngFor="let coin of best_inv" >
+        <td class="clickable" (click)="navigateToCoin(coin.name)">{{ coin.name }}</td>
+        <td class="clickable" (click)="navigateToCategory(coin.category)">{{ coin.category  }}</td>
+        <td [ngClass]="coin.score >= 0 ? 'green' : 'red'">{{ coin.score.toFixed(2) }}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="list-container">
+    <div class="list-label">Best Trading Coins
+      <a role="tooltip" aria-haspopup="true" class="tooltip tooltip-md tooltip-bottom-left">
+        <cds-icon shape="info-circle" size="24"></cds-icon>
+            <span class="tooltip-content">     
+                This are the best performing Coins based on the higher trading score (intraday timeframe) on the ALL category
+            </span>
+        </a>
+    </div>
+    <table>
+      <tr><th>Name</th><th>%</th><th>Score</th></tr>
+      <tr *ngFor="let coin of best_trd" >
+        <td class="clickable" (click)="navigateToCoin(coin.name)">{{ coin.name }}</td>
+        <td [ngClass]="coin.d >= 0 ? 'green' : 'red'">{{ coin.d.toFixed(2)  }}%</td>
+        <td [ngClass]="coin.score >= 0 ? 'green' : 'red'">{{ coin.score.toFixed(2) }}</td>
+      </tr> 
+    </table>
+  </div>
+  <div style="margin-bottom: 6px;"></div>
+</div>

@@ -1,0 +1,76 @@
+.wrap-text {
+    white-space: normal;
+    word-break: break-all;
+    /* oppure word-break: break-word; */
+}
+
+.ellipsis-text {
+    white-space: normal;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.datagrid-cell, .datagrid-action-overflow, 
+.datagrid-empty, .datagrid-container, .action-item,
+.datagrid-footer, .datagrid-column	{
+    background-color: #1b1b1c;
+    padding: 2vh; /* Adds more padding for a spacious row layout */
+    font-size: 1em; /* Optional: Adjust font size if needed */
+    background: #1b1b1c;
+}
+
+.btn-primary{
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: hsl(263, 76%, 36%);
+}
+
+clr-modal{
+    --clr-modal-bg-color: #141414;
+}
+
+/* button{
+    --clr-btn-default-color: #a43cff;
+    --clr-btn-default-border-color: #a43cff;
+}
+ */
+
+.sticky-column {
+    text-decoration: underline; /* Optional: underline the text */
+    cursor: pointer; /* Show pointer cursor on hover */
+}
+
+.sticky-column:hover {
+    text-decoration: none; /* Remove underline on hover for a subtle effect */
+}
+
+.green {
+    font-weight: bold;
+    color: green;
+}
+  
+.red {
+    font-weight: bold;
+    color: red;
+}
+
+@media (max-width: 768px) {
+
+    .datagrid-cell, .datagrid-action-overflow, 
+    .datagrid-empty, .datagrid-container, .action-item,
+    .datagrid-footer, .datagrid-column , .datagrid-placeholders {
+        padding: 2.2vh; /* Adds more padding for a spacious row layout */
+        font-size: 1.2em; /* Optional: Adjust font size if needed */
+    }
+
+    .sticky-column{
+        position: sticky;
+        left: 0;
+        z-index: 2;
+    }
+    
+}
+
+

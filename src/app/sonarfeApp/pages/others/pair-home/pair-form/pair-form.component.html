@@ -1,0 +1,89 @@
+<clr-modal [(clrModalOpen)]="confirmModalWithdraw" [clrModalSize]="'sm'">
+    <h3 class="modal-title">Confirm delete</h3>
+    <div class="modal-body">
+        <p>Do you want to proceed?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="confirmModalWithdraw = false">NO</button>
+        <button type="button" class="btn btn-primary" (click)="executeAction()">YES</button>
+    </div>
+</clr-modal>
+<div *ngIf="fetchingData" class="progress loop"><progress></progress></div>
+<form clrForm [formGroup]="pairForm" (ngSubmit)="onSubmit()">
+    <clr-combobox-container>
+        <label class="clr-required-mark">Exchange name</label>
+        <clr-combobox (clrSelectionChange)="onChangeExchange($event)" formControlName="Kpair_Kexch">
+            <clr-options>
+                <clr-option *clrOptionItems="let exch of exchanges; field: 'Kexch_name'" [clrValue]="exch">
+                    {{exch.Kexch_name}}
+                </clr-option>
+            </clr-options>
+        </clr-combobox>
+    </clr-combobox-container>
+    <clr-combobox-container>
+        <label class="clr-required-mark">Symbol1</label>
+        <clr-combobox formControlName="Kpair_sym1">
+            <clr-options>
+                <clr-option *clrOptionItems="let sym of symrefpairs; field: 'Ksym_description'" [clrValue]="sym">
+                    {{sym.Ksym_description}}
+                </clr-option>
+            </clr-options>
+        </clr-combobox>
+    </clr-combobox-container>
+    <clr-combobox-container>
+        <label class="clr-required-mark">Symbol2</label>
+        <clr-combobox formControlName="Kpair_sym2">
+            <clr-options>
+                <clr-option *clrOptionItems="let sym of symrefpairs; field: 'Ksym_description'" [clrValue]="sym">
+                    {{sym.Ksym_description}}
+                </clr-option>
+            </clr-options>
+        </clr-combobox>
+    </clr-combobox-container>
+    <clr-input-container>
+        <label>Exchange Fee</label>
+        <input clrInput type="number" formControlName="Kpair_fee" name="Kpair_fee" placeholder="taken from exchange">
+        <clr-control-helper>ex. 0.1</clr-control-helper>
+    </clr-input-container>
+    <clr-select-container>
+        <label>Download Data</label>
+        <select clrSelect name="Kpair_status" formControlName="Kpair_status">
+            <option value="0">Disabled</option>
+            <option value="1">Enabled</option>
+        </select>
+    </clr-select-container>
+    <clr-select-container>
+        <label>Trading</label>
+        <select clrSelect name="Kpair_statustrade" formControlName="Kpair_statustrade">
+            <option value="0">Disabled</option>
+            <option value="1">Enabled</option>
+            <option value="2">Not Allowed</option>
+        </select>
+    </clr-select-container>
+    <clr-input-container>
+        <label class="clr-required-mark">Price Decimals</label>
+        <input clrInput type="number" formControlName="Kpair_pdec" name="Kpair_pdec" max="10" required>
+        <clr-control-helper>ex. 8</clr-control-helper>
+        <clr-control-error>Number required between 0 and 10</clr-control-error>
+    </clr-input-container>
+    <clr-input-container>
+        <label class="clr-required-mark">Quantity Decimals</label>
+        <input clrInput type="number" formControlName="Kpair_qdec" name="Kpair_qdec" max="10" required>
+        <clr-control-helper>ex. 2</clr-control-helper>
+        <clr-control-error>Number required between 0 and 10</clr-control-error>
+    </clr-input-container>
+    <clr-toggle-container>
+        <label>Watch</label>
+        <clr-toggle-wrapper>
+            <input type="checkbox" clrToggle formControlName="Kpair_watch">
+        </clr-toggle-wrapper>
+    </clr-toggle-container>
+    <clr-textarea-container>
+        <label>Notes</label>
+        <textarea clrTextarea formControlName="Kpair_notes"></textarea>
+    </clr-textarea-container>
+    <br>
+    <button *ngIf="!isAddMode" type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
+    <button type="button" class="btn btn-outline" (click)="onCancel()">Cancel</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!pairForm.valid">Ok</button>
+</form>

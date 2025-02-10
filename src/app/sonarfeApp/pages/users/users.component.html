@@ -1,0 +1,78 @@
+<div *ngIf="isLoading()" class="loading-overlay">
+  <div class="loading-spinner">
+    <div class="loading-text">Please wait...</div>
+    <span class="spinner spinner-sm">Loading...</span>
+  </div>
+</div>
+
+
+<!-- Add PopUp -->
+<clr-modal [(clrModalOpen)]="isAddOpen">
+  <h3 class="modal-title">Rename New User</h3>
+  <div class="modal-body">
+    <label for="categoryNameInput">Enter the new email:</label>
+    <input id="categoryNameInput" type="text" [(ngModel)]="email" placeholder="Category Name" class="clr-input" />
+  </div>
+  <div class="modal-footer">
+    <!-- Pass categoryName as an argument to the createCategory function -->
+    <button class="btn btn-primary" type="button" (click)="addUser()">Rename</button>
+    <button class="btn btn-outline" type="button" (click)="isAddOpen = false">Cancel</button>
+  </div>
+</clr-modal>
+
+<!-- Change plan PopUp -->
+<clr-modal [(clrModalOpen)]="isPlanOpen">
+  <h3 class="modal-title">Change Plan</h3>
+  <div class="modal-body">
+    <label for="categoryNameInput">Enter the new plan:</label>
+    <input id="categoryNameInput" type="text" [(ngModel)]="plan" placeholder="Plan Name" class="clr-input" />
+  </div>
+  <div class="modal-footer">
+    <!-- Pass categoryName as an argument to the createCategory function -->
+    <button class="btn btn-primary" type="button" (click)="changePlan()">Rename</button>
+    <button class="btn btn-outline" type="button" (click)="isPlanOpen = false">Cancel</button>
+  </div>
+</clr-modal>
+
+<!-- Delete PopUp -->
+<clr-modal [(clrModalOpen)]="isDeleteOpen">
+    <h3 class="modal-title">Are you sure?</h3>
+    <div class="modal-body">Proceed to delete the user: {{ user!.email }} ?
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" type="button" (click)="delUser()" >Ok</button>
+      <button class="btn btn-primary" type="button" (click)="isDeleteOpen = false">Cancel</button>
+    </div>
+</clr-modal>
+
+<!-- Header -->
+<div class="header-container">
+    <h3 style="margin: 0;">Users</h3>
+    <button 
+      class="btn btn-primary" 
+      (click)="isAddOpen= !isAddOpen" style="margin-left: auto;">Add
+    </button>
+</div>
+
+<!-- Div per visualizzare le metriche orizzontalmente -->
+<div class="table-coins">
+  <clr-datagrid *ngIf="users!.length > 0">
+    <clr-dg-column>ID</clr-dg-column>
+    <clr-dg-column>Email</clr-dg-column>
+    <clr-dg-column>Plan</clr-dg-column>
+    <clr-dg-column>Last Login</clr-dg-column>
+
+    <clr-dg-row *clrDgItems="let user of users" > 
+        <clr-dg-action-overflow  > 
+          <button class="action-item" (click)="openPlan(user)">Change Plan</button>
+          <button class="action-item" (click)="openDelete(user)">Remove</button>
+        </clr-dg-action-overflow>
+        <clr-dg-cell>{{ user.id }}</clr-dg-cell>
+        <clr-dg-cell>{{ user.email }}</clr-dg-cell>
+        <clr-dg-cell>{{ user.plan }}</clr-dg-cell>
+        <clr-dg-cell>{{ user.lastlogin }}</clr-dg-cell>
+    </clr-dg-row>
+
+    <clr-dg-footer>{{ users.length }} users</clr-dg-footer>
+  </clr-datagrid>
+</div>

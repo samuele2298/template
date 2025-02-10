@@ -1,0 +1,155 @@
+/* Contenitore delle metriche, con layout flex per disposizione orizzontale */
+
+:host {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark transparent background */
+    z-index: 9999; /* Make sure it's above all content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .loading-spinner {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .loading-text {
+    margin-left: 10px;
+    color: white;
+    font-size: 16px;
+  }
+
+.header-container{
+    padding: 20px;
+    display: flex; 
+    flex-direction:row; 
+    justify-content:space-between;
+    align-items: center;
+}
+
+.metrics {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-block: 5vh;
+    gap: 1vh;
+}
+  
+.metrics-container {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    padding: 3vh;
+    width: 22%; /* Default width for larger screens (4 metrics in a row) */
+    text-align: center;
+    box-shadow: 3px 3px 0px #a43cff; /* Solid shadow without blur */
+    background: linear-gradient(135deg, #1e1e1f, #1b1b1c, #29282b);
+    transition: all 0.3s ease; /* Smooth transition for hover */
+}
+  
+/* .metrics-container:hover {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); 
+    transform: translateY(-5px); 
+} */
+  
+.metrics-container .data {
+    font-weight: bold;
+    margin-bottom: 2vh;
+    font-size: 1.1em;
+    color: #fff; /* White text for better contrast */
+}
+  
+.metrics-container .value {
+    font-size: 1em;
+    color: #f1f1f1;
+}
+  
+.metrics-container.dominance .value {
+    display: flex;
+    text-align: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+    gap: 2vh;
+}
+
+/* Stile per clr-datagrid */
+.table-noborder {
+    border: none;
+}
+
+.clr-dg-column, .clr-dg-cell {
+    text-align: center;
+}
+
+.clr-dg-footer {
+    font-weight: bold;
+    text-align: right;
+}
+
+.datagrid-cell, .datagrid-action-overflow, 
+.datagrid-empty, .datagrid-container, .action-item,
+.datagrid-footer, .datagrid-column , .datagrid-placeholders {
+    background-color: #1b1b1c;
+    padding: 2vh; /* Adds more padding for a spacious row layout */
+    font-size: 1em; /* Optional: Adjust font size if needed */
+}
+
+.btn-primary{
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: hsl(263, 76%, 36%);
+}
+
+.table-coins{
+    margin-bottom: 1vh;
+}
+
+@media (max-width: 768px) {
+    .metrics {
+        flex-direction: column;
+        gap: 3vh;
+    }
+
+    .metrics-container, .list-container {
+        width: 100%;
+    }
+
+    .metrics-container .data {
+        font-size: 1.8em;
+        padding-bottom: 10px;
+    }
+
+    .metrics-container .value {
+        font-size: 1.6em;
+    }
+    .header-container{
+        padding: 0;
+
+    }
+
+    .datagrid-cell, .datagrid-action-overflow, 
+    .datagrid-empty, .datagrid-container, .action-item,
+    .datagrid-footer, .datagrid-column , .datagrid-placeholders {
+        padding: 2.2vh; /* Adds more padding for a spacious row layout */
+        font-size: 1.2em; /* Optional: Adjust font size if needed */
+    }
+    
+    .sticky-column{
+        position: sticky;
+        left: 0;
+        z-index:1000;
+    }
+    
+}

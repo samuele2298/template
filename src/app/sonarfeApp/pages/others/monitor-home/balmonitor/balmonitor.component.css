@@ -1,0 +1,61 @@
+.leftbord {
+    border-left: 1px solid var(--clr-table-border-color);
+}
+
+.lowbal {
+    background-color: #d80000;
+}
+
+.lowthrstotbal {
+    color: #d80000;
+}
+
+.highthrstotbal {
+    color: #7b23ff;
+}
+
+.lowbalthrs {
+    background-color: #800000;
+}
+
+.highbal {
+    background-color: #7b23ff;
+}
+
+.highbalthrs {
+    background-color: #300078;
+}
+
+.notconfigured {
+    background-color: #1a2429;
+}
+
+.stdisabled {
+    background-color: #1a2429;
+    --clr-progress-default-color: #91919120;
+    --clr-progress-bg-color: #2d404820;
+}
+
+.stnotallowed {
+    background-color: #333333;
+    --clr-progress-default-color: #91919120;
+    --clr-progress-bg-color: #2d404820;
+}
+
+.stnotallowednowatch {
+    background-color: #262626;
+    --clr-progress-default-color: #91919120;
+    --clr-progress-bg-color: #2d404820;
+}
+
+clr-progress-bar {
+    --clr-progress-default-color: #919191;
+}
+/* 
+tr:hover {
+    opacity: 0.7;
+} */
+
+td {
+    padding-bottom: 0px;
+}

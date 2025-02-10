@@ -1,0 +1,26 @@
+<div class="clr-row">
+    <div class="clr-col-lg-3 clr-col-md-4 clr-col-12">
+        <div class="card">
+            <div class="card-block">
+                <div class="card-title">Update balance request</div>
+                <clr-select-container>
+                    <select clrSelect name="options" [(ngModel)]="updateBalanceSelectedExchange">
+                        <option value="" disabled selected>Select Exchange</option>
+                        <option *ngFor="let ex of exchanges" [ngValue]="ex.id">{{ex.Kexch_name}}</option>
+                    </select>
+                </clr-select-container>
+            </div>
+            <div class="card-footer">
+                <button [clrLoading]="updateBalanceBtnState" class="btn btn-sm btn-primary" [disabled]="!updateBalanceSelectedExchange" (click)="sendUpdateBalanceRequest()">Send command</button>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-block">
+                <div class="card-title">Dump Kaverage Arrays</div>
+            </div>
+            <div class="card-footer">
+                <button [clrLoading]="sendKaverageBtnState" class="btn btn-sm btn-primary" (click)="sendKaverageDumpRequest()">Send command</button>
+            </div>
+        </div>
+    </div>
+</div>

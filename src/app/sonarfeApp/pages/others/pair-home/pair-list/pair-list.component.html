@@ -1,0 +1,51 @@
+<div cds-layout="horizontal gap:sm" class="clr-align-items-center">
+    <button [clrLoading]="loadingBalState" type="button" class="btn btn-sm" (click)="getPairList()">Reload</button>
+    <button type="button" class="btn btn-sm btn-primary" routerLink="add">New Pair</button>
+    <div><input clrInput placeholder="search..." [(ngModel)]="searchFilter" (keyup)="applySearchFilter()"></div>
+</div>
+
+<div>
+    <clr-datagrid>
+        <clr-dg-column [clrDgField]="'id'">
+            <ng-container *clrDgHideableColumn="{ hidden: false }">ID</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'sym1'" [clrDgSortOrder]="ascSort">
+            <ng-container *clrDgHideableColumn="{ hidden: true }">Sym1</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'sym1_desc'">Sym1 Desc</clr-dg-column>
+        <clr-dg-column [clrDgField]="'sym2'">
+            <ng-container *clrDgHideableColumn="{ hidden: true }">Sym2</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'sym2_desc'">Sym2 Desc</clr-dg-column>
+        <clr-dg-column [clrDgField]="'exch_name'">Exchange</clr-dg-column>
+        <clr-dg-column [clrDgField]="'status'">StatusDl</clr-dg-column>
+        <clr-dg-column [clrDgColType]="'number'">
+            <ng-container *clrDgHideableColumn="{ hidden: false }">Fee</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'istrading'">Trading</clr-dg-column>
+        <clr-dg-column [clrDgField]="'watch'">Watch</clr-dg-column>
+
+        <clr-dg-row *clrDgItems="let pair of pairs">
+            <clr-dg-cell>
+                <a href="javascript://" [routerLink]="['edit', pair.id]">{{pair.id}}</a>
+            </clr-dg-cell>
+            <clr-dg-cell>{{pair.sym1}}</clr-dg-cell>
+            <clr-dg-cell>{{pair.sym1_desc}}</clr-dg-cell>
+            <clr-dg-cell>{{pair.sym2}}</clr-dg-cell>
+            <clr-dg-cell>{{pair.sym2_desc}}</clr-dg-cell>
+            <clr-dg-cell>{{pair.exch_name}}</clr-dg-cell>
+            <clr-dg-cell>{{pair.status === 0 ? 'disabled' : 'enabled'}}</clr-dg-cell>
+            <clr-dg-cell>{{pair.fee}}</clr-dg-cell>
+            <clr-dg-cell>{{statusTradingMap.get(pair.istrading)}}
+                <clr-tooltip *ngIf="pair.notes">
+                    <cds-icon clrTooltipTrigger shape="info-circle" status="info"></cds-icon>
+                    <clr-tooltip-content [clrPosition]="'top-right'" [clrSize]="'sm'">{{pair.notes}}</clr-tooltip-content>
+                </clr-tooltip>
+            </clr-dg-cell>
+            <clr-dg-cell><input type="checkbox" clrToggle (change)="onChangeWatch($event, pair.id)"
+                    [checked]="pair.watch === 1 ? true : false"></clr-dg-cell>
+        </clr-dg-row>
+
+        <clr-dg-footer>{{ pairs.length }} pairs</clr-dg-footer>
+    </clr-datagrid>
+</div>

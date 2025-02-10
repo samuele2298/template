@@ -1,0 +1,205 @@
+<clr-modal [(clrModalOpen)]="showModalWithdraw">
+    <h3 class="modal-title">Withdraw {{wdModel.srccoin}} from {{wdModel.srcexchange}}</h3>
+    <div class="modal-body">
+        <form clrForm #formWithdraw="ngForm" clrLabelSize="4">
+            <clr-input-container>
+                <label>Source Exchange</label>
+                <input cds-layout="container:fill" clrInput [(ngModel)]="wdModel.srcexchange" name="srcexchange"
+                    disabled>
+            </clr-input-container>
+            <clr-input-container>
+                <label>Source Coin</label>
+                <input cds-layout="container:fill" clrInput [(ngModel)]="wdModel.srccoin" name="srccoin" disabled>
+            </clr-input-container>
+            <clr-combobox-container>
+                <label class="clr-required-mark">Dest Exchange</label>
+                <clr-combobox [clrLoading]="loadingWithdrawals" (clrSelectionChange)="onChangeExchange($event)"
+                    [(ngModel)]="wdDestSelected" name="dstexchange">
+                    <clr-options>
+                        <clr-option *clrOptionItems="let wdDest of wdDestExchs; field: 'Kexch_name'" [clrValue]="wdDest"
+                            [class.disabled]="wdDest.Kwithdrawal_status === 0">
+                            {{wdDest.Kexch_name}}
+                        </clr-option>
+                    </clr-options>
+                </clr-combobox>
+            </clr-combobox-container>
+            <clr-input-container>
+                <label>Destination Address</label>
+                <input cds-layout="container:fill" clrInput required [(ngModel)]="wdModel.dstaddress" name="dstaddress"
+                    [disabled]="rangeAmountDisabled">
+            </clr-input-container>
+            <clr-input-container>
+                <label>Memo Tag</label>
+                <input cds-layout="container:fill" clrInput [(ngModel)]="wdModel.memotag" name="memotag"
+                    [disabled]="rangeAmountDisabled">
+                <clr-control-helper>ex. XRP TAG</clr-control-helper>
+            </clr-input-container>
+            <clr-input-container>
+                <label>Fee</label>
+                <input clrInput required [(ngModel)]="wdModel.fee" name="fee" disabled>
+                <clr-control-helper> ≈ {{wdFeeUSDT}} USDT</clr-control-helper>
+            </clr-input-container>
+            <clr-input-container>
+                <label>Chain</label>
+                <input cds-layout="container:fill" clrInput required [(ngModel)]="wdModel.chaindesc" name="chaindesc"
+                    disabled>
+            </clr-input-container>
+            <clr-input-container *ngIf="wdModel.contract">
+                <label>Contract</label>
+                <input cds-layout="container:fill" clrInput required [(ngModel)]="wdModel.contract" name="contract"
+                    disabled>
+            </clr-input-container>
+            <clr-input-container>
+                <label>Desc</label>
+                <input cds-layout="container:fill" clrInput [(ngModel)]="wdModel.desc" name="desc"
+                    [disabled]="rangeAmountDisabled">
+            </clr-input-container>
+            <clr-input-container>
+                <label class="clr-required-mark">Amount</label>
+                <input cds-layout="container:fill" clrInput required type="number" min="0.00000001"
+                    [(ngModel)]="wdModel.amount" name="amount" [max]="wdModel.available"
+                    (input)="amountWithdrawChange($event)" [disabled]="rangeAmountDisabled">
+                <clr-control-helper>Available: {{wdModel.available}} {{wdModel.srccoin}} ≈
+                    {{wdModel.available_usdt.toFixed(2)}} USDT</clr-control-helper>
+            </clr-input-container>
+            <clr-range-container>
+                <label class="clr-required-mark">Amount</label>
+                <input #rangeAmountControl cds-layout="container:fill" clrRange required type="range"
+                    [value]="rangeAmountVal" name="amountrange" (input)="amountWithdrawChange($event)"
+                    [disabled]="rangeAmountDisabled">
+                <clr-control-helper cds-text="body center">{{rangeAmountControl.value}}%</clr-control-helper>
+            </clr-range-container>
+            <br>
+            <div class="clr-row">
+                <div class="clr-col-6">
+                    <label>From {{wdModel.srcexchange}}</label>
+                </div>
+                <div class="clr-col-6">
+                    <label>To {{wdModel.dstexchange}}</label>
+                </div>
+            </div>
+            <div class="clr-row">
+                <div class="clr-col-6">
+                    <clr-progress-bar [clrValue]="wdSrcProgressUsdt" [clrMax]="wdSrcProgressMax"
+                        [title]="wdSrcProgressTitle"></clr-progress-bar>
+                    <clr-control-helper>{{wdSrcProgressVal.toFixed(8)}} {{wdModel.srccoin}} ≈
+                        {{wdSrcProgressUsdt.toFixed(2)}} USDT</clr-control-helper>
+                </div>
+                <div class="clr-col-6">
+                    <clr-progress-bar [clrValue]="wdDestProgressUsdt" [clrMax]="wdDestProgressMax"
+                        [title]="wdDestProgressTitle"></clr-progress-bar>
+                    <clr-control-helper>{{wdDestProgressVal.toFixed(8)}} {{wdModel.srccoin}} ≈
+                        {{wdDestProgressUsdt.toFixed(2)}} USDT</clr-control-helper>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="showModalWithdraw = false">Cancel</button>
+        <button [clrLoading]="sendWithdrawalState" type="button" class="btn btn-primary"
+            [disabled]="!formWithdraw.valid || !wdDestSelected" (click)="displayConfirmWithdraw()">OK</button>
+    </div>
+</clr-modal>
+<clr-modal [(clrModalOpen)]="confirmModalWithdraw" [clrModalSize]="'sm'">
+    <h3 class="modal-title">Confirm</h3>
+    <div class="modal-body">
+        <p>Do you want to proceed?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="confirmModalWithdraw = false">NO</button>
+        <button type="button" class="btn btn-primary" (click)="executeWithdraw()">YES</button>
+    </div>
+</clr-modal>
+
+<div cds-layout="horizontal gap:sm" class="clr-align-items-center">
+    <button [clrLoading]="loadingState" type="button" class="btn btn-sm" (click)="getBalMonitor()">Reload</button>
+    <clr-toggle-wrapper>
+        <input type="checkbox" clrToggle [(ngModel)]="tradingEnabled" name="tradingenabled"
+            (change)="onChangeTradingEnabled($event)" />
+        <label>Trading Enabled</label>
+    </clr-toggle-wrapper>
+    <clr-toggle-wrapper>
+        <input type="checkbox" clrToggle [(ngModel)]="withdrawEnabled" name="withdrawenabled"
+        (change)="onChangeWithdrawEnabled($event)" />
+        <label>Withdraw Enabled</label>
+    </clr-toggle-wrapper>
+    <div cds-layout="horizontal gap:md align:right">
+        <button [clrLoading]="updateAllExchangeBalanceState" class="btn btn-sm btn-warning"
+            (click)="updateAllExchangeBalance()">Update All Exchanges Balance</button>
+    </div>
+</div>
+
+<table class="table">
+    <colgroup>
+        <col style="width: 30%;" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th></th>
+            <th *ngFor="let exch of exchange_names" colspan="2" class="leftbord">{{exch}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let bal of balMonitor">
+            <td>
+                <div cds-layout="horizontal gap:sm align:left">{{bal.name}} ({{bal.symnum}})</div>
+                <div *ngIf="bal.sumcurr" cds-text="smallcaption" cds-layout="horizontal gap:sm align:right">
+                    {{bal.name.split('/')[0]}} <span [class.lowthrstotbal]="bal.thrstotbalunder2"
+                        [class.highthrstotbal]="bal.thrstotbalover2">{{bal.sumcurr.toFixed(2)}}</span>
+                    ({{bal.thrstotbal}}) - USDT {{bal.sumusdt?.toFixed(2)}}</div>
+            </td>
+            <ng-container *ngFor="let exch of bal.exchange">
+                <td [class]="exch.sym1.classtd">
+                    <div class="clr-row">
+                        <div class="clr-col-10" style="padding: 0;">
+                            <clr-progress-bar *ngIf="exch.configured" [class]="exch.sym1.classpbar"
+                                [clrValue]="exch.sym1.usdt" [clrMax]="exch.sym1.max"
+                                [title]="exch.sym1.usdt.toFixed(2) + ' USDT - ' + exch.sym1.val.toFixed(8) + ' ' + exch.sym1.name">
+                            </clr-progress-bar>
+                            <div *ngIf="exch.configured" cds-text="smallcaption"
+                                cds-layout="horizontal gap:md align:right" style="color: gray;">
+                                {{Math.abs(exch.sym1.max) > 999 ? ((Math.abs(exch.sym1.max)/1000).toFixed(1)) + 'k' :
+                                Math.sign(exch.sym1.max)*Math.abs(exch.sym1.max)}}
+                            </div>
+                        </div>
+                        <div class="clr-col-2" style="padding: 0;">
+                            <clr-dropdown>
+                                <button clrDropdownTrigger (click)="withdraw(exch.sym1, exch.id, exch.name, bal.symnum.substring(0, 4), formWithdraw)">
+                                    <cds-icon shape="ellipsis-vertical" size="12"></cds-icon>
+                                </button>
+                            </clr-dropdown>
+                        </div>
+                    </div>
+                </td>
+                <td [class]="exch.sym2.classtd">
+                    <div class="clr-row">
+                        <div class="clr-col-10" style="padding: 0;">
+                            <clr-progress-bar *ngIf="exch.configured" [class]="exch.sym2.classpbar"
+                                [clrValue]="exch.sym2.usdt" [clrMax]="exch.sym2.max"
+                                [title]="exch.sym2.usdt.toFixed(2) + ' USDT - ' + exch.sym2.val.toFixed(8) + ' ' + exch.sym2.name">
+                            </clr-progress-bar>
+                            <div *ngIf="exch.configured" cds-text="smallcaption"
+                                cds-layout="horizontal gap:md align:right" style="color: gray;">
+                                {{Math.abs(exch.sym2.max) > 999 ? ((Math.abs(exch.sym2.max)/1000).toFixed(1)) + 'k' :
+                                Math.sign(exch.sym2.max)*Math.abs(exch.sym2.max)}}
+                            </div>
+                        </div>
+                        <div class="clr-col-2" style="padding: 0;">
+                            <clr-dropdown>
+                                <button clrDropdownTrigger (click)="withdraw(exch.sym2, exch.id, exch.name, bal.symnum.substring(4), formWithdraw)">
+                                    <cds-icon shape="ellipsis-vertical" size="12"></cds-icon>
+                                </button>
+                            </clr-dropdown>
+                        </div>
+                    </div>
+                </td>
+            </ng-container>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Tot {{exchange_total.toFixed(2)}} USDT</th>
+            <th *ngFor="let tots of exchange_totals" colspan="2" class="leftbord">Tot {{tots}} USDT</th>
+        </tr>
+    </tfoot>
+</table>

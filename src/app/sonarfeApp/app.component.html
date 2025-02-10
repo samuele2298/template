@@ -1,0 +1,196 @@
+<div *ngIf="isLoading()" class="loading-overlay">
+    <div class="loading-spinner">
+      <div class="loading-text">Please wait...</div>
+      <span class="spinner spinner-sm">Loading...</span>
+    </div>
+</div>
+
+<!-- Weights -->
+<clr-modal [(clrModalOpen)]="isWeightsOpen">
+    <h3 class="modal-title">Set Your Weights</h3>
+
+    <div class="modal-body clr-dark-theme" style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+        <span class="tooltip-content">     
+            Adjust the weights for Price, Volume, and Vol. The total must sum to 100%. These weights directly impact the analysis scores, so set them according to your focus.
+        </span>
+        <!-- Price Weight -->
+        <clr-range-container [clrRangeHasProgress]="true">
+            <label for="priceWeight">Price Weight</label>
+            <label>{{ weights.price.toFixed(2) }}%</label>
+            <input type="range"
+                clrRange
+                [(ngModel)]="weights.price"
+                id="priceWeight"
+                name="priceWeight"
+                (ngModelChange)="onWeightChange('price')"
+                min="0"
+                max="100"
+                />
+        </clr-range-container>
+    
+        <!-- Volu Weight -->
+        <clr-range-container [clrRangeHasProgress]="true">
+            <label for="priceWeight">Volu Weight</label>
+            <label>{{ weights.volu.toFixed(2) }}%</label>
+            <input type="range"
+                clrRange
+                [(ngModel)]="weights.volu"
+                id="voluWeight"
+                name="voluWeight"
+                (ngModelChange)="onWeightChange('volu')"
+                min="0"
+                max="100"
+                />
+        </clr-range-container>
+    
+        <!-- Vol Weight -->
+        <clr-range-container [clrRangeHasProgress]="true">
+            <label for="priceWeight">Vol Weight</label>
+            <label>{{ weights.vol.toFixed(2) }}%</label>
+            <input type="range"
+                clrRange
+                [(ngModel)]="weights.vol"
+                id="volWeight"
+                name="volWeight"
+                (ngModelChange)="onWeightChange('vol')"
+                min="0"
+                max="100"
+                />
+        </clr-range-container>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-outline-primary" type="button" (click)="confirmWeights()">Ok</button>
+        <button class="btn btn-primary" type="button" (click)="isWeightsOpen = false">Cancel</button>
+    </div>
+</clr-modal>
+  
+<clr-main-container *ngIf="!isFullScreen">
+    <!--<app-alert *ngIf="user"></app-alert>--> <!-- Optional alert component -->
+    <!-- Header -->
+    <clr-header>
+        <div class="branding">
+            <a routerLink="/dashboard">
+                <cds-icon shape="radar" solid="true" class="title-icon"></cds-icon>
+                <span class="title-text">Crypto Sonar</span>
+                <span class="title-text-mobile" >Sonar</span>
+            </a>
+        </div>
+
+        <form class="search" >
+            <label for="search_input">
+              <input id="search_input" type="text" placeholder="Search for keywords..."  (keydown.enter)="onSearch($event)"/>
+            </label>
+        </form>
+
+        <div class="header-actions">
+            <!-- <app-theme-toggle></app-theme-toggle>
+            <ng-container *ngIf="user; else loggedOut">
+                <clr-dropdown>
+                    <button clrDropdownTrigger aria-label="Toggle settings menu" >
+                        <div class="user-icon" style= "background-color:#a72a2a">
+                            {{ user.email? user.email.charAt(0).toUpperCase() : '4' }} 
+                        </div>
+                    </button>
+                    <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+                        <a [routerLink]="['/profile']" clrDropdownItem>Profile</a>
+                        <a [routerLink]="['/billing']" clrDropdownItem>Billing/Plan</a>
+                        <a clrDropdownItem (click)="logout()">Log out</a>
+                    </clr-dropdown-menu>
+                </clr-dropdown>
+            </ng-container> -->
+
+
+
+            <button 
+                class="btn btn-primary" 
+                [routerLink]="'/pricing'" 
+                style="margin-top: 15px; color: #a43cff"
+            >
+                {{ user?.plan ?? 'NONE' }}
+            </button>
+
+            <!-- <button 
+                class="btn referral" 
+                (click)="copyToClipboard(user?.referral)"
+                style="margin-top: 15px; color: #ffffff"
+            >
+                Referral: {{ user?.referral ?? 'NONE' }}
+            </button>
+            <button 
+                type="button" 
+                class="btn btn-icon btn-secondary referral-mobile" 
+                (click)="copyToClipboard(user?.referral)"
+                style="margin-top: 15px; color: #ffffff;"
+            >
+                <cds-icon shape="users" solid="true" style=" color: #ffffff"></cds-icon>
+            </button> -->
+
+            <clr-dropdown>
+                <button clrDropdownTrigger aria-label="Toggle settings menu" >
+                    <div class="user-icon">
+                        {{ user?.email? user!.email!.charAt(0).toUpperCase() : 'S' }} <!-- Default to '404' if no email -->
+                    </div>
+                </button>
+                <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+                    <a clrDropdownItem (click)="isWeightsOpen=true">Weights</a>
+                    <a clrDropdownItem (click)="logout()">Log out</a>
+                </clr-dropdown-menu>
+            </clr-dropdown>
+
+        </div>
+    </clr-header>
+
+  
+    <!-- Main -->
+    <div class="content-container">
+        <!-- Content -->
+
+        <main class="content-area">
+            <router-outlet></router-outlet>
+        </main>
+
+        <!-- Vertical Bar -->
+
+        <clr-vertical-nav    
+            [clrVerticalNavCollapsible]="true"
+            [clrVerticalNavCollapsed]="clrVerticalNavCollapsed"
+            (clrVerticalNavCollapsedChange)="clrVerticalNavCollapsedChange()"
+            [clr-nav-level]="1"  
+        >     
+            <a clrVerticalNavLink routerLink="/dashboard" routerLinkActive="active" class="nav-link" (click)="saveRoute('/dashboard')">
+                <cds-icon shape="line-chart" solid="true" size="18" class="nav-icon" clrVerticalNavIcon></cds-icon>
+                Dashboard
+            </a>
+            <a clrVerticalNavLink routerLink="/trading" routerLinkActive="active" class="nav-link" (click)="saveRoute('/trading')">
+                <cds-icon shape="flask" solid="true" size="18" class="nav-icon" clrVerticalNavIcon ></cds-icon>
+                Trading
+            </a>
+            <a *ngIf="isPro()" clrVerticalNavLink routerLink="/gems" routerLinkActive="active" class="nav-link" (click)="saveRoute('/gems')">
+                <cds-icon shape="search" solid="true" size="18" class="nav-icon" clrVerticalNavIcon ></cds-icon>
+                Gems
+            </a>
+            <a clrVerticalNavLink routerLink="/categories" routerLinkActive="active" class="nav-link" (click)="saveRoute('/categories')">
+                <cds-icon shape="wallet" solid="true" size="18" class="nav-icon" clrVerticalNavIcon></cds-icon>
+                Categories
+            </a>
+            <a clrVerticalNavLink routerLink="/coins" routerLinkActive="active" class="nav-link" (click)="saveRoute('/coins')">
+                <cds-icon shape="slider" solid="true" size="18" class="nav-icon" clrVerticalNavIcon></cds-icon>
+                Coins
+            </a>
+            <a *ngIf="isAdmin()"  clrVerticalNavLink routerLink="/users" routerLinkActive="active" class="nav-link" (click)="saveRoute('/users')">
+                <cds-icon shape="slider" solid="true" size="18" class="nav-icon" clrVerticalNavIcon></cds-icon>
+                Users
+            </a>
+            <!-- Update Panel 
+            <div *ngIf="!clrVerticalNavCollapsed" class="upgrade-panel">
+                <h3>Upgrade to Pro</h3>
+                <h6>Unlock additional features and take your experience to the next level.</h6>
+                <button>Upgrade Now </button>
+            </div>-->
+        </clr-vertical-nav>
+    </div>
+ 
+</clr-main-container>
+
+<router-outlet *ngIf="isFullScreen">
+</router-outlet>

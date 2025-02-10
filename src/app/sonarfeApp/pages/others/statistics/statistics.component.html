@@ -1,0 +1,88 @@
+<!-- Banner Section -->
+<div class="statistics-summary">
+    <h6>Account value:</h6>
+    <h1>{{formatNumber(account_value)}} USDT</h1>
+    <!-- <div class="statistics-row">
+        <div class="statistics-box">
+            <h2>Day</h2>
+            <div class="statistics-box-statistics">
+                <h6 [ngStyle]="{'color': day_usdt >= 0 ? 'green' : 'red'}">
+                    {{day_usdt.toFixed(2)}}
+                </h6>
+                <p> USDT</p>
+                <h6 [ngStyle]="{'color': day_usdt >= 0 ? 'green' : 'red'}">
+                    {{day_perc.toFixed(2)}}
+                </h6>
+                <p> %</p>
+            </div>
+        </div>
+        <div class="statistics-box">
+            <h2>Week</h2>
+            <div class="statistics-box-statistics">
+                <h6 [ngStyle]="{'color': week_usdt >= 0 ? 'green' : 'red'}">
+                    {{week_usdt.toFixed(2)}}
+                </h6>
+                <p> USDT</p>
+                <h6 [ngStyle]="{'color': week_usdt >= 0 ? 'green' : 'red'}">
+                    {{week_perc.toFixed(2)}}
+                </h6>
+                <p> %</p>
+            </div>
+        </div>
+        <div class="statistics-box">
+            <h2>Month</h2>
+            <div class="statistics-box-statistics">
+                <h6 [ngStyle]="{'color': month_usdt >= 0 ? 'green' : 'red'}">
+                    {{month_usdt.toFixed(2)}}
+                </h6>
+                <p> USDT</p>
+                <h6 [ngStyle]="{'color': month_usdt >= 0 ? 'green' : 'red'}">
+                    {{month_perc.toFixed(2)}}
+                </h6>
+                <p> %</p>
+            </div>
+        </div>
+        <div class="statistics-box">
+            <h2>Year</h2>
+            <div class="statistics-box-statistics">
+                <h6 [ngStyle]="{'color': year_usdt >= 0 ? 'green' : 'red'}">
+                    {{year_usdt.toFixed(2)}}
+                </h6>
+                <p> USDT</p>
+                <h6 [ngStyle]="{'color': year_usdt >= 0 ? 'green' : 'red'}">
+                    {{year_perc.toFixed(2)}}
+                </h6>
+                <p> %</p>
+            </div>
+        </div>
+    </div> -->
+</div> 
+
+<!-- Charts Section -->
+<!-- <div class="statistics-charts">
+    <div class="chart">
+        <h1>Returns</h1>
+        <canvas #returns></canvas>
+    </div>
+    <div class="chart">
+        <h1>Equity</h1>
+        <canvas #equity></canvas>
+    </div>
+</div> -->
+
+<!-- Table Section -->
+<div class="statistics-table">
+    <clr-datagrid>
+        <clr-dg-column>Date</clr-dg-column>
+        <clr-dg-column>Count</clr-dg-column>
+        <clr-dg-column>Margin</clr-dg-column>
+        <clr-dg-column>Fee</clr-dg-column>
+
+        <clr-dg-row *clrDgItems="let statistic of statistics">
+            <clr-dg-cell>{{ statistic.date | date:'yyyy/MM/dd':'UTC' }}</clr-dg-cell>
+            <clr-dg-cell>{{ statistic.count }}</clr-dg-cell>
+            <clr-dg-cell>{{ formatNumber(statistic.margin) }}</clr-dg-cell>
+            <clr-dg-cell>{{ formatNumber(statistic.fee) }}</clr-dg-cell>
+        </clr-dg-row>
+    </clr-datagrid>
+</div>

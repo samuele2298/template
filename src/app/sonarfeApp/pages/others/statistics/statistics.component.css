@@ -1,0 +1,92 @@
+.statistics-summary h6{
+    font-size: 4vh;
+    text-align: center;
+}
+
+.statistics-summary h1{
+    font-size: 8vh;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 3vh;
+}
+
+.statistics-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin: 3vh;
+    margin-bottom: 3vh;
+}
+
+.statistics-box {
+    text-align: center;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    padding: 4vh;
+    width: 100%;
+}
+
+.statistics-box-statistics {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    gap: 10px; 
+}
+
+.statistics-box-statistics h6{
+    font-size: 2.5vh; 
+    font-weight: bold;
+}
+
+
+.statistics-charts{
+    padding: 0.1vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.chart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 40vh;
+    margin-top: 10vh;
+    flex-direction: column;
+    margin-bottom: 10vh;
+
+}
+
+.chart h1{
+    font-size: 6vh;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 3vh;
+}
+  
+canvas {
+    width: 100%;
+    height: 100%;
+}
+
+
+.statistics-table{
+    padding: 0.1vh
+}
+
+@media (max-width: 1000px) {
+    .statistics-row {
+        flex-direction: column; 
+    }
+    .statistics-charts {
+        flex-direction: column; 
+    }
+}
+
+
+

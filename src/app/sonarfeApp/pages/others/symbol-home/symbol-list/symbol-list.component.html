@@ -1,0 +1,60 @@
+<div cds-layout="horizontal gap:sm" class="clr-align-items-center">
+    <button [clrLoading]="loadingBalState" type="button" class="btn btn-sm" (click)="getSymbolList()">Reload</button>
+    <button type="button" class="btn btn-sm btn-primary" routerLink="add">New Symbol</button>
+    <div><input clrInput placeholder="search..." [(ngModel)]="searchFilter" (keyup)="applySearchFilter()"></div>
+</div>
+
+<div>
+    <clr-datagrid>
+        <clr-dg-column>
+            <ng-container *clrDgHideableColumn="{ hidden: true }">ID</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Ksym_number'">
+            <ng-container *clrDgHideableColumn="{ hidden: false }">Sym number</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Ksym_description'" [clrDgSortOrder]="ascSort">Sym Desc</clr-dg-column>
+        <clr-dg-column [clrDgField]="'Ksym_thresholdopp'">
+            <ng-container *clrDgHideableColumn="{ hidden: false }">Threshold Opp</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Ksym_thresholdoppperc'">
+            <ng-container *clrDgHideableColumn="{ hidden: false }">Threshold Opp %</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Ksym_maxinv'">
+            <ng-container *clrDgHideableColumn="{ hidden: false }">Max Invest USDT</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Ksym_minbal'">
+            <ng-container *clrDgHideableColumn="{ hidden: false }">Min Balance USDT</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Ksym_maxbal'">
+            <ng-container *clrDgHideableColumn="{ hidden: false }">Max Balance USDT</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Ksym_thrstotbal'">
+            <ng-container *clrDgHideableColumn="{ hidden: false }">Threshold Tot Bal</ng-container>
+        </clr-dg-column>
+
+        <clr-dg-row *clrDgItems="let symbol of symbols">
+            <clr-dg-action-overflow>
+                <button class="action-item" [routerLink]="['edit', symbol.id]">Edit</button>
+                <button class="action-item" (click)="onDelete(symbol)">Delete</button>
+            </clr-dg-action-overflow>
+            <clr-dg-cell>{{symbol.id}}</clr-dg-cell>
+            <clr-dg-cell>
+                <a href="javascript://" [routerLink]="['edit', symbol.id]">{{symbol.Ksym_number}}</a>
+            </clr-dg-cell>
+            <clr-dg-cell>{{symbol.Ksym_description}}
+                <clr-tooltip *ngIf="symbol.Ksym_notes">
+                    <cds-icon clrTooltipTrigger shape="info-circle" status="info"></cds-icon>
+                    <clr-tooltip-content [clrPosition]="'top-right'" [clrSize]="'sm'">{{symbol.Ksym_notes}}</clr-tooltip-content>
+                </clr-tooltip>                
+            </clr-dg-cell>
+            <clr-dg-cell class="right">{{symbol.Ksym_thresholdopp}}</clr-dg-cell>
+            <clr-dg-cell class="right">{{symbol.Ksym_thresholdoppperc}}</clr-dg-cell>
+            <clr-dg-cell class="right">{{symbol.Ksym_maxinv}}</clr-dg-cell>
+            <clr-dg-cell class="right">{{symbol.Ksym_minbal}}</clr-dg-cell>
+            <clr-dg-cell class="right">{{symbol.Ksym_maxbal}}</clr-dg-cell>
+            <clr-dg-cell class="right">{{symbol.Ksym_thrstotbal}}</clr-dg-cell>
+        </clr-dg-row>
+
+        <clr-dg-footer>{{ symbols.length }} symbols</clr-dg-footer>
+    </clr-datagrid>
+</div>

@@ -1,0 +1,7 @@
+.limit-height clr-datagrid {
+    height: 80vh;
+}
+
+.infoblue {
+    --clr-tooltip-color: blue;
+}

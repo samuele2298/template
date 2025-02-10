@@ -1,0 +1,50 @@
+
+
+<!-- Header -->
+<div class="header-container">
+  <div style="display: flex; flex-direction: row; align-items: center;gap: 6px;">
+    <a role="tooltip" aria-haspopup="true" class="tooltip tooltip-md tooltip-bottom-right">
+      <cds-icon shape="info-circle" size="24"></cds-icon>
+      <span class="tooltip-content">     
+        This screen provides insights for crypto traders, showing today&apos;s performance of the crypto market.
+        Also screening the best and worst intraday coins based on our scores.
+      </span>
+    </a>
+    <h3 style="margin: 0;">Trading</h3>  
+
+  </div>
+
+</div>
+
+<div class="bias" >
+    <div class="bias-container" *ngFor="let b of bias">
+        <div class="data">{{b.name}}:</div>
+         <div class="value">{{ b.value.toFixed(2) }} %</div>
+    </div>
+</div>
+
+<div class="list-section">
+
+  <div class="list-container">
+    <div class="list-label">Today&apos;s Best Coins</div>
+    <table>
+      <tr><th>Name</th><th>%</th><th>Score</th></tr>
+      <tr *ngFor="let b of best" (click)="navigateToCoin(b.name)">
+        <td class="clickable">{{ b.name }}</td>
+        <td [ngClass]="b.d >= 0 ? 'green' : 'red'">{{ b.d.toFixed(2) }}%</td>
+        <td [ngClass]="b.score >= 0 ? 'green' : 'red'">{{ b.score.toFixed(2) }}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="list-container">
+    <div class="list-label">Today&apos;s Worst Coins</div>
+    <table>
+      <tr><th>Name</th><th>%</th><th>Score</th></tr>
+      <tr *ngFor="let w of worst" (click)="navigateToCoin(w.name)">
+        <td class="clickable">{{ w.name }}</td>
+        <td [ngClass]="w.d >= 0 ? 'green' : 'red'">{{ w.d.toFixed(2) }}%</td>
+        <td [ngClass]="w.score >= 0 ? 'green' : 'red'">{{ w.score.toFixed(2) }}</td>
+      </tr> 
+    </table>
+  </div>
+</div>

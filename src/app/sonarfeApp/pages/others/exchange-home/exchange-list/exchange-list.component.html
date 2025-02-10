@@ -1,0 +1,71 @@
+<div cds-layout="horizontal gap:sm">
+    <button type="button" class="btn btn-sm" (click)="getExchangeList()">Reload</button>
+    <button type="button" class="btn btn-sm btn-primary" routerLink="add">New Exchange</button>
+</div>
+<div>
+    <clr-datagrid>
+        <clr-dg-column [clrDgField]="'id'">
+            <ng-container *clrDgHideableColumn="{ hidden: false }">ID</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kexch_name'" [clrDgSortOrder]="ascSort">
+            <ng-container *clrDgHideableColumn="{ hidden: false }">Name</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kexch_status'">Status</clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kexch_apikey'">
+            <ng-container *clrDgHideableColumn="{ hidden: true }">Api Key</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kexch_apisecret'">
+            <ng-container *clrDgHideableColumn="{ hidden: true }">Api Secret</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kexch_subscribe'">
+            <ng-container *clrDgHideableColumn="{ hidden: true }">Subscribe</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kexch_unsubscribe'">
+            <ng-container *clrDgHideableColumn="{ hidden: true }">Unsubscribe</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kexch_url'">
+            <ng-container *clrDgHideableColumn="{ hidden: false }">URL</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kexch_pingcmd'">
+            <ng-container *clrDgHideableColumn="{ hidden: true }">Ping Command</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kexch_pinginterval'" [clrDgColType]="'number'">
+            <ng-container *clrDgHideableColumn="{ hidden: true }">Ping Interval</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kexch_topic'">
+            <ng-container *clrDgHideableColumn="{ hidden: true }">Topic</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kexch_fee'" [clrDgColType]="'number'">
+            <ng-container *clrDgHideableColumn="{ hidden: false }">Exchange Fee</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kexch_desc'">
+            <ng-container *clrDgHideableColumn="{ hidden: false }">Desc</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kexch_watch'">Watch</clr-dg-column>
+
+        <clr-dg-row *clrDgItems="let exchange of exchanges">
+            <clr-dg-action-overflow>
+                <button class="action-item" [routerLink]="['edit', exchange.id]">Edit</button>
+                <button class="action-item" (click)="onDelete(exchange)">Delete</button>
+            </clr-dg-action-overflow>
+            <clr-dg-cell>{{exchange.id}}</clr-dg-cell>
+            <clr-dg-cell>
+                <a href="javascript://" [routerLink]="['edit', exchange.id]">{{exchange.Kexch_name}}</a></clr-dg-cell>
+            <clr-dg-cell>{{exchange.Kexch_status === 1 ? 'enabled' : 'disabled'}}</clr-dg-cell>
+            <clr-dg-cell>{{exchange.Kexch_apikey}}</clr-dg-cell>
+            <clr-dg-cell>{{exchange.Kexch_apisecret}}</clr-dg-cell>
+            <clr-dg-cell>{{exchange.Kexch_subscribe}}</clr-dg-cell>
+            <clr-dg-cell>{{exchange.Kexch_unsubscribe}}</clr-dg-cell>
+            <clr-dg-cell>{{exchange.Kexch_url}}</clr-dg-cell>
+            <clr-dg-cell>{{exchange.Kexch_pingcmd}}</clr-dg-cell>
+            <clr-dg-cell>{{exchange.Kexch_pinginterval}}</clr-dg-cell>
+            <clr-dg-cell>{{exchange.Kexch_topic}}</clr-dg-cell>
+            <clr-dg-cell>{{exchange.Kexch_fee}}</clr-dg-cell>
+            <clr-dg-cell>{{exchange.Kexch_desc}}</clr-dg-cell>
+            <clr-dg-cell><input type="checkbox" clrToggle (change)="onChangeWatch($event, exchange.id)"
+                [checked]="exchange.Kexch_watch === 1 ? true : false"></clr-dg-cell>
+        </clr-dg-row>
+
+        <clr-dg-footer>{{ exchanges.length }} exchanges</clr-dg-footer>
+    </clr-datagrid>
+</div>
