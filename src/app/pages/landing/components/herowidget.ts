@@ -12,7 +12,7 @@ import { RippleModule } from 'primeng/ripple';
             style=""
         >
             <div class="mx-6 md:mx-20 mt-0 md:mt-6">
-                <h1 class="text-5xl font-extrabold text-gray-900 leading-tight sm:text-6xl sm:font-bold">
+                <h1 class="text-5xl font-extrabold text-gray-900 leading-tight sm:text-gray-6xl sm:font-bold">
                     Il meglio per il tuo DB ecco:
                     <span class="text-green-800"> Sonic </span>
                 </h1>
