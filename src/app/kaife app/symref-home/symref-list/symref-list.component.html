@@ -1,0 +1,32 @@
+<div cds-layout="horizontal gap:sm" class="clr-align-items-center">
+<div><button [clrLoading]="loadingBalState" type="button" class="btn btn-sm" (click)="getSymrefList()">Reload</button></div>
+<div><button type="button" class="btn btn-sm btn-primary" routerLink="add">New Symref</button></div>
+<div><input clrInput placeholder="search..." [(ngModel)]="searchFilter" (keyup)="applySearchFilter()"></div>
+</div>
+<div>
+    <clr-datagrid>
+        <clr-dg-column>
+            <ng-container *clrDgHideableColumn="{ hidden: true }">ID</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Ksymref_Ksym_number'">Sym Number</clr-dg-column>
+        <clr-dg-column [clrDgField]="'Ksymref_name'" [clrDgSortOrder]="ascSort">Name</clr-dg-column>
+        <clr-dg-column [clrDgField]="'Ksymref_Kexch_id'">Exchange</clr-dg-column>
+        <clr-dg-column [clrDgField]="'Ksymref_balname'">Balance Name</clr-dg-column>
+
+        <clr-dg-row *clrDgItems="let symref of symrefs">
+            <clr-dg-action-overflow>
+                <button class="action-item" [routerLink]="['edit', symref.id]">Edit</button>
+                <button class="action-item" (click)="onDelete(symref)">Delete</button>
+            </clr-dg-action-overflow>
+            <clr-dg-cell>{{symref.id}}</clr-dg-cell>
+            <clr-dg-cell>
+                <a href="javascript://" [routerLink]="['edit', symref.id]">{{symref.Ksymref_Ksym_number}}</a>
+            </clr-dg-cell>
+            <clr-dg-cell>{{symref.Ksymref_name}}</clr-dg-cell>
+            <clr-dg-cell>{{getExchangeName(symref.Ksymref_Kexch_id.toString().padStart(3, '0'))}}</clr-dg-cell>
+            <clr-dg-cell>{{symref.Ksymref_balname}}</clr-dg-cell>
+        </clr-dg-row>
+
+        <clr-dg-footer>{{ symrefs.length }} symrefs</clr-dg-footer>
+    </clr-datagrid>
+</div>

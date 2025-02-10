@@ -1,0 +1,38 @@
+<div *ngIf="fetchingData" class="progress loop"><progress></progress></div>
+<form clrForm [formGroup]="formSymref" (ngSubmit)="onSubmit()">
+    <clr-combobox-container>
+        <label class="clr-required-mark">Exchange name</label>
+        <clr-combobox formControlName="exch">
+            <clr-options>
+                <clr-option *clrOptionItems="let exch of exchanges; field: 'Kexch_name'" [clrValue]="exch">
+                    {{exch.Kexch_name}}
+                </clr-option>
+            </clr-options>
+        </clr-combobox>
+    </clr-combobox-container>
+    <clr-combobox-container>
+        <label class="clr-required-mark">Symbol Name</label>
+        <clr-combobox formControlName="sym_number">
+            <clr-options>
+                <clr-option *clrOptionItems="let sym of symbols; field: 'Ksym_description'" [clrValue]="sym">
+                    {{sym.Ksym_description}}
+                </clr-option>
+            </clr-options>
+        </clr-combobox>
+        <clr-control-helper>if not present add a new symbol</clr-control-helper>
+    </clr-combobox-container>
+    <clr-input-container>
+        <label class="clr-required-mark">Name</label>
+        <input clrInput type="text" formControlName="name" required>
+        <clr-control-helper>the name of symbol used for subscribe ex. BNB</clr-control-helper>
+    </clr-input-container>
+
+    <clr-input-container>
+        <label class="clr-required-mark">Balance Name</label>
+        <input clrInput type="text" formControlName="balname" required>
+        <clr-control-helper>the name of symbol used in balance update</clr-control-helper>
+    </clr-input-container>
+
+    <button type="button" class="btn btn-outline" (click)="onCancel()">Cancel</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!formSymref.valid">Ok</button>
+</form>

@@ -1,0 +1,31 @@
+<div *ngIf="fetchingData" class="progress loop"><progress></progress></div>
+<form clrForm [formGroup]="formChainref" (ngSubmit)="onSubmit()">
+    <clr-combobox-container>
+        <label class="clr-required-mark">Exchange name</label>
+        <clr-combobox formControlName="exch">
+            <clr-options>
+                <clr-option *clrOptionItems="let exch of exchanges; field: 'Kexch_name'" [clrValue]="exch">
+                    {{exch.Kexch_name}}
+                </clr-option>
+            </clr-options>
+        </clr-combobox>
+    </clr-combobox-container>
+    <clr-combobox-container>
+        <label class="clr-required-mark">Chain Name</label>
+        <clr-combobox formControlName="chain">
+            <clr-options>
+                <clr-option *clrOptionItems="let chain of chains; field: 'Kchain_desc'" [clrValue]="chain">
+                    {{chain.Kchain_desc}}
+                </clr-option>
+            </clr-options>
+        </clr-combobox>
+        <clr-control-helper>if not present add a new chain</clr-control-helper>
+    </clr-combobox-container>
+    <clr-input-container>
+        <label class="clr-required-mark">Name</label>
+        <input clrInput type="text" formControlName="name" required>
+        <clr-control-helper>the name of chain used for subscribe ex. BNB</clr-control-helper>
+    </clr-input-container>
+    <button type="button" class="btn btn-outline" (click)="onCancel()">Cancel</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!formChainref.valid">Ok</button>
+</form>

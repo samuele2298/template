@@ -1,0 +1,50 @@
+<div *ngIf="fetchingData" class="progress loop"><progress></progress></div>
+<form clrForm #dataForm="ngForm" (ngSubmit)="onSubmit()">
+    <input type="hidden" [(ngModel)]="symbol.Ksym_qtybalancer" name="Ksym_qtybalancer" value="0">
+    <input type="hidden" [(ngModel)]="symbol.Ksym_wdautoinprogress" name="Ksym_wdautoinprogress" value="0">
+    <clr-input-container>
+        <label class="clr-required-mark">Symbol Number</label>
+        <input size=40 clrInput type="text" [(ngModel)]="symbol.Ksym_number" name="Ksym_number" required>
+    </clr-input-container>
+    <clr-input-container>
+        <label class="clr-required-mark">Description</label>
+        <input size=40 clrInput type="text" [(ngModel)]="symbol.Ksym_description" name="Ksym_description" required>
+    </clr-input-container>
+    <clr-input-container>
+        <label class="clr-required-mark">Threshold Opportunity</label>
+        <input size=40 clrInput type="text" [(ngModel)]="symbol.Ksym_thresholdopp" name="Ksym_thresholdopp" required>
+        <clr-control-helper>ex. 1</clr-control-helper>
+    </clr-input-container>
+    <clr-input-container>
+        <label class="clr-required-mark">Threshold Perc</label>
+        <input size=40 clrInput type="number" [(ngModel)]="symbol.Ksym_thresholdoppperc" name="Ksym_thresholdoppperc" required>
+        <clr-control-helper>ex. 0.1</clr-control-helper>
+        <clr-control-error>Number required</clr-control-error>
+    </clr-input-container>    
+    <clr-input-container>
+        <label class="clr-required-mark">Max Invest USDT</label>
+        <input size=40 clrInput type="text" [(ngModel)]="symbol.Ksym_maxinv" name="Ksym_maxinv" required>
+    </clr-input-container>
+    <clr-input-container>
+        <label class="clr-required-mark">Min Balance USDT</label>
+        <input size=40 clrInput type="text" [(ngModel)]="symbol.Ksym_minbal" name="Ksym_minbal" required>
+        <clr-control-helper>ex. 200</clr-control-helper>
+    </clr-input-container>
+    <clr-input-container>
+        <label class="clr-required-mark">Max Balance USDT</label>
+        <input size=40 clrInput type="text" [(ngModel)]="symbol.Ksym_maxbal" name="Ksym_maxbal" required>
+        <clr-control-helper>ex. 1500</clr-control-helper>
+    </clr-input-container>
+    <clr-input-container>
+        <label class="clr-required-mark">Threshold Tot Bal</label>
+        <input size=40 clrInput type="text" [(ngModel)]="symbol.Ksym_thrstotbal" name="Ksym_thrstotbal" required>
+        <clr-control-helper>ex. 225000</clr-control-helper>
+    </clr-input-container>
+    <clr-textarea-container>
+        <label>Notes</label>
+        <textarea clrTextarea [(ngModel)]="symbol.Ksym_notes" name="Ksym_notes"></textarea>
+    </clr-textarea-container>
+    <br>
+    <button type="button" class="btn btn-outline" (click)="onCancel()">Cancel</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!dataForm.form.valid">Ok</button>
+</form>

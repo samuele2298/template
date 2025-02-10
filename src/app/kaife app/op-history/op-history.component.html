@@ -1,0 +1,148 @@
+<clr-alert *ngIf="!loadingState && ops.length <= 0" [clrAlertClosable]="false">
+    <clr-alert-item>
+        <span class="alert-text">No opportunities found on history database.</span>
+    </clr-alert-item>
+</clr-alert>
+<div cds-layout="horizontal gap:sm" class="clr-align-items-center">
+    <button [clrLoading]="loadingState" type="button" class="btn btn-sm" (click)="getHistory()">Reload</button>
+    <div><input clrInput placeholder="search..." [(ngModel)]="searchFilter" (keydown.enter)="getHistory()"></div>
+    <clr-combobox-container>
+        <label>1° Coin</label>
+        <clr-combobox [(ngModel)]="searchCoin" name="select1" (ngModelChange)="getHistory()" required>
+                <clr-options>
+                <clr-option *clrOptionItems="let coin of coins" [clrValue]="coin">
+                    {{ coin }}
+                </clr-option>
+                </clr-options>
+        </clr-combobox>
+    </clr-combobox-container>
+    <clr-combobox-container>
+        <label>2° Coin</label>
+        <clr-combobox [(ngModel)]="searchCoin2" name="select2" (ngModelChange)="getHistory()" required>
+                <clr-options>
+                <clr-option *clrOptionItems="let coin of coins" [clrValue]="coin">
+                    {{ coin }}
+                </clr-option>
+                </clr-options>
+        </clr-combobox>
+    </clr-combobox-container>
+    <clr-combobox-container>
+        <label>1° Exchange</label>
+        <clr-combobox [(ngModel)]="searchExch" name="select3" (ngModelChange)="getHistory()" required>
+                <clr-options>
+                <clr-option *clrOptionItems="let exch of exchanges" [clrValue]="exch">
+                    {{ exch }}
+                </clr-option>
+                </clr-options>
+        </clr-combobox>
+    </clr-combobox-container>
+    <clr-combobox-container>
+        <label>2° Exchange</label>
+        <clr-combobox [(ngModel)]="searchExch2" name="select4" (ngModelChange)="getHistory()" required>
+                <clr-options>
+                <clr-option *clrOptionItems="let exch of exchanges" [clrValue]="exch">
+                    {{ exch }}
+                </clr-option>
+                </clr-options>
+        </clr-combobox>
+    </clr-combobox-container>
+</div>
+<div class="card" *ngFor="let op of ops">
+    <table class="table table-noborder" style="margin-top: 0px;">
+        <thead>
+            <tr>
+                <th class="oprow">Pair</th>
+                <th class="oprow">Margin {{getPairName(op.oppair).split('/')[1]}}</th>
+                <th class="oprow">Margin %</th>
+                <th class="oprow">Fee {{getPairName(op.oppair).split('/')[1]}}</th>
+                <th class="oprow">Opp {{getPairName(op.oppair).split('/')[1]}}</th>
+                <th class="separator"></th>
+                <th class="oprow">Side</th>
+                <th class="oprow">Quantity</th>
+                <th class="oprow">Price</th>
+                <th class="oprow">Exchange</th>
+                <th class="separator"></th>
+                <th class="oprow">Side</th>
+                <th class="oprow">Quantity</th>
+                <th class="oprow">Price</th>
+                <th class="oprow">Exchange</th>
+                <th class="separator"></th>
+                <th class="oprow">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <span class="pair-color-square" [style.backgroundColor]="getOpColor(op)"></span>
+                    <strong>{{getPairName(op.oppair)}}</strong>
+                </td>
+                <td>{{(+op.opthreshold).toFixed(getDecimalPlaces(op))}}</td>
+                <td>{{(+op.opthreshold * 100/(+op.A.q * +op.A.p)).toFixed(3)}}</td>
+                <td>{{((+op.A.q * +op.A.f) + (+op.B.q * +op.B.f)).toFixed(getDecimalPlaces(op))}}</td>
+                <td>{{(+op.A.q * +op.A.p).toFixed(getDecimalPlaces(op))}}</td>    
+                <td class="separator"></td>
+                <td>{{op.oppri === 'A' ? 'BUY' : 'SELL'}}</td>
+                <td>{{op[op.oppri === 'A' ? 'A' : 'B'].q}}</td>
+                <td>{{op[op.oppri === 'A' ? 'A' : 'B'].p}}</td>
+                <td>{{getExchangeName((op[op.oppri === 'A' ? 'A' : 'B'].exchid))}}</td>
+                <td class="separator"></td>
+                <td>{{op.oppri === 'A' ? 'SELL' : 'BUY'}}</td>
+                <td>{{op[op.oppri === 'A' ? 'B' : 'A'].q}}</td>
+                <td>{{op[op.oppri === 'A' ? 'B' : 'A'].p}}</td>
+                <td>{{getExchangeName(op[op.oppri === 'A' ? 'B' : 'A'].exchid)}}</td>
+                <td class="separator"></td>
+                <td>{{op.opdate | date:'yyyy-MM-dd HH:mm:ss':'UTC'}}</td>
+            </tr>
+        </tbody>
+        <tbody *ngIf="isFilled(op)">
+            <tr>
+                <td>Effective</td>
+                <td>{{getEffectiveMargin(op).toFixed(2)}}</td>
+                <td>{{(getEffectiveMargin(op) * 100/(+op.A.q * +op.A.p)).toFixed(3)}}</td>
+                <td></td>
+                <td></td>
+                <td class="separator"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="separator"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="separator"></td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table" style="margin-top: 0px;">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Side</th>
+                <th>Filled</th>
+                <th>Quantiy</th>
+                <th>Price</th>
+                <th>Exchange</th>
+                <th>Init Date</th>
+                <th>Upd Date</th>
+                <th>Error</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let ord of op.oporders">
+                <td><span class="color-square" [style.backgroundColor]="orderStatusClass.get(ord.orstatus)"></span></td>
+                <td>{{ord.orside}}</td>
+                <td>{{ord.orqfilled}}</td>
+                <td>{{ord.orq}}</td>
+                <td>{{ord.orprice}}</td>
+                <td>{{getExchangeName(ord.orexch)}}</td>
+                <td>{{ord.orinitdate | date:'yyyy-MM-dd HH:mm:ss':'UTC'}}</td>
+                <td>{{ord.orupddate | date:'yyyy-MM-dd HH:mm:ss':'UTC'}}</td>
+                <td>{{ord.orerror }}</td>
+                <td>{{orderStatus.get(ord.orstatus)}}</td>
+            </tr>
+        </tbody>
+    </table>
+<div>

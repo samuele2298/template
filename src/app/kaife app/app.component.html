@@ -1,0 +1,79 @@
+<clr-main-container>
+    <!--<app-alert *ngIf="user"></app-alert>-->
+    <clr-header *ngIf="user">
+        <div class="branding">
+            <a routerLink="/">
+                <cds-icon shape="bolt"></cds-icon>
+                <span class="title">KAIFE</span>
+            </a>
+        </div>
+        <div class="header-nav">
+        </div>
+        <div class="header-actions">
+            <app-theme-toggle></app-theme-toggle>
+            <clr-dropdown>
+                <button class="nav-icon" clrDropdownTrigger aria-label="toggle settings menu">
+                    <cds-icon shape="cog"></cds-icon>
+                    <cds-icon shape="angle" direction="down"></cds-icon>
+                </button>
+                <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+                    <a [routerLink]="" clrDropdownItem (click)="logout()">Log out</a>
+                </clr-dropdown-menu>
+            </clr-dropdown>
+        </div>
+    </clr-header>
+    <nav *ngIf="user" class="subnav" [clr-nav-level]="1">
+        <ul class="nav">
+            <li class="nav-item">
+                <a routerLink="/monitor" class="nav-link" routerLinkActive="active">Monitor</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/opportunity" class="nav-link" routerLinkActive="active">Opp({{nopp}})</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/history" class="nav-link" routerLinkActive="active">History</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/withdrawal-list" class="nav-link" routerLinkActive="active">Withdrawals</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/pair-list" class="nav-link" routerLinkActive="active">Pair</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/symbol-list" class="nav-link" routerLinkActive="active">Symbol</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/symref-list" class="nav-link" routerLinkActive="active">Symbol Ref</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/chain-list" class="nav-link" routerLinkActive="active">Chain</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/chainref-list" class="nav-link" routerLinkActive="active">Chain Ref</a>
+            </li> 
+            <li class="nav-item">
+                <a routerLink="/exchange-list" class="nav-link" routerLinkActive="active">Exchange</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/balance-list" class="nav-link" routerLinkActive="active">Balance</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/statistics" class="nav-link" routerLinkActive="active">Statistics</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/logs" class="nav-link" routerLinkActive="active">Logs</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/command" class="nav-link" routerLinkActive="active">Command</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/settings" class="nav-link" routerLinkActive="active">Settings</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="content-container">
+        <main class="content-area">
+            <router-outlet></router-outlet>
+        </main> 
+    </div>
+</clr-main-container>

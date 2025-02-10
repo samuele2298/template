@@ -1,0 +1,14 @@
+<div *ngIf="fetchingData" class="progress loop"><progress></progress></div>
+<form clrForm #dataForm="ngForm" (ngSubmit)="onSubmit()">
+    <clr-input-container>
+        <label class="clr-required-mark">Description</label>
+        <input size=40 clrInput type="text" [(ngModel)]="chain.Kchain_desc" name="Kchain_desc" required>
+    </clr-input-container>
+    <clr-input-container>
+        <label>Exchanges</label>
+        <label>{{chain.exchanges.join(' - ')}}</label>
+    </clr-input-container>
+    <br>
+    <button type="button" class="btn btn-outline" (click)="onCancel()">Cancel</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!dataForm.form.valid">Ok</button>
+</form>

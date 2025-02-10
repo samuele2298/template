@@ -1,0 +1,41 @@
+<clr-modal [(clrModalOpen)]="isModalOpen">
+    <h3 class="modal-title">Insert new setting</h3>
+    <div class="modal-body">
+        <form clrForm [formGroup]="newSettingForm">
+            <clr-input-container>
+                <label class="clr-required-mark">Name</label>
+                <input cds-layout="container:fill" clrInput name="Ksetting_name" autocomplete="off" formControlName="Ksetting_name"/>
+            </clr-input-container>
+            <clr-input-container>
+                <label class="clr-required-mark">Value</label>
+                <input cds-layout="container:fill" clrInput name="Ksetting_value" autocomplete="off" formControlName="Ksetting_value"/>
+            </clr-input-container>
+            <clr-input-container>
+                <label class="clr-required-mark">Description</label>
+                <input cds-layout="container:fill" clrInput name="Ksetting_desc" autocomplete="off" formControlName="Ksetting_desc"/>
+            </clr-input-container>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-outline" type="button" (click)="isModalOpen = false">Cancel</button>
+        <button class="btn btn-primary" type="button" (click)="insertNewSetting()" [disabled]="!newSettingForm.valid">Ok</button>
+    </div>
+</clr-modal>
+<clr-alert *ngIf="settingSet" [clrAlertType]="alertType">
+    <clr-alert-item>
+        <span class="alert-text">{{alertText}}</span>
+    </clr-alert-item>
+</clr-alert>
+<button type="button" class="btn btn-sm btn-primary" (click)="isModalOpen=true">New Setting</button>
+<div cds-layout="grid cols@sm:6 cols@md:4 gap:md">
+<div class="card" *ngFor="let setting of settings">
+    <h3 class="card-header">{{setting.Ksetting_name}}</h3>
+    <div class="card-block">
+        <div class="card-text">{{setting.Ksetting_desc}}</div>
+        <input clrInput placeholder="value" name="Ksetting_value" [(ngModel)]="setting.Ksetting_value" />
+    </div>
+    <div class="card-footer">
+        <button class="btn btn-sm btn-link" (click)="setSetting(setting)">SET</button>
+    </div>
+</div>
+</div>

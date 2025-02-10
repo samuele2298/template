@@ -1,0 +1,13 @@
+.wrap-text {
+    white-space: normal;
+    word-break: break-all;
+    /* oppure word-break: break-word; */
+}
+
+.ellipsis-text {
+    white-space: normal;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+  }

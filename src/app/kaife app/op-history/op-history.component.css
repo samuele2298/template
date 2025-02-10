@@ -1,0 +1,28 @@
+.color-square {
+    display: inline-block;
+    vertical-align: text-bottom;
+    height: var(--cds-global-space-7);
+    width: var(--cds-global-space-7);
+    border: var(--cds-alias-object-border-width-100) solid var(--cds-global-color-construction-1000);
+    border-radius: 0.2rem;
+}
+.pair-color-square {
+    display: inline-block;
+    vertical-align: text-bottom;
+    height: var(--cds-global-space-7);
+    width: var(--cds-global-space-7);
+    border: var(--cds-alias-object-border-width-100) solid var(--cds-global-color-construction-1000);
+    border-radius: 0.2rem;
+    margin-right: 0.5vw;  
+}
+
+.oprow {
+    background-color: darkslategray;
+}
+.separator {
+    width: 1px;
+    padding: 0;
+    margin: 0;
+    background-color: white;
+    opacity: 0.5;
+}

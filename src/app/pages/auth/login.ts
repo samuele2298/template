@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -7,11 +7,16 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
 import { AppFloatingConfigurator } from '../../layout/component/app.floatingconfigurator';
+import { AuthService } from '../../auth.service';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { first } from 'rxjs';
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports: [ButtonModule, CheckboxModule, InputTextModule, PasswordModule, FormsModule, RouterModule, RippleModule, AppFloatingConfigurator],
+    imports: [ButtonModule, CheckboxModule, InputTextModule, PasswordModule, FormsModule, RouterModule, RippleModule, AppFloatingConfigurator,  ReactiveFormsModule],
     template: `
         <app-floating-configurator />
         <div class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden">
@@ -40,12 +45,12 @@ import { AppFloatingConfigurator } from '../../layout/component/app.floatingconf
                             <span class="text-muted-color font-medium">Sign in to continue</span>
                         </div>
 
-                        <div>
+                        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login">
                             <label for="email1" class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Email</label>
-                            <input pInputText id="email1" type="text" placeholder="Email address" class="w-full md:w-[30rem] mb-8" [(ngModel)]="email" />
+                            <input pInputText id="email1" formControlName="email" type="text" placeholder="Email address" class="w-full md:w-[30rem] mb-8" [(ngModel)]="email" />
 
                             <label for="password1" class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2">Password</label>
-                            <p-password id="password1" [(ngModel)]="password" placeholder="Password" [toggleMask]="true" styleClass="mb-4" [fluid]="true" [feedback]="false"></p-password>
+                            <p-password id="password1" [(ngModel)]="password" formControlName="password" placeholder="Password" [toggleMask]="true" styleClass="mb-4" [fluid]="true" [feedback]="false"></p-password>
 
                             <div class="flex items-center justify-between mt-2 mb-8 gap-8">
                                 <div class="flex items-center">
@@ -54,8 +59,8 @@ import { AppFloatingConfigurator } from '../../layout/component/app.floatingconf
                                 </div>
                                 <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary">Forgot password?</span>
                             </div>
-                            <p-button label="Sign In" styleClass="w-full" routerLink="/"></p-button>
-                        </div>
+                            <p-button label="Sign In" styleClass="w-full" type="submit" routerLink="/"></p-button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -67,5 +72,58 @@ export class Login {
 
     password: string = '';
 
-    checked: boolean = false;
+    checked: boolean = false; 
+
+    form = new FormGroup({
+        email: new FormControl('', [Validators.email, Validators.required]),
+        password: new FormControl('', [Validators.required])
+    });
+
+    private authService = inject(AuthService);
+    private router = inject(Router);
+    private route = inject(ActivatedRoute);
+    loading = false;
+    submitted = false;
+    error = '';
+
+    constructor() {
+        if (this.authService.userValue) {
+            this.router.navigate(['/']);
+        }
+    }
+    
+    onSubmit() {
+        this.submitted = true;
+
+        if (this.form.invalid) {
+            this.error = 'Invalid data';
+            return;
+        }
+        this.error = '';
+        this.loading = true;
+        if (this.form.value.email === undefined || this.form.value.email === null) {
+            this.error = 'email required';
+            this.loading = false;
+            return;
+        }
+        if (this.form.value.password === undefined || this.form.value.password === null) {
+            this.error = 'password required';
+            this.loading = false;
+            return;
+        }
+        const email = this.form.value.email?.trim();
+        const password = this.form.value.password?.trim();
+        this.authService.login(email, password)
+            .pipe(first())
+            .subscribe({
+            next: () => {
+                const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/opportunity';
+                this.router.navigate([returnUrl]);
+            },
+            error: error => {
+                this.error = error;
+                this.loading = false;
+            }
+        })
+    }
 }

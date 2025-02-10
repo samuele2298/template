@@ -1,0 +1,25 @@
+<div cds-layout="horizontal gap:sm" class="clr-align-items-center">
+    <button [clrLoading]="loadingBalState" type="button" class="btn btn-sm" (click)="getChainList()">Reload</button>
+    <button type="button" class="btn btn-sm btn-primary" routerLink="add">New Chain</button>
+    <div><input clrInput placeholder="search..." [(ngModel)]="searchFilter" (keyup)="applySearchFilter()"></div>
+</div>
+<div>
+    <clr-datagrid>
+        <clr-dg-column [clrDgField]="'id'" [clrDgSortOrder]="ascSort">
+            <ng-container *clrDgHideableColumn="{ hidden: false }">ID</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kchain_desc'" [clrDgSortOrder]="ascSort">Chain Desc</clr-dg-column>
+        <clr-dg-column [clrDgField]="'exchanges'" [clrDgSortOrder]="ascSort">Configured Exchanges</clr-dg-column>
+        <clr-dg-row *clrDgItems="let chain of chains">
+            <clr-dg-action-overflow>
+                <button class="action-item" [routerLink]="['edit', chain.id]">Edit</button>
+                <button class="action-item" (click)="onDelete(chain)">Delete</button>
+            </clr-dg-action-overflow>
+            <clr-dg-cell>{{chain.id}}</clr-dg-cell>
+            <clr-dg-cell>{{chain.Kchain_desc}}</clr-dg-cell>
+            <clr-dg-cell>{{chain.exchanges.join(' - ')}}</clr-dg-cell>
+        </clr-dg-row>
+
+        <clr-dg-footer>{{ chains.length }} chains</clr-dg-footer>
+    </clr-datagrid>
+</div>

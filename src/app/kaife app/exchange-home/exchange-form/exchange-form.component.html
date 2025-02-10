@@ -1,0 +1,75 @@
+<div *ngIf="fetchingData" class="progress loop"><progress></progress></div>
+<form clrForm #dataForm="ngForm" (ngSubmit)="onSubmit()">
+    <clr-input-container>
+        <label class="clr-required-mark">Exchange Name</label>
+        <input size=40 clrInput type="text" [(ngModel)]="exchange.Kexch_name" name="Kexch_name" required>
+    </clr-input-container>
+    <clr-select-container>
+        <label>Status</label>
+        <select clrSelect name="Kexch_status" [(ngModel)]="exchange.Kexch_status">
+            <option value="0">0 - Disabled</option>
+            <option value="1">1 - Enabled</option>
+            <option value="2">2 - Read only prices</option>
+        </select>
+    </clr-select-container>
+    <clr-input-container>
+        <label>API Key</label>
+        <input size=40 clrInput type="text" [(ngModel)]="exchange.Kexch_apikey" name="Kexch_apikey">
+    </clr-input-container>
+    <clr-input-container>
+        <label>API Secret</label>
+        <input size=40 clrInput type="text" [(ngModel)]="exchange.Kexch_apisecret" name="Kexch_apisecret">
+    </clr-input-container>
+    <clr-input-container>
+        <label>Subscribe command</label>
+        <input size=40 clrInput type="text" [(ngModel)]="exchange.Kexch_subscribe" name="Kexch_subscribe">
+    </clr-input-container>
+    <clr-input-container>
+        <label>Unsubscribe command</label>
+        <input size=40 clrInput type="text" [(ngModel)]="exchange.Kexch_unsubscribe" name="Kexch_unsubscribe">
+    </clr-input-container>
+    <clr-input-container>
+        <label>Kexch URL</label>
+        <input size=40 clrInput type="text" [(ngModel)]="exchange.Kexch_url" name="Kexch_url">
+        <clr-control-helper>ex. wss://api.mexc.com/ws</clr-control-helper>
+    </clr-input-container>
+    <clr-input-container>
+        <label>Ping command</label>
+        <input size=40 clrInput type="text" [(ngModel)]="exchange.Kexch_pingcmd" name="Kexch_pingcmd">
+        <clr-control-helper>ex. "ping"</clr-control-helper>
+    </clr-input-container>
+    <clr-input-container>
+        <label>Ping timeout seconds</label>
+        <input size=40 clrInput type="number" [(ngModel)]="exchange.Kexch_pinginterval" name="Kexch_pinginterval">
+        <clr-control-helper>ex. 15</clr-control-helper>
+    </clr-input-container>
+    <clr-input-container>
+        <label>Topic</label>
+        <input size=40 clrInput type="text" [(ngModel)]="exchange.Kexch_topic" name="Kexch_topic">
+        <clr-control-helper>ex $Symbol1/$Symbol2 for BTC/USDT</clr-control-helper>
+    </clr-input-container>
+    <clr-input-container>
+        <label>Exchange Fee %</label>
+        <input size=40 clrInput type="number" [(ngModel)]="exchange.Kexch_fee" name="Kexch_fee">
+        <clr-control-helper>ex. 0.1</clr-control-helper>
+    </clr-input-container>
+    <clr-input-container>
+        <label>Discount Fee %</label>
+        <input size=40 clrInput type="number" [(ngModel)]="exchange.Kexch_feediscount" name="Kexch_feediscount">
+        <clr-control-helper>ex. 20</clr-control-helper>
+    </clr-input-container>
+    <clr-input-container>
+        <label>Desc</label>
+        <input size=40 clrInput type="text" [(ngModel)]="exchange.Kexch_desc" name="Kexch_desc">
+        <clr-control-helper>note</clr-control-helper>
+    </clr-input-container>
+    <clr-toggle-container>
+        <label>Watch</label>
+        <clr-toggle-wrapper>
+            <input type="checkbox" clrToggle [(ngModel)]="exchange.Kexch_watch" name="Kexch_watch">
+        </clr-toggle-wrapper>
+    </clr-toggle-container>
+    <br>
+    <button type="button" class="btn btn-outline" (click)="onCancel()">Cancel</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!dataForm.form.valid">Ok</button>
+</form>

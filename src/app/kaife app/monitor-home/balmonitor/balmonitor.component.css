@@ -1,0 +1,101 @@
+.leftbord {
+    border-left: 1px solid var(--clr-table-border-color);
+}
+
+.lowbal {
+    background-color: #d80000;
+}
+
+.lowthrstotbal {
+    color: #d80000;
+}
+
+.highthrstotbal {
+    color: #7b23ff;
+}
+
+.lowbalthrs {
+    background-color: #800000;
+}
+
+.highbal {
+    background-color: #7b23ff;
+}
+
+.highbalthrs {
+    background-color: #300078;
+}
+
+.notconfigured {
+    background-color: #1a2429;
+}
+
+.stdisabled {
+    background-color: #1a2429;
+    --clr-progress-default-color: #91919120;
+    --clr-progress-bg-color: #2d404820;
+}
+
+.stnotallowed {
+    background-color: #333333;
+    --clr-progress-default-color: #91919120;
+    --clr-progress-bg-color: #2d404820;
+}
+
+.stinprogressgreen {
+    --clr-progress-default-color: #408f44;
+}
+
+.stinprogressred {
+    --clr-progress-default-color: #8a2b2b;
+}
+
+.stnotallowednowatch {
+    background-color: #262626;
+    --clr-progress-default-color: #c9474720;
+    --clr-progress-bg-color: #2d404820;
+}
+
+.stonlydata {
+    opacity: 0.4;
+}
+
+clr-progress-bar {
+    --clr-progress-default-color: #919191;
+}
+
+.wdProgressReceiver {
+    border: 2px solid #7fdb16 ;
+}
+
+.wdProgressSender {
+    border: 2px solid #dba316 ;
+}
+
+.wdProgressOutdate {
+    border: 2px solid #851ba5 ;
+}
+
+.wdProgressOutdateOnlyData {
+    border: 2px solid #851ba5 ;
+    opacity: 0.4;
+}
+
+.totProgressPositive{
+    --clr-progress-default-color: #489136;
+}
+
+.totProgressNegative{
+    --clr-progress-bg-color: #9e0c0c;
+    --clr-progress-default-color: #2d4048;
+}
+
+/* 
+tr:hover {
+    opacity: 0.7;
+} */
+
+td {
+    padding-top: 5px;
+    padding-bottom: 0px;
+}

@@ -1,0 +1,32 @@
+<div cds-layout="horizontal gap:sm" class="clr-align-items-center">
+    <button [clrLoading]="loadingBalState" type="button" class="btn btn-sm" (click)="getChainrefList()">Reload</button>
+    <button type="button" class="btn btn-sm btn-primary" routerLink="add">New ChainRef</button>
+    <div><input clrInput placeholder="search..." [(ngModel)]="searchFilter" (keyup)="applySearchFilter()"></div>
+</div>
+
+<div>
+    <clr-datagrid>
+        <clr-dg-column>
+            <ng-container *clrDgHideableColumn="{ hidden: true }">ID</ng-container>
+        </clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kchainref_Kchain_id'" [clrDgSortOrder]="ascSort">Chain Number</clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kchain_desc'" [clrDgSortOrder]="ascSort">Chain Desc</clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kchainref_name'" [clrDgSortOrder]="ascSort">Name</clr-dg-column>
+        <clr-dg-column [clrDgField]="'Kchainref_Kexch_id'" [clrDgSortOrder]="ascSort">Exchange</clr-dg-column>
+
+        <clr-dg-row *clrDgItems="let chainref of chainrefs">
+            <clr-dg-action-overflow>
+                <button class="action-item" [routerLink]="['edit', chainref.id]">Edit</button>
+                <button class="action-item" (click)="onDelete(chainref)">Delete</button>
+            </clr-dg-action-overflow>
+            <clr-dg-cell>{{chainref.id}}</clr-dg-cell>
+            <clr-dg-cell>
+                <a href="javascript://" [routerLink]="['edit', chainref.id]">{{chainref.Kchainref_Kchain_id}}</a>
+            </clr-dg-cell>
+            <clr-dg-cell>{{chainref.Kchain_desc}}</clr-dg-cell>
+            <clr-dg-cell>{{chainref.Kchainref_name}}</clr-dg-cell>
+            <clr-dg-cell>{{getExchangeName(chainref.Kchainref_Kexch_id.toString().padStart(3, '0'))}}</clr-dg-cell>
+        </clr-dg-row>
+        <clr-dg-footer>{{ chainrefs.length }} Chains</clr-dg-footer>
+    </clr-datagrid>
+</div>

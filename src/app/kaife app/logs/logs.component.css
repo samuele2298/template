@@ -1,0 +1,10 @@
+.limit-height clr-datagrid {
+    height: 300px;
+}
+.limit-height-small clr-datagrid {
+    height: 150px;
+}
+
+.limit-height-large clr-datagrid {
+    height: 450px;
+}

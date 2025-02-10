@@ -1,0 +1,105 @@
+<clr-modal [(clrModalOpen)]="isModalOpen">
+    <h3 class="modal-title">{{modalTitle}}</h3>
+    <div class="modal-body">
+        <div style="overflow-y: scroll;">{{modalBody}}</div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-outline" type="button" (click)="isModalOpen = false">Close</button>
+    </div>
+</clr-modal>
+
+<p>Withdrawal <button class="btn btn-link" (click)="withdrawal_messages.length = 0">Clear</button></p>
+<div style="display: flex; flex-direction: row; align-items: center;">
+    <button class="btn btn-sm" (click)="filterForBatch(1)">1°Last</button>
+    <button class="btn btn-sm" (click)="filterForBatch(2)">2°Last</button>
+    <button class="btn btn-sm" (click)="filterForBatch(3)">3°Last</button>
+    <button class="btn btn-sm" (click)="filterForBatch(4)">4°Last</button>
+    <button class="btn btn-sm" (click)="filterForBatch(5)">5°Last</button>
+    <button class="btn btn-sm" (click)="filterForBatch(0)">All</button>
+</div>
+<div class="limit-height">
+    <clr-datagrid class="datagrid-compact">
+        <clr-dg-column [clrDgField]="'date'" [clrDgSortOrder]="descSort">Date</clr-dg-column>
+        <clr-dg-column [clrDgField]="'message'">Result</clr-dg-column>
+        <clr-dg-column [clrDgField]="'message'">Coin</clr-dg-column>
+        <clr-dg-column [clrDgField]="'message'">Source</clr-dg-column>
+        <clr-dg-column [clrDgField]="'message'">Dest</clr-dg-column>
+        <clr-dg-column [clrDgField]="'message'">Chain</clr-dg-column>
+        <clr-dg-column [clrDgField]="'message'">Status</clr-dg-column>
+        <clr-dg-column>Data</clr-dg-column>
+
+        <clr-dg-row *clrDgItems="let record of withdrawal_filtered_messages">
+            <clr-dg-cell>{{ record.date | date:'yyyy-MM-dd HH:mm:ss':'UTC' }}</clr-dg-cell>
+            <clr-dg-cell>{{ parseLog(record.message).result }}</clr-dg-cell>            
+            <clr-dg-cell>{{ parseLog(record.message).coin }}</clr-dg-cell>            
+            <clr-dg-cell>{{ parseLog(record.message).source }}</clr-dg-cell>            
+            <clr-dg-cell>{{ parseLog(record.message).dest }}</clr-dg-cell>            
+            <clr-dg-cell>{{ parseLog(record.message).chain }}</clr-dg-cell>            
+            <clr-dg-cell>{{ parseLog(record.message).status }}</clr-dg-cell>            
+            <clr-dg-cell><a href="javascript://" (click)="viewData(record)">View Data</a></clr-dg-cell>
+        </clr-dg-row>
+    </clr-datagrid>
+</div>
+
+<p>Urgent <button class="btn btn-link" (click)="clearUrgentLogs()">Clear</button></p>
+<div class="limit-height-large">
+    <clr-datagrid class="datagrid-compact">
+        <clr-dg-column [clrDgField]="'date'" [clrDgSortOrder]="descSort">Date</clr-dg-column>
+        <clr-dg-column [clrDgField]="'message'">Software</clr-dg-column>
+        <clr-dg-column [clrDgField]="'message'">Error</clr-dg-column>
+        <clr-dg-column>Data</clr-dg-column>
+
+        <clr-dg-row *clrDgItems="let record of urgent_messages">
+            <clr-dg-cell>{{ record.date | date:'yyyy-MM-dd HH:mm:ss':'UTC' }}</clr-dg-cell>
+            <clr-dg-cell>{{ parseUrgentLog(record.message).sw }}</clr-dg-cell>
+            <clr-dg-cell>{{ parseUrgentLog(record.message).error }}</clr-dg-cell>
+            <clr-dg-cell><a href="javascript://" (click)="viewData(record)">View Data</a></clr-dg-cell>
+        </clr-dg-row>
+    </clr-datagrid>
+</div>
+
+<p>Balance KO <button class="btn btn-link" (click)="balance_messages.length = 0">Clear</button></p>
+<div class="limit-height-small">
+    <clr-datagrid class="datagrid-compact">
+        <clr-dg-column [clrDgField]="'date'" [clrDgSortOrder]="descSort">Date</clr-dg-column>
+        <clr-dg-column [clrDgField]="'message'">Message</clr-dg-column>
+        <clr-dg-column>Data</clr-dg-column>
+
+        <clr-dg-row *clrDgItems="let record of balance_messages">
+            <clr-dg-cell>{{ record.date | date:'yyyy-MM-dd HH:mm:ss':'UTC' }}</clr-dg-cell>
+            <clr-dg-cell>{{ record.message }}</clr-dg-cell>
+            <clr-dg-cell><a href="javascript://" (click)="viewData(record)">View Data</a></clr-dg-cell>
+        </clr-dg-row>
+    </clr-datagrid>
+</div>
+
+<p>No trading enabled <button class="btn btn-link" (click)="notrading_messages.length = 0">Clear</button></p>
+<div class="limit-height-small">
+    <clr-datagrid class="datagrid-compact">
+        <clr-dg-column [clrDgField]="'date'" [clrDgSortOrder]="descSort">Date</clr-dg-column>
+        <clr-dg-column [clrDgField]="'message'">Message</clr-dg-column>
+        <clr-dg-column>Data</clr-dg-column>
+
+        <clr-dg-row *clrDgItems="let record of notrading_messages">
+            <clr-dg-cell>{{ record.date | date:'yyyy-MM-dd HH:mm:ss':'UTC' }}</clr-dg-cell>
+            <clr-dg-cell>{{ record.message }}</clr-dg-cell>
+            <clr-dg-cell><a href="javascript://" (click)="viewData(record)">View Data</a></clr-dg-cell>
+        </clr-dg-row>
+    </clr-datagrid>
+</div>
+
+<p>Pair found (opportunity running) <button class="btn btn-link" (click)="pairfound_messages.length = 0">Clear</button></p>
+<div class="limit-height-small">
+    <clr-datagrid class="datagrid-compact">
+        <clr-dg-column [clrDgField]="'date'" [clrDgSortOrder]="descSort">Date</clr-dg-column>
+        <clr-dg-column [clrDgField]="'message'">Message</clr-dg-column>
+        <clr-dg-column>Data</clr-dg-column>
+
+        <clr-dg-row *clrDgItems="let record of pairfound_messages">
+            <clr-dg-cell>{{ record.date | date:'yyyy-MM-dd HH:mm:ss':'UTC' }}</clr-dg-cell>
+            <clr-dg-cell>{{ record.message }}</clr-dg-cell>
+            <clr-dg-cell><a href="javascript://" (click)="viewData(record)">View Data</a></clr-dg-cell>
+        </clr-dg-row>
+    </clr-datagrid>
+</div>
+
