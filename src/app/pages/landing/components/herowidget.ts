@@ -36,7 +36,7 @@ import { RippleModule } from 'primeng/ripple';
                 <div class="flex justify-center font-medium text-md">
                     <form class="mt-6 flex flex-col items-center sm:flex-row sm:gap-x-3">
                         <div class="sm:pt-0 pt-3">
-                            <a class="py-2.5 px-4 text-center rounded-full duration-150 flex items-center justify-center gap-x-1 h-12 text-white bg-purple-600 hover:bg-purple-700 ring-offset-2 ring-blue-600 focus:ring shadow rounded-lg active:bg-gray-900"
+                            <a class="py-2.5 px-4 text-center rounded-full duration-150 flex items-center justify-center gap-x-1 h-12 text-[var(--text-light)] bg-[var(--primary)] hover:bg-[var(--primary-shadow)] ring-offset-2 ring-blue-600 focus:ring shadow rounded-lg active:bg-gray-900"
                                 style="background-color:#333" href="">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor"
                                     viewBox="0 0 24 24">
@@ -48,7 +48,7 @@ import { RippleModule } from 'primeng/ripple';
                             </a>
                         </div>
                         <div class="sm:pt-0 pt-3">
-                            <a class="py-2.5 px-4 dark:bg-[var(--primary)] text-center rounded-full duration-150 flex items-center justify-center gap-x-1 h-12 text-white bg-purple-600 hover:bg-purple-700 ring-offset-2 ring-blue-600 focus:ring shadow rounded-lg active:bg-gray-900" 
+                            <a class="py-2.5 px-4 dark:bg-[var(--primary)] text-center rounded-full duration-150 flex items-center justify-center gap-x-1 h-12 text-[var(--text-light)] bg-[var(--primary)] hover:bg-[var(--primary-shadow)] ring-offset-2 ring-blue-600 focus:ring shadow rounded-lg active:bg-gray-900" 
                                 href="">
                                 <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">

@@ -3,6 +3,14 @@
       "target": "http://127.0.0.1:3000",
       "secure": false
     },
+    "/emailjs": {
+      "target": "https://api.emailjs.com",
+      "secure": false,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/emailjs": ""
+      }
+    },
     "/ws": {
       "target": "http://127.0.0.1:3000",
       "secure": false,

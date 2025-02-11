@@ -101,7 +101,7 @@ import { RippleModule } from 'primeng/ripple';
                             Contact Us
                         </h2>
                         <ul class="list-none pl-0 text-gray-600 space-y-2">
-                            <li><strong>Email:</strong> <a href="mailto:support@bongochat.com.bd" class="text-[#006A4E] hover:underline">supportbongochat.com.bd</a></li>
+                            <li><strong>Email:</strong> <a href="mailto:supportbongochat.com.bd" class="text-[#006A4E] hover:underline">supportbongochat.com.bd</a></li>
                             <li><strong>Address:</strong> Jashore, Bangladesh</li>
                         </ul>
                     </section>

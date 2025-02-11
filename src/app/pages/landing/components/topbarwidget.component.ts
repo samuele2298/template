@@ -26,7 +26,7 @@ import { ButtonModule } from 'primeng/button';
                     />
                 </g>
             </svg>
-            <span class="text-surface-900 dark:text-surface-0 font-medium text-2xl leading-normal mr-20">Sonic</span>
+            <span class="text-[var(--text-light)] dark:text-[var(--text-light)] font-medium text-2xl leading-normal mr-20">Sonic</span>
         </a>
 
         <a pButton [text]="true" severity="secondary" [rounded]="true" pRipple class="lg:!hidden" pStyleClass="@next" enterClass="hidden" leaveToClass="hidden" [hideOnOutsideClick]="true">
@@ -36,32 +36,32 @@ import { ButtonModule } from 'primeng/button';
         <div class="items-center bg-[var(--background)] dark:bg-[var(--background)] grow justify-between hidden lg:flex absolute lg:static w-full left-0 top-full px-12 lg:px-0 z-20 rounded-border">
             <ul class="list-none p-0 m-0 flex lg:items-center select-none flex-col lg:flex-row cursor-pointer gap-8">
                 <li>
-                    <a (click)="router.navigate(['/landing'], { fragment: 'home' })" pRipple class="px-0 py-4 text-surface-900 dark:text-surface-0 font-medium text-xl">
+                    <a (click)="router.navigate(['/landing'], { fragment: 'home' })" pRipple class="px-0 py-4 text-[var(--text-light)] dark:text-[var(--text-light)] font-medium text-xl">
                         <span>Home</span>
                     </a>
                 </li>
                 <li>
-                    <a (click)="router.navigate(['/landing'], { fragment: 'features' })" pRipple class="px-0 py-4 text-surface-900 dark:text-surface-0 font-medium text-xl">
+                    <a (click)="router.navigate(['/landing'], { fragment: 'features' })" pRipple class="px-0 py-4 text-[var(--text-light)] dark:text-[var(--text-light)] font-medium text-xl">
                         <span>Features</span>
                     </a>
                 </li>
                 <!-- <li>
-                    <a (click)="router.navigate(['/landing'], { fragment: 'highlights' })" pRipple class="px-0 py-4 text-surface-900 dark:text-surface-0 font-medium text-xl">
+                    <a (click)="router.navigate(['/landing'], { fragment: 'highlights' })" pRipple class="px-0 py-4 text-[var(--text-light)] dark:text-[var(--text-light)] font-medium text-xl">
                         <span>Highlights</span>
                     </a>
                 </li> -->
                 <li>
-                    <a (click)="router.navigate(['/landing'], { fragment: 'testimonials' })" pRipple class="px-0 py-4 text-surface-900 dark:text-surface-0 font-medium text-xl">
+                    <a (click)="router.navigate(['/landing'], { fragment: 'testimonials' })" pRipple class="px-0 py-4 text-[var(--text-light)] dark:text-[var(--text-light)] font-medium text-xl">
                         <span>Testimonials</span>
                     </a>
                 </li>
                 <li>
-                    <a (click)="router.navigate(['/landing'], { fragment: 'pricing' })" pRipple class="px-0 py-4 text-surface-900 dark:text-surface-0 font-medium text-xl">
+                    <a (click)="router.navigate(['/landing'], { fragment: 'pricing' })" pRipple class="px-0 py-4 text-[var(--text-light)] dark:text-[var(--text-light)] font-medium text-xl">
                         <span>Pricing</span>
                     </a>
                 </li>
                 <!-- <li>
-                    <a (click)="router.navigate(['/landing'], { fragment: 'comparison' })" pRipple class="px-0 py-4 text-surface-900 dark:text-surface-0 font-medium text-xl">
+                    <a (click)="router.navigate(['/landing'], { fragment: 'comparison' })" pRipple class="px-0 py-4 text-[var(--text-light)] dark:text-[var(--text-light)] font-medium text-xl">
                         <span>Comparison</span>
                     </a>
                 </li> -->
@@ -86,7 +86,7 @@ import { ButtonModule } from 'primeng/button';
                     style="background-color: var(--primary); color: var(--text-light)">
                 </button> -->
                 <div class="sm:pt-0 pt-3">
-                    <a class="py-2.5 px-4 dark:bg-[var(--primary)] text-center rounded-full duration-150 flex items-center justify-center gap-x-1 h-12 text-white bg-purple-600 hover:bg-purple-700 ring-offset-2 ring-blue-600 focus:ring shadow rounded-lg active:bg-gray-900" 
+                    <a class="py-2.5 px-4 dark:bg-[var(--primary)] text-center rounded-full duration-150 flex items-center justify-center gap-x-1 h-12 text-[var(--text-light)] bg-[var(--primary)] hover:bg-[var(--primary-shadow)] ring-offset-2 ring-blue-600 focus:ring shadow rounded-lg active:bg-gray-900" 
                         href="">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor"
                             viewBox="0 0 24 24">
@@ -98,7 +98,7 @@ import { ButtonModule } from 'primeng/button';
                     </a>
                 </div>
                 <div class="sm:pt-0 pt-3">
-                    <a class="py-2.5 px-4 dark:bg-[var(--primary)] text-center rounded-full duration-150 flex items-center justify-center gap-x-1 h-12 text-white bg-purple-600 hover:bg-purple-700 ring-offset-2 ring-blue-600 focus:ring shadow rounded-lg active:bg-gray-900" 
+                    <a class="py-2.5 px-4 dark:bg-[var(--primary)] text-center rounded-full duration-150 flex items-center justify-center gap-x-1 h-12 text-[var(--text-light)] bg-[var(--primary)] hover:bg-[var(--primary-shadow)] ring-offset-2 ring-blue-600 focus:ring shadow rounded-lg active:bg-gray-900" 
                         href="">
                         <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">

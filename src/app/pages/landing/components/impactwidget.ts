@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
                 </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <!-- User Count -->
-                <div class="flex flex-col items-center p-8 bg-[var(--primary)] rounded-lg shadow-lg hover:shadow-xl transition-shadow shadow-[var(--primary-shadow)]">
+                <div class="flex flex-col items-center p-8 bg-[var(--background-light)] rounded-lg shadow-lg hover:shadow-xl transition-shadow shadow-[var(--background-light-shadow)]">
                     <div
                     class="mb-6 flex items-center justify-center w-28 h-28 rounded-full bg-gradient-to-r from-purple-500 to-pink-400 p-1">
                     <div class="w-full h-full rounded-full bg-white flex items-center justify-center">
@@ -32,7 +32,7 @@ import { CommonModule } from '@angular/common';
                     <div class="text-[var(--text-light)]">Users</div>
                 </div>
                 <!-- Documents Count -->
-                <div class="flex flex-col items-center p-8 bg-[var(--primary)] rounded-lg shadow-lg hover:shadow-xl transition-shadow shadow-[var(--primary-shadow)]">
+                <div class="flex flex-col items-center p-8 bg-[var(--background-light)] rounded-lg shadow-lg hover:shadow-xl transition-shadow shadow-[var(--background-light-shadow)]">
                     <div
                     class="mb-6 flex items-center justify-center w-28 h-28 rounded-full bg-gradient-to-r from-purple-500 to-pink-400 p-1">
                     <div class="w-full h-full rounded-full bg-white flex items-center justify-center">
@@ -48,7 +48,7 @@ import { CommonModule } from '@angular/common';
                     <div class="text-[var(--text-light)]">Papers and Documents Processed</div>
                 </div>
                 <!-- Languages Supported -->
-                <div class="flex flex-col items-center p-8 bg-[var(--primary)] rounded-lg shadow-lg hover:shadow-xl transition-shadow shadow-[var(--primary-shadow)]">
+                <div class="flex flex-col items-center p-8 bg-[var(--background-light)] rounded-lg shadow-lg hover:shadow-xl transition-shadow shadow-[var(--background-light-shadow)]">
                     <div
                     class="mb-6 flex items-center justify-center w-28 h-28 rounded-full bg-gradient-to-r from-purple-500 to-pink-400 p-1">
                     <div class="w-full h-full rounded-full bg-white flex items-center justify-center">

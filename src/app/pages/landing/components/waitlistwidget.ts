@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms'; 
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
     selector: 'waitlist-widget',
+    standalone: true,
+    imports: [FormsModule], // Import FormsModule here for standalone components
     template: `
         <div id="waitlist" class="mx-auto my-12 max-w-7xl px-6 sm:my-16 lg:px-8">
             <div class="relative isolate overflow-hidden bg-[var(--background-light)] px-6 py-24 shadow-2xl rounded-2xl sm:rounded-3xl sm:px-24 xl:py-32">
@@ -13,12 +18,17 @@ import { Component } from '@angular/core';
                     Waitlist..
                 </p>
 
-                <form class="mx-auto mt-10 flex max-w-md gap-x-4">
+                <form class="mx-auto mt-10 flex max-w-md gap-x-4" (ngSubmit)="sendEmail($event)">
 
                     <label for="email-address" class="sr-only">Email address</label>
-                    <input id="email-address" name="email" type="email" autocomplete="email" required="" class="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6" placeholder="Enter your email">
+                    <input id="email-address" name="email" type="email" [(ngModel)]="email" autocomplete="email" required
+                        class="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6"
+                        placeholder="Enter your email">
 
-                    <button type="submit" class="flex-none rounded-md bg-[var(--primary)] px-3.5 py-2.5 text-sm font-semibold text-[var(--text-light)] shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Notify me</button>
+                    <button type="submit" [disabled]="loading"
+                        class="flex-none rounded-md bg-[var(--primary)] px-3.5 py-2.5 text-sm font-semibold text-[var(--text-light)] shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                        {{ loading ? 'Sending...' : 'Notify me' }}
+                    </button>
                 </form>
 
                 <svg viewBox="0 0 1024 1024" class="absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-x-1/2"
@@ -36,6 +46,45 @@ import { Component } from '@angular/core';
 
             </div>
         </div>
-    `
+    `,
+    styles: [`input:disabled, button:disabled { opacity: 0.5; cursor: not-allowed; }`]
 })
-export class WaitlistWidget {}
+export class WaitlistWidget {
+    email: string = '';
+    loading: boolean = false;
+    message: string = '';
+    errorMessage: string = '';
+
+    constructor(private http: HttpClient) {}
+
+    sendEmail(event: Event) {
+        event.preventDefault();
+        if (!this.email) return;
+
+        this.loading = true;
+        this.message = '';
+        this.errorMessage = '';
+
+        const emailData = {
+            service_id: environment.EMAILJS_SERVICE_ID as string,
+            template_id: environment.EMAILJS_TEMPLATE_ID as string,
+            user_id: environment.EMAILJS_USER_ID as string,
+            template_params: { email: this.email }
+        };
+        this.http.post('/emailjs/v1.0/email/send', emailData).subscribe({
+            next: () => {
+                this.message = 'You have been added to the waitlist!';
+                this.email = ''; // Reset input
+            },
+            error: (error) => {
+                this.errorMessage = 'Failed to join the waitlist. Please try again later.';
+                console.error('EmailJS Error:', error);
+            },
+            complete: () => {
+                this.loading = false;
+            }
+        });
+    }
+
+
+}
