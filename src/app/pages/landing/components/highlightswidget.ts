@@ -3,11 +3,14 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'highlights-widget',
     template: `
-        <div id="highlights" class="py-6 px-6 lg:px-20 mx-0 my-12 lg:mx-20">
-            <div class="text-center">
-                <div class="text-surface-900 dark:text-surface-0 font-normal mb-2 text-4xl">Powerful Everywhere</div>
-                <span class="text-muted-color text-2xl">Amet consectetur adipiscing elit...</span>
+        <div id="highlights" class="py-6 px-6 lg:px-10 mx-0 my-12 lg:mx-20">
+            <div class="relative mb-10  mx-auto max-w-7xl px-6 text-center lg:px-8">
+                <div class="mx-auto max-w-2xl lg:max-w-4xl">
+                <h2 class="text-lg font-semibold leading-8 text-[var(--primary)] dark:text-[var(--primary)]">Highlights</h2>
+                <p class="mt-2 text-4xl font-bold tracking-tight text-[var(--text-light)] dark:text-[var(--text-light)]">Highlights..</p>
+                </div>
             </div>
+
 
             <div class="grid grid-cols-12 gap-4 mt-20 pb-2 md:pb-20">
                 <div class="flex justify-center col-span-12 lg:col-span-6 bg-purple-100 p-0 order-1 lg:order-none" style="border-radius: 8px">

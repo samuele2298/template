@@ -5,7 +5,7 @@ import { Router, RouterModule } from '@angular/router';
     selector: 'footer-widget',
     imports: [RouterModule],
     template: `
-        <footer class="bg-[var(--background)] dark:bg-[var(--background)] px-8 lg:px-8">
+        <footer class="bg-[var(--background)] dark:bg-[var(--background)] px-12 lg:px-8">
             <div class="mx-auto w-full max-w-screen-xl p-4 py-8 lg:py-10">
                 <div class="md:flex md:justify-between">
                 <a class="flex items-center sm: mb-10" href="#">

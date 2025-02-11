@@ -3,15 +3,21 @@
 // Variabili di colore personalizzate
 $primary: #e149ff9c;  // Blu principale
 $primary-light: #3d64d19c;  // Blu principale
+$primary-shadow: #e149ff4d;  // Blu principale
 $text-dark: #312929;      // Testo scuro
 $text-light: #ffffff;      // Testo scuro
 $background: #202020;  // Sfondo scuro
+$background-light: #303030;  // Sfondo scuro
+$border: #ffffff52;      // Testo scuro
 
 // Esportiamo le variabili come CSS per Tailwind
 :root {
     --primary: #{$primary};
     --primary-light: #{$primary-light};
+    --primary-shadow: #{$primary-shadow};
     --text-dark: #{$text-dark};
     --text-light: #{$text-light};
     --background: #{$background};
+    --background-light: #{$background-light};
+    --border: #{$border};
 }
