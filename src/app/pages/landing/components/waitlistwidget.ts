@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; 
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 
 @Component({
     selector: 'waitlist-widget',
@@ -50,12 +50,14 @@ import { environment } from '../../../../environments/environment.development';
     styles: [`input:disabled, button:disabled { opacity: 0.5; cursor: not-allowed; }`]
 })
 export class WaitlistWidget {
+    private http = inject(HttpClient);
+    
     email: string = '';
     loading: boolean = false;
     message: string = '';
     errorMessage: string = '';
 
-    constructor(private http: HttpClient) {}
+    constructor() {}
 
     sendEmail(event: Event) {
         event.preventDefault();
@@ -65,25 +67,29 @@ export class WaitlistWidget {
         this.message = '';
         this.errorMessage = '';
 
-        const emailData = {
-            service_id: environment.EMAILJS_SERVICE_ID as string,
-            template_id: environment.EMAILJS_TEMPLATE_ID as string,
-            user_id: environment.EMAILJS_USER_ID as string,
-            template_params: { email: this.email }
-        };
-        this.http.post('/emailjs/v1.0/email/send', emailData).subscribe({
-            next: () => {
-                this.message = 'You have been added to the waitlist!';
-                this.email = ''; // Reset input
+        fetch('https://api.emailjs.com/api/v1.0/email/send', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
             },
-            error: (error) => {
-                this.errorMessage = 'Failed to join the waitlist. Please try again later.';
-                console.error('EmailJS Error:', error);
-            },
-            complete: () => {
-                this.loading = false;
+            body: JSON.stringify({
+				service_id: environment.EMAILJS_SERVICE_ID,   // Your Service ID
+				template_id: environment.EMAILJS_TEMPLATE_ID, // Your Template ID
+				user_id: environment.EMAILJS_USER_ID,         // Your User ID from EmailJS
+				template_params: {email: this.email}  // The email parameters
+			}),
+            mode: 'no-cors', // CORS mode set here
+          })
+          .then((response) => {
+            if (response.ok) {
+              console.log('Email sent');
+            } else {
+              console.error('Error sending email:', response);
             }
-        });
+          })
+          .catch((error) => {
+            console.error('Network or CORS error:', error);
+          });
     }
 
 

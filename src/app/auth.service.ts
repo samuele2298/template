@@ -27,15 +27,16 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.http.post<User>('/api/auth/login', {email, password})
+    /* return this.http.post<User>('/api/auth/login', {email, password})
       .pipe(map(user => {
         localStorage.setItem('user', JSON.stringify(user));
         this.userSubject.next(user);
         return user;
-      })); 
-      /* const user = {id: 1, email: 'Sam'};
-      this.userSubject.next(user);
-      return user; */
+      }));  */
+      console.log('email');
+      const user = JSON.parse('{"id": 1, "email": "Sam"}');
+      //this.userSubject.next(user);
+      return user; 
   }
 
   clearAuth() {

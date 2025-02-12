@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
+import { environment } from '../../../../environments/environment';
 
 @Component({
     selector: 'hero-widget',
@@ -13,7 +14,7 @@ import { RippleModule } from 'primeng/ripple';
                     class="px-4 py-3 rounded-full font-semibold"
                     style="background-color: var(--primary); color: var(--text-light);"
                 >
-                    🚀 Potenzia il tuo Template
+                    🚀 Potenzia il tuo nuovo brand
                 </span>
                 <h1 class="mt-8 text-5xl md:text-5xl font-extrabold leading-tight"
                     style="color: var(--text-light);"
@@ -25,7 +26,7 @@ import { RippleModule } from 'primeng/ripple';
                         <path d="M6 6.4c16.8 16.8 380.8-11.2 397.6 5.602" stroke-width="12" fill="none"
                             fill-rule="evenodd" stroke-linecap="round"></path>
                     </svg>
-                    <span class="relative text-[var(--primary)]">Template</span>
+                    <span class="relative text-[var(--primary)]">{{environment.APP_NAME}}</span>
                 </span>
                 </h1>
                 <p class="mt-4 text-lg md:text-xl leading-relaxed"
@@ -75,4 +76,7 @@ import { RippleModule } from 'primeng/ripple';
         </div>
     `
 })
-export class HeroWidget {}
+export class HeroWidget {
+    environment = environment;
+
+}

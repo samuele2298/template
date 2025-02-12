@@ -7,8 +7,7 @@ import { NgFor } from '@angular/common';
     selector: 'app-alert',
     templateUrl: './alert.component.html',
     styleUrls: ['./alert.component.css'],
-    standalone: true,
-    imports: [NgFor]
+    standalone: true
 })
 export class AlertComponent implements OnInit {
   messages: Alert[] = [];

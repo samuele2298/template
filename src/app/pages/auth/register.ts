@@ -11,11 +11,12 @@ import { AuthService } from '../../auth.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs';
+import { AlertComponent } from "../../others/kaifeApp/alert/alert.component";
 
 @Component({
-    selector: 'app-login',
+    selector: 'app-register',
     standalone: true,
-    imports: [ButtonModule, CheckboxModule, InputTextModule, PasswordModule, FormsModule, RouterModule, RippleModule, AppFloatingConfigurator,  ReactiveFormsModule],
+    imports: [ButtonModule, CheckboxModule, InputTextModule, PasswordModule, FormsModule, RouterModule, RippleModule, AppFloatingConfigurator, ReactiveFormsModule],
     template: `
         <app-floating-configurator />
         <div class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden">
@@ -40,59 +41,54 @@ import { first } from 'rxjs';
                                     />
                                 </g>
                             </svg>
-                            <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Login to Template!</div>
-                            <span class="text-muted-color font-medium">Sign in to continue</span>
+                            <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Welcome to Template!</div>
+                            <span class="text-muted-color font-medium">Sign up</span>
                         </div>
 
                         <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login mb-8">
                             <label for="email1" class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Email</label>
-                            <input pInputText id="email1" formControlName="email" type="text" placeholder="Email address" class="w-full md:w-[30rem] mb-8" [(ngModel)]="email" />
-
+                            <input pInputText id="email1" formControlName="email" type="text" placeholder="Email address" 
+                                class="w-full md:w-[30rem] mb-8 border-2 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500" 
+                                [(ngModel)]="email" />
                             <label for="password1" class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2">Password</label>
-                            <p-password id="password1" [(ngModel)]="password" formControlName="password" placeholder="Password" [toggleMask]="true" styleClass="mb-4" [fluid]="true" [feedback]="false"></p-password>
+                            <p-password id="password1" [(ngModel)]="password" formControlName="password" placeholder="Password" [toggleMask]="true" 
+                                styleClass="mb-4" [fluid]="true" [feedback]="false"></p-password>
 
-                            <div class="flex items-center justify-between mt-2 mb-8 gap-8">
-                                <div class="flex items-center">
-                                    <p-checkbox [(ngModel)]="checked" id="rememberme1" binary class="mr-2"></p-checkbox>
-                                    <label for="rememberme1">Remember me</label>
-                                </div>
-                                <span class="font-medium no-underline ml-2 text-right cursor-pointer text-[var(--primary)]">Forgot password?</span>
-                            </div>
-                            <button type="submit" class="py-2.5 px-4 dark:bg-[var(--primary)] text-center w-full rounded-full duration-150 flex items-center justify-center gap-x-1 h-12 text-[var(--text-light)] bg-[var(--primary)] hover:bg-[var(--primary-shadow)] ring-offset-2 ring-blue-600 focus:ring shadow rounded-lg active:bg-gray-900">
+                            <button type="submit" class="py-2.5 px-4 mt-10 dark:bg-[var(--primary)] text-center w-full rounded-full duration-150 flex items-center justify-center gap-x-1 h-12 text-[var(--text-light)] bg-[var(--primary)] hover:bg-[var(--primary-shadow)] ring-offset-2 ring-blue-600 focus:ring shadow rounded-lg active:bg-gray-900">
                                 Login
                             </button>                        
                         </form>
 
                         <div class="text-center mb-8">
-                            Don't have an account? <a [routerLink]="'/register'"><strong class=" text-[var(--primary)] dark:text-[var(--primary)]">  Register here </strong></a>
+                            Already have an account? <a [routerLink]="'/login'"><strong class=" text-[var(--primary)] dark:text-[var(--primary)]">  Login here </strong></a>
                         </div>
 
                         <hr>
 
                         <div class="mt-14 mb-0 flex flex-col gap-2">
-                            <button
-                                class="inline-flex py-2.5 px-4 w-full items-center justify-center gap-2 rounded-l border border-slate-300 bg-white p-2 text-sm font-medium text-black outline-none focus:ring-2 focus:ring-[#333] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60 rounded-r-lg">
+                            <a
+                                class="inline-flex py-2.5 px-4 w-full items-center justify-center gap-2 rounded-l border border-slate-300 bg-white p-2 text-sm font-medium text-black outline-none focus:ring-2 focus:ring-[var(--primary)] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60 rounded-r-lg">
                                 <img
                                     src="https://www.svgrepo.com/show/512317/github-142.svg" alt="GitHub"
                                     class="h-[18px] w-[18px]"
                                     style="border-radius: 60px !important">
                                 Continue with GitHub
-                            </button>
+                            </a>
 
-                            <button
-                                class="inline-flex py-2.5 px-4 w-full items-center justify-center gap-2 rounded border border-slate-300 bg-white p-2 text-sm font-medium text-black outline-none focus:ring-2 focus:ring-[#333] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60"><img
+                            <a
+                                class="inline-flex py-2.5 px-4 w-full items-center justify-center gap-2 rounded border border-slate-300 bg-white p-2 text-sm font-medium text-black outline-none focus:ring-2 focus:ring-[var(--primary)] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60"><img
                                     src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google"
                                     class="h-[18px] w-[18px] ">Continue with
                                 Google
-                            </button>
+                            </a>
 
 
-                            <button
-                                class="inline-flex py-2.5 px-4 w-full items-center justify-center gap-2 rounded border border-slate-300 bg-white p-2 text-sm font-medium text-black outline-none focus:ring-2 focus:ring-[#333] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60"><img
+                            <a
+                                class="inline-flex py-2.5 px-4 w-full items-center justify-center gap-2 rounded border border-slate-300 bg-white p-2 text-sm font-medium text-black outline-none focus:ring-2 focus:ring-[var(--primary)] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60"><img
                                     src="https://www.svgrepo.com/show/448234/linkedin.svg" alt="Google"
                                     class="h-[18px] w-[18px] ">Continue with
                                 LinkedIn
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -100,7 +96,7 @@ import { first } from 'rxjs';
         </div>
     `
 })
-export class Login {
+export class Register {
     email: string = '';
 
     password: string = '';
@@ -153,10 +149,10 @@ export class Login {
                 const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/opportunity';
                 this.router.navigate([returnUrl]);
             },
-            /* error: error => {
+            error: error => {
                 this.error = error;
                 this.loading = false;
-            } 
+            }
         }) */
     }
 }

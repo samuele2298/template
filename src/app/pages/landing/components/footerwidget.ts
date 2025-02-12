@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { environment } from '../../../../environments/environment';
 
 @Component({
     selector: 'footer-widget',
@@ -33,7 +34,7 @@ import { Router, RouterModule } from '@angular/router';
                         <h2 class="mb-6 text-sm font-semibold text-[var(--text-light)] uppercase dark:text-[var(--text-light)]">Resources</h2>
                         <ul class="text-[var(--text-light)] dark:text-[var(--text-light)] font-medium">
                             <li class="mb-4">
-                                <a href="/" class="hover:underline">Template</a>
+                                <a href="/" class="hover:underline">{{environment.APP_NAME}}</a>
                             </li>
                             <li>
                                 <a href="/" class="hover:underline">Tailwind CSS</a>
@@ -106,5 +107,6 @@ import { Router, RouterModule } from '@angular/router';
     `
 })
 export class FooterWidget {
+    environment = environment;
     constructor(public router: Router) {}
 }

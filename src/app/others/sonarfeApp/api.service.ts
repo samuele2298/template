@@ -25,6 +25,7 @@ export class ApiService {
     this.handleError = this.httpErrorHandler.createHandleError('ApiService');
   }
 
+
   // ********************************************
   // Dashboard 
   // ********************************************
@@ -39,27 +40,6 @@ export class ApiService {
     return this.http.get<Global[]>('/api/dashboard/global-metrics')
       .pipe(
         catchError(this.handleError('getGlobalMetrics', []))
-      );
-  }
-
-  getChart() {
-    return this.http.get<Tick[]>('/api/dashboard/chart')
-      .pipe(
-        catchError(this.handleError('getChart', []))
-      );
-  }
-
-  getBestTrading(weights: any) {
-    return this.http.post<SCoin[]>('/api/dashboard/best-trading', weights)
-      .pipe(
-        catchError(this.handleError('getBestTrading', []))
-      );
-  }
-
-  getBestInvesting(weights: any) {
-    return this.http.post<SCoin[]>(`/api/dashboard/best-investing`, weights)
-      .pipe(
-        catchError(this.handleError('getBestInvesting', []))
       );
   }
 

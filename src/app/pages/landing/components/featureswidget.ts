@@ -153,13 +153,13 @@ import { CommonModule } from '@angular/common';
             </div>
             <div
                 class="grid max-w-4xl lg:max-w-6xl grid-cols-1 mx-auto mt-8 text-center gap-y-4 sm:gap-x-8 sm:grid-cols-2 lg:grid-cols-3 sm:mt-12 lg:mt-20 sm:text-left">
-                <div class="relative">
+                <div class="relative shadow-lg shadow-[var(--primary-shadow)]">
                     <div class="absolute -inset-1">
                         <div
-                            class="w-full h-full rotate-180 opacity-30 blur-lg filter bg-gradient-to-r from-[var(--primary)] via-[var(--primary)] to-[var(--primary)]">
-                        </div>
+                            class="w-full h-full rotate-180 opacity-30 blur-lg filter ">
+                        </div> 
                     </div>
-                    <div class="relative overflow-hidden bg-[var(--background-light)] shadow-md rounded-xl h-full">
+                    <div class="relative overflow-hidden bg-[var(--background-light)]  rounded-xl h-full">
                         <div class="p-9"><svg class="w-12 h-12 mx-auto text-[var(--text-light)] sm:mx-0" viewBox="0 0 24 24"
                                 fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M11 8L20 8" style="stroke: var(--primary);" stroke-width="2" stroke-linecap="round"></path>
@@ -175,7 +175,8 @@ import { CommonModule } from '@angular/common';
                         </div>
                     </div>
                 </div>
-                <div class="overflow-hidden bg-[var(--background-light)] shadow-md rounded-xl">
+                
+                <div class="overflow-hidden bg-[var(--background-light)] shadow-lg shadow-[var(--primary-shadow)] rounded-xl">
                     <div class="p-9"><svg class="w-12 h-12 mx-auto text-gray-400 sm:mx-0" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <rect x="13" y="14" width="2" height="2" rx="1" style="fill: var(--primary);"></rect>
@@ -195,10 +196,10 @@ import { CommonModule } from '@angular/common';
                             restore your designs to any point in time</p>
                     </div>
                 </div>
-                <div class="relative">
+                <div class="relative shadow-lg shadow-[var(--primary-shadow)]">
                     <div class="absolute -inset-1">
                         <div
-                            class="w-full h-full rotate-180 opacity-30 blur-lg filter bg-gradient-to-r from-[var(--primary)] via-[var(--primary)] to-[var(--primary)]">
+                            class="w-full h-full rotate-180 opacity-30 blur-lg filter ">
                         </div>
                     </div>
                     <div class="relative overflow-hidden bg-[var(--background-light)] shadow-md rounded-xl h-full">
@@ -217,7 +218,7 @@ import { CommonModule } from '@angular/common';
                         </div>
                     </div>
                 </div>
-                <div class="overflow-hidden bg-[var(--background-light)] shadow-md rounded-xl">
+                <div class="overflow-hidden bg-[var(--background-light)] shadow-lg shadow-[var(--primary-shadow)] rounded-xl">
                     <div class="p-9"><svg class="w-12 h-12 mx-auto text-gray-400 sm:mx-0" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <rect x="13" y="14" width="2" height="2" rx="1" style="fill: var(--primary);"></rect>
@@ -237,10 +238,10 @@ import { CommonModule } from '@angular/common';
                             it available to the world with a click of a button</p>
                     </div>
                 </div>
-                <div class="relative">
+                <div class="relative shadow-lg shadow-[var(--primary-shadow)]">
                     <div class="absolute -inset-1">
                         <div
-                            class="w-full h-full rotate-180 opacity-30 blur-lg filter bg-gradient-to-r from-[var(--primary)] via-[var(--primary)] to-[var(--primary)]">
+                            class="w-full h-full rotate-180 opacity-30 blur-lg filter">
                         </div>
                     </div>
                     <div class="relative overflow-hidden bg-[var(--background-light)] shadow-md rounded-xl h-full">
@@ -260,7 +261,7 @@ import { CommonModule } from '@angular/common';
                         </div>
                     </div>
                 </div>
-                <div class="overflow-hidden bg-[var(--background-light)] shadow-md rounded-xl">
+                <div class="overflow-hidden bg-[var(--background-light)] shadow-lg shadow-[var(--primary-shadow)] rounded-xl">
                     <div class="p-9"><svg class="w-12 h-12 mx-auto text-gray-400 sm:mx-0" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <rect x="13" y="14" width="2" height="2" rx="1" style="fill: var(--primary);"></rect>

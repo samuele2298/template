@@ -53,6 +53,21 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor() {
     ClarityIcons.addIcons(boltIcon, moonIcon, sunIcon, refreshIcon, flaskIcon, usersIcon, walletIcon, lockIcon, timesIcon, sliderIcon, searchIcon, radarIcon,  cogIcon, lineChartIcon, userIcon);
+    this.authService.login('','').subscribe(Response => {
+      this.user = user;
+    });
+    this.authService.login(email, password)
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/opportunity';
+          this.router.navigate([returnUrl]);
+        },
+        error: error => {
+          this.error = error;
+          this.loading = false;
+        }
+    })
     this.authService.user.subscribe(user => {
       this.user = user;
     });
