@@ -8,7 +8,7 @@ export const unauthInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(catchError(err => {
     if ([401, 403].includes(err.status) && authService.userValue) {
-      //authService.clearAuth();
+      authService.clearAuth();
     }
     const error = err.statusText;
     console.error(error);

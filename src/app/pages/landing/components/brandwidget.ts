@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
     standalone: true,
     imports: [CommonModule],
     template: ` 
-        <div id="brand" class="bg-[var(--primary)] w-full px-4 pt-16 pb-16" id="faq">
+        <div id="brand" class="bg-[var(--primary-light)] dark:bg-[var(--primary-dark)] w-full px-4 pt-16 pb-16" id="faq">
             <div
                 class="mx-auto w-full max-w-4xl bg-trasparent justify-center items-center grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
                 <a target="_blank" href="">

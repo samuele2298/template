@@ -20,39 +20,53 @@ export class AuthService {
     this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user')!));
     this.handleError = this.httpErrorHandler.createHandleError('AuthService');
     this.user = this.userSubject.asObservable();
+    this.status();
   }
 
   public get userValue() {
     return this.userSubject.value;
   }
 
-  login(email: string, password: string) {
-    /* return this.http.post<User>('/api/auth/login', {email, password})
-      .pipe(map(user => {
+  /* login() {
+    window.location.href = '/api/auth/google'; 
+  } */
+
+  status() {
+    return this.http.get<User>('/api/auth/status').pipe(
+      map(user => {
+        if (Object.keys(user).length === 0) {
+          window.location.href = '/';  // Redirect to marketing or a specific page
+        }
+
         localStorage.setItem('user', JSON.stringify(user));
         this.userSubject.next(user);
+        console.log('SONO AUTORIZZATO' + user.email);
         return user;
-      }));  */
-      console.log('email');
-      const user = JSON.parse('{"id": 1, "email": "Sam"}');
-      //this.userSubject.next(user);
-      return user; 
+      }),
+      catchError(this.handleError('status', {})),
+    );
+  }
+
+  login(email: string, password: string) {
+    return this.http.post<any>('/api/auth/login', {email, password})
+      .pipe(map(res => {
+        localStorage.setItem('user', JSON.stringify(res.user));
+        this.userSubject.next(res.user);
+        console.log(JSON.stringify(this.userValue));
+        return res.user;
+      }));                              
   }
 
   clearAuth() {
-    //localStorage.removeItem('user');
-    //this.userSubject.next(null);
-    //this.router.navigate(['/login']);
+    localStorage.removeItem('user');
+    this.userSubject.next(null);
+    this.router.navigate(['/login']);
   }
 
   logout() {
-    //return this.http.post('/api/auth/logout', null)
-    //  .pipe(
-    //    catchError(this.handleError('logout', {}))
-    //  );
-
-    // localStorage.removeItem('user');
-    // this.userSubject.next(null);
-    // this.router.navigate(['/login']);
+    return this.http.get('/api/auth/logout')
+      .pipe(
+        catchError(this.handleError('logout', {}))
+      );
   }
 }

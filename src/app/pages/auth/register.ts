@@ -11,7 +11,6 @@ import { AuthService } from '../../auth.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs';
-import { AlertComponent } from "../../others/kaifeApp/alert/alert.component";
 
 @Component({
     selector: 'app-register',

@@ -6,17 +6,17 @@ import { CommonModule } from '@angular/common';
     standalone: true,
     imports: [CommonModule],
     template: ` 
-        <div id="impact" class="text-[var(--text-light)] pt-16 pb-24 px-6 w-full bg-[var(--background)] dark:bg-[var(--background)]">
+        <div id="impact" class="text-[var(--text-light)] dark:text-[var(--text-dark)] pt-16 pb-24 px-6 w-full bg-[var(--bg-light)] dark:bg-[var(--bg-dark)]">
             <div class="max-w-7xl mx-auto text-center">
                 <div class="relative mb-10  mx-auto max-w-7xl px-6 text-center lg:px-8">
                     <div class="mx-auto max-w-2xl lg:max-w-4xl">
-                        <h2 class="text-lg font-semibold leading-8 text-[var(--primary)] dark:text-[var(--primary)]">Impact</h2>
-                        <p class="mt-2 text-4xl font-bold tracking-tight text-[var(--text-light)] dark:text-[var(--text-light)]">Impact..</p>
+                        <h2 class="text-lg font-semibold leading-8 text-[var(--primary-light)] dark:text-[var(--primary-dark)]">Impact</h2>
+                        <p class="mt-2 text-4xl font-bold tracking-tight text-[var(--text-light)] dark:text-[var(--text-dark)]">Impact..</p>
                     </div>
                 </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <!-- User Count -->
-                <div class="flex flex-col items-center p-8 bg-[var(--background-light)] rounded-lg shadow-lg hover:shadow-xl transition-shadow shadow-[var(--background-light-shadow)]">
+                <div class="flex flex-col items-center p-8 bg-[var(--bg-light)] dark:bg-[var(--bg-dark)] text-[var(--text-light)] dark:text-[var(--text-dark)] rounded-lg shadow-lg hover:shadow-xl transition-shadow shadow-[var(--background-light-shadow)]">
                     <div
                     class="mb-6 flex items-center justify-center w-28 h-28 rounded-full bg-gradient-to-r from-purple-500 to-pink-400 p-1">
                     <div class="w-full h-full rounded-full bg-white flex items-center justify-center">
@@ -28,8 +28,8 @@ import { CommonModule } from '@angular/common';
                         </svg>
                     </div>
                     </div>
-                    <div class="text-3xl font-extrabold text-[var(--text-light)]">70,680 +</div>
-                    <div class="text-[var(--text-light)]">Users</div>
+                    <div class="text-3xl font-extrabold text-[var(--text-light)] dark:text-[var(--text-dark)]">70,680 +</div>
+                    <div class="text-[var(--text-light)] dark:text-[var(--text-dark)]">Users</div>
                 </div>
                 <!-- Documents Count -->
                 <div class="flex flex-col items-center p-8 bg-[var(--background-light)] rounded-lg shadow-lg hover:shadow-xl transition-shadow shadow-[var(--background-light-shadow)]">
@@ -44,8 +44,8 @@ import { CommonModule } from '@angular/common';
                         </svg>
                     </div>
                     </div>
-                    <div class="text-3xl font-extrabold text-[var(--text-light)]">651,589 +</div>
-                    <div class="text-[var(--text-light)]">Papers and Documents Processed</div>
+                    <div class="text-3xl font-extrabold text-[var(--text-light)] dark:text-[var(--text-dark)]">651,589 +</div>
+                    <div class="text-[var(--text-light)] dark:text-[var(--text-dark)]">Papers and Documents Processed</div>
                 </div>
                 <!-- Languages Supported -->
                 <div class="flex flex-col items-center p-8 bg-[var(--background-light)] rounded-lg shadow-lg hover:shadow-xl transition-shadow shadow-[var(--background-light-shadow)]">
@@ -60,8 +60,8 @@ import { CommonModule } from '@angular/common';
                         </svg>
                     </div>
                     </div>
-                    <div class="text-3xl font-extrabold text-[var(--text-light)]">651,589 +</div>
-                    <div class="text-[var(--text-light)]">Papers and Documents Processed</div>
+                    <div class="text-3xl font-extrabold text-[var(--text-light)] dark:text-[var(--text-dark)]">651,589 +</div>
+                    <div class="text-[var(--text-light)] dark:text-[var(--text-dark)]">Papers and Documents Processed</div>
                 </div>
                 </div>
             </div>

@@ -29,43 +29,57 @@ export class ApiService {
     this.handleError = this.httpErrorHandler.createHandleError('ApiService');
   }
 
+
   // ********************************************
-  // Symbol Functions
+  // Test Functions
   // ********************************************
-  getSymbolList() {
-    return this.http.get<Symbol[]>('/api/symbol')
+  getTest() {
+    return this.http.get<{ message: string }>('/api/dashboard')
       .pipe(
-        catchError(this.handleError('getSymbolList', []))
+        catchError(this.handleError('getTest', { message: 'Error' }))
       );
   }
 
-  getSymbol(id: string) {
-    return this.http.get<Symbol>(`/api/symbol/${id}`)
+  // ********************************************
+  // CRUD Functions
+  // ********************************************
+  getObjectList() {
+    return this.http.get<Symbol[]>('/api/object')
       .pipe(
-        catchError(this.handleError('getSymbol', {} as Symbol))
+        catchError(this.handleError('getObjectList', []))
       );
   }
 
-  getSymbolMaxNumber() {
-    return this.http.get<any>('/api/symbol/maxnumber')
+  getObject(id: string) {
+    return this.http.get<Symbol>(`/api/object/${id}`)
       .pipe(
-        catchError(this.handleError('getSymbolMaxNumber', null))
+        catchError(this.handleError('getObject', {} as Symbol))
       );
   }
 
-  setSymbol(symb: Symbol) {
-    return this.http.post<Response>('/api/symbol', symb)
+  getObjectMaxNumber() {
+    return this.http.get<any>('/api/object/maxnumber')
       .pipe(
-        catchError(this.handleError('setSymbol', {} as Response))
+        catchError(this.handleError('getObjectMaxNumber', null))
       );
   }
 
-  delSymbol(id: string) {
-    return this.http.delete<Response>(`/api/symbol/${id}`)
+  setObject(symb: Symbol) {
+    return this.http.post<Response>('/api/object', symb)
       .pipe(
-        catchError(this.handleError('delSymbol', {} as Response))
+        catchError(this.handleError('setObject', {} as Response))
       );
   }
+
+  delObject(id: string) {
+    return this.http.delete<Response>(`/api/object/${id}`)
+      .pipe(
+        catchError(this.handleError('delObject', {} as Response))
+      );
+  }
+
+
+  ///////////////////////////////////////////////////////
 
   // ********************************************
   // Symref Functions

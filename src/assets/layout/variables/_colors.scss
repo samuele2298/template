@@ -1,23 +1,37 @@
 // src/styles/_colors.scss
 
-// Variabili di colore personalizzate
-$primary: #ff39de;  // Blu principale
-$primary-light: #3d64d19c;  // Blu principale
-$primary-shadow: #ff39de5e;  // Blu principale
-$text-dark: #312929;      // Testo scuro
-$text-light: #ffffff;      // Testo scuro
-$background: #1f1f1f;  // Sfondo scuro
-$background-light: #2b2b2b;  // Sfondo scuro
-$border: #ffffff52;      // Testo scuro
+// DARK MODE
+$primary-dark: #ff39de9f;  // Blu principale
+$primary-dark-shadow: #ff39de50;  // Blu principale
+$text-dark: #ffffff;      // Testo scuro
+$secondary-dark: #2b2b2b;  // Sfondo scuro
+$bg-dark: #1f1f1f;  // Sfondo scuro
+$border-dark: #ffffff52;      // Testo scuro
+
+//LIGHT MODE
+$primary-light: #3f4fdf9f;  // Blu principale
+$primary-light-shadow: #2247ee56;  // Blu principale
+$text-light: #000000;      // Testo scuro
+$secondary-light: #999999;  // Sfondo scuro
+$bg-light: #ffffff;  // Sfondo scuro
+$border-light: #8b8b8b52;      // Testo scuro
+
 
 // Esportiamo le variabili come CSS per Tailwind
 :root {
-    --primary: #{$primary};
+    // Light Mode (default)
     --primary-light: #{$primary-light};
-    --primary-shadow: #{$primary-shadow};
-    --text-dark: #{$text-dark};
+    --primary-light-shadow: #{$primary-light-shadow};
+    --secondary-light: #{$secondary-light};
     --text-light: #{$text-light};
-    --background: #{$background};
-    --background-light: #{$background-light};
-    --border: #{$border};
+    --bg-light: #{$bg-light};
+    --border-light: #{$border-light};
+
+    // Dark Mode (default)
+    --primary-dark: #{$primary-dark};
+    --primary-dark-shadow: #{$primary-dark-shadow};
+    --secondary-dark: #{$secondary-dark};
+    --text-dark: #{$text-dark};
+    --bg-dark: #{$bg-dark};
+    --border-dark: #{$border-dark};
 }

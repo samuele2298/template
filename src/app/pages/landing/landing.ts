@@ -15,15 +15,17 @@ import { TestimonialsWidget } from "./components/testimonialswidget";
 import { ImpactWidget } from "./components/impactwidget";
 import { BrandWidget } from "./components/brandwidget";
 import { WaitlistWidget } from "./components/waitlistwidget";
+import { AppFloatingConfigurator } from "../../layout/component/app.floatingconfigurator";
 
 @Component({
     selector: 'app-landing',
     standalone: true,
-    imports: [RouterModule, TopbarWidget, HeroWidget, FeaturesWidget, HighlightsWidget, PricingWidget, ComparisonWidget, FooterWidget, RippleModule, StyleClassModule, ButtonModule, DividerModule, TestimonialsWidget, ImpactWidget, BrandWidget, WaitlistWidget],
+    imports: [RouterModule, TopbarWidget, HeroWidget, FeaturesWidget, HighlightsWidget, PricingWidget, ComparisonWidget, FooterWidget, RippleModule, StyleClassModule, ButtonModule, DividerModule, TestimonialsWidget, ImpactWidget, BrandWidget, WaitlistWidget, AppFloatingConfigurator],
     template: `
-        <div class="bg-[var(--background)] dark:bg-[var(--background)]"> 
+        <app-floating-configurator />
+        <div class="bg-[var(--bg-light)] dark:bg-[var(--bg-dark)]"> 
             <div id="home" class="landing-wrapper overflow-hidden">
-                <topbar-widget class="py-6 bg-[var(--background)] dark:bg-[var(--background)] px-6 mx-0 md:mx-12 lg:mx-20 lg:px-20 flex items-center justify-between relative lg:static" />
+                <topbar-widget class="py-6 bg-[var(--bg-light)] dark:bg-[var(--bg-dark)] px-6 mx-0 md:mx-12 lg:mx-20 lg:px-20 flex items-center justify-between relative lg:static" />
                 <hero-widget />
                 <brand-widget />
                 <features-widget />
@@ -39,10 +41,5 @@ import { WaitlistWidget } from "./components/waitlistwidget";
     `
 })
 export class Landing {
-    constructor(private renderer: Renderer2) {}
-
-    ngOnInit() {
-        this.renderer.addClass(document.body, 'app-dark'); // Force add dark mode
-    }
 }
 

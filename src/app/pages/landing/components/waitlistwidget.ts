@@ -9,12 +9,12 @@ import { environment } from '../../../../environments/environment';
     imports: [FormsModule], // Import FormsModule here for standalone components
     template: `
         <div id="waitlist" class="mx-auto my-12 max-w-7xl px-6 sm:my-16 lg:px-8">
-            <div class="relative isolate overflow-hidden bg-[var(--background-light)] px-6 py-24 shadow-2xl rounded-2xl sm:rounded-3xl sm:px-24 xl:py-32">
-                <h2 class="mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            <div class="relative isolate overflow-hidden bg-[var(--bg-light)] dark:bg-[var(--bg-dark)] px-6 py-24 shadow-2xl rounded-2xl sm:rounded-3xl sm:px-24 xl:py-32">
+                <h2 class="mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-[var(--text-light) dark:text-[var(--text-dark)] sm:text-4xl">
                     Waitlist 
                 </h2>
 
-                <p class="mx-auto mt-2 max-w-xl text-center text-lg leading-8 text-[var(--text-light)]">
+                <p class="mx-auto mt-2 max-w-xl text-center text-lg leading-8 text-[var(--text-light)] dark:text-[var(--text-dark)]">
                     Waitlist..
                 </p>
 
@@ -26,7 +26,7 @@ import { environment } from '../../../../environments/environment';
                         placeholder="Enter your email">
 
                     <button type="submit" [disabled]="loading"
-                        class="flex-none rounded-md bg-[var(--primary)] px-3.5 py-2.5 text-sm font-semibold text-[var(--text-light)] shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                        class="flex-none rounded-md bg-[var(--primary-light)] dark:bg-[var(--primary-dark)] px-3.5 py-2.5 text-sm font-semibold text-[var(--text-light)] dark:text-[var(--text-dark)] shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
                         {{ loading ? 'Sending...' : 'Notify me' }}
                     </button>
                 </form>
@@ -38,8 +38,8 @@ import { environment } from '../../../../environments/environment';
                     <defs>
                         <radialGradient id="759c1415-0410-454c-8f7c-9a820de03641" cx="0" cy="0" r="1"
                             gradientUnits="userSpaceOnUse" gradientTransform="translate(512 512) rotate(90) scale(512)">
-                            <stop style="stop-color: var(--primary);"></stop>
-                            <stop offset="1" style="stop-color: var(--primary); stop-opacity: 0;"></stop>
+                            <stop id="gradient-stop-1" ></stop>
+                            <stop id="gradient-stop-2" offset="1" style="stop-opacity: 0;"></stop>
                         </radialGradient>
                     </defs>
                 </svg>
@@ -47,7 +47,25 @@ import { environment } from '../../../../environments/environment';
             </div>
         </div>
     `,
-    styles: [`input:disabled, button:disabled { opacity: 0.5; cursor: not-allowed; }`]
+    styles: [
+        `input:disabled, button:disabled { opacity: 0.5; cursor: not-allowed; }`,
+        `#gradient-stop-1 {
+            stop-color: var(--primary-light);
+        }
+    
+        #gradient-stop-2 {
+            stop-color: var(--primary-light);
+        }
+        @media (prefers-color-scheme: dark) {
+            #gradient-stop-1 {
+                stop-color: var(--primary-dark);
+            }
+
+            #gradient-stop-2 {
+                stop-color: var(--primary-dark);
+            }
+        }`
+    ]
 })
 export class WaitlistWidget {
     private http = inject(HttpClient);

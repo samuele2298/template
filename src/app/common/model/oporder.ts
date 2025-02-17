@@ -1,4 +1,3 @@
-import { ClrLoadingState } from "@clr/angular";
 
 export interface Oporder {
     orexch: string;
@@ -15,7 +14,6 @@ export interface Oporder {
     orupddate: number;
     orerror: string;
     orkey: string;
-    loadingState: ClrLoadingState;
 }
 
 export const orderStatus = new Map<string, string>();

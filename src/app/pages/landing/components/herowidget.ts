@@ -7,37 +7,33 @@ import { environment } from '../../../../environments/environment';
     selector: 'hero-widget',
     imports: [ButtonModule, RippleModule],
     template: `
-        <div id="hero" class="mb-14 flex dark:bg-[var(--background)] flex-col md:flex-row items-center justify-between gap-8 px-20 lg:px-22 py-12">
+        <div id="hero" class="mb-14 flex bg-[var(--bg-light)] dark:bg-[var(--bg-dark)] flex-col md:flex-row items-center justify-between gap-8 px-20 lg:px-22 py-12">
             <!-- Left Content -->
             <div class="w-full md:w-1/2 text-center md:text-left">
                 <span 
-                    class="px-4 py-3 rounded-full font-semibold"
-                    style="background-color: var(--primary); color: var(--text-light);"
+                    class="px-4 py-3 rounded-full font-semibold bg-[var(--primary-light)] dark:bg-[var(--primary-dark)] text-[var(--text-light)] dark:text-[var(--text-dark)]"
                 >
                     🚀 Potenzia il tuo nuovo brand
                 </span>
-                <h1 class="mt-8 text-5xl md:text-5xl font-extrabold leading-tight"
-                    style="color: var(--text-light);"
+                <h1 class="text-[var(--text-light)] dark:text-[var(--text-dark)] mt-8 text-5xl md:text-5xl font-extrabold leading-tight"
                 >
                     Il meglio per il tuo Template ecco:
                     <span class="px-2 py-1 relative inline-block">
-                    <svg class="stroke-current bottom-0 absolute text-[var(--primary)] -translate-x-2" viewBox="0 0 410 18"
+                    <svg class="stroke-current bottom-0 absolute text-[var(--primary-light)] dark:text-[var(--primary-dark)] -translate-x-2" viewBox="0 0 410 18"
                         xmlns="http://www.w3.org/2000/svg">
                         <path d="M6 6.4c16.8 16.8 380.8-11.2 397.6 5.602" stroke-width="12" fill="none"
                             fill-rule="evenodd" stroke-linecap="round"></path>
                     </svg>
-                    <span class="relative text-[var(--primary)]">{{environment.APP_NAME}}</span>
+                    <span class="relative text-[var(--primary-light)] dark:text-[var(--primary-dark)]">{{environment.APP_NAME}}</span>
                 </span>
                 </h1>
-                <p class="mt-4 text-lg md:text-xl leading-relaxed"
-                    style="color: var(--text-light);"
-                >
+                <p class="mt-4 text-lg md:text-xl leading-relaxed text-[var(--text-light)] dark:text-[var(--text-dark)]">
                     Il meglio del meglio del meglio...
                 </p>
                 <div class="flex justify-center font-medium text-md">
                     <form class="mt-6 flex flex-col items-center sm:flex-row sm:gap-x-3">
                         <div class="sm:pt-0 pt-3">
-                            <a class="py-2.5 px-4 text-center rounded-full duration-150 flex items-center justify-center gap-x-1 h-12 text-[var(--text-light)] bg-[var(--primary)] hover:bg-[var(--primary-shadow)] ring-offset-2 ring-blue-600 focus:ring shadow rounded-lg active:bg-gray-900"
+                            <a class="py-2.5 px-4 text-center rounded-full duration-150 flex items-center justify-center gap-x-1 h-12 text-[var(--text-dark)] dark:text-[var(--text-dark)] bg-[var(--secondary-light)] dark:bg-[var(--secondary-dark)] hover:bg-[var(--primary-shadow)] ring-offset-2 ring-blue-600 focus:ring shadow rounded-lg active:bg-gray-900"
                                 style="background-color:#333" href="">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor"
                                     viewBox="0 0 24 24">
@@ -49,9 +45,9 @@ import { environment } from '../../../../environments/environment';
                             </a>
                         </div>
                         <div class="sm:pt-0 pt-3">
-                            <a class="py-2.5 px-4 dark:bg-[var(--primary)] text-center rounded-full duration-150 flex items-center justify-center gap-x-1 h-12 text-[var(--text-light)] bg-[var(--primary)] hover:bg-[var(--primary-shadow)] ring-offset-2 ring-blue-600 focus:ring shadow rounded-lg active:bg-gray-900" 
+                            <a class="py-2.5 px-4 bg-[var(--primary-light)] dark:bg-[var(--primary-dark)] text-center rounded-full duration-150 flex items-center justify-center gap-x-1 h-12 text-[var(--text-light)] dark:text-[var(--text-dark)] bg-[var(--primary-light)] dark:bg-[var(--primary-dark)] hover:bg-[var(--primary-shadow)] ring-offset-2 ring-blue-600 focus:ring shadow rounded-lg active:bg-gray-900" 
                                 href="">
-                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"
+                                <svg class="h-5 w-5 fill-[var(--text-light)] dark:fill-[var(--text-dark)]" fill="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
                                     <path
                                         d="M19.54 0c1.356 0 2.46 1.104 2.46 2.472v21.528l-2.58-2.28-1.452-1.344-1.536-1.428.636 2.22h-13.608c-1.356 0-2.46-1.104-2.46-2.472v-16.224c0-1.368 1.104-2.472 2.46-2.472h16.08zm-4.632 15.672c2.652-.084 3.672-1.824 3.672-1.824 0-3.864-1.728-6.996-1.728-6.996-1.728-1.296-3.372-1.26-3.372-1.26l-.168.192c2.04.624 2.988 1.524 2.988 1.524-1.248-.684-2.472-1.02-3.612-1.152-.864-.096-1.692-.072-2.424.024l-.204.024c-.42.036-1.44.192-2.724.756-.444.204-.708.348-.708.348s.996-.948 3.156-1.572l-.12-.144s-1.644-.036-3.372 1.26c0 0-1.728 3.132-1.728 6.996 0 0 1.008 1.74 3.66 1.824 0 0 .444-.54.804-.996-1.524-.456-2.1-1.416-2.1-1.416l.336.204.048.036.047.027.014.006.047.027c.3.168.6.3.876.408.492.192 1.08.384 1.764.516.9.168 1.956.228 3.108.012.564-.096 1.14-.264 1.74-.516.42-.156.888-.384 1.38-.708 0 0-.6.984-2.172 1.428.36.456.792.972.792.972zm-5.58-5.604c-.684 0-1.224.6-1.224 1.332 0 .732.552 1.332 1.224 1.332.684 0 1.224-.6 1.224-1.332.012-.732-.54-1.332-1.224-1.332zm4.38 0c-.684 0-1.224.6-1.224 1.332 0 .732.552 1.332 1.224 1.332.684 0 1.224-.6 1.224-1.332 0-.732-.54-1.332-1.224-1.332z">

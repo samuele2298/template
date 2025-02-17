@@ -17,7 +17,14 @@ export const appConfig: ApplicationConfig = {
         provideRouter(appRoutes, withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }), withEnabledBlockingInitialNavigation()),
         provideHttpClient(withFetch()),
         provideAnimationsAsync(),
-        providePrimeNG({ theme: { preset: Lara, options: { darkModeSelector: '.app-dark' } } }),
+        providePrimeNG({ 
+            theme: { 
+                preset: Lara, 
+                options: { 
+                    darkModeSelector: '.app-dark' 
+                } 
+            } 
+        }),
         provideAnimations(),
         provideToastr(),
         importProvidersFrom(BrowserAnimationsModule),

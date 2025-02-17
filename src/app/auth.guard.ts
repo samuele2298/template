@@ -7,6 +7,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   if (authService.userValue) {
     return true;
   }
-  //authService.clearAuth();
+  authService.clearAuth();
   return false;
 };

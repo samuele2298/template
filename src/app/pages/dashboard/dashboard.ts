@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { NotificationsWidget } from './components/notificationswidget';
 import { StatsWidget } from './components/statswidget';
 import { RecentSalesWidget } from './components/recentsaleswidget';
 import { BestSellingWidget } from './components/bestsellingwidget';
 import { RevenueStreamWidget } from './components/revenuestreamwidget';
+import { ApiService } from '../../api.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -22,4 +23,13 @@ import { RevenueStreamWidget } from './components/revenuestreamwidget';
         </div>
     `
 })
-export class Dashboard {}
+export class Dashboard implements OnInit  {
+    private apiService = inject(ApiService);
+
+    constructor(){}
+
+    ngOnInit(): void {
+        this.apiService.getTest().subscribe(res => console.log(res.message))
+    }
+}
+

@@ -18,11 +18,12 @@ export const appRoutes: Routes = [
             { path: 'documentation', component: Documentation },
             { path: 'pages', loadChildren: () => import('./pages/pages.routes') }
         ],
+        canActivate: [authGuard]
     },
     { path: 'login', component: Login },
     { path: 'register', component: Register },
     { path: 'landing', component: Landing },
-    { path: 'notfound', component: Notfound, canActivate: [authGuard] },
+    { path: 'notfound', component: Notfound },
     { path: 'auth', loadChildren: () => import('./pages/auth/auth.routes') },
     { path: '**', redirectTo: '/notfound' }
 ];
